@@ -1,0 +1,84 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SeoLanding from '../components/SeoLanding.astro';
+
+const steps = [
+  { title: 'Diagnostic gratuit', text: 'Nous visitons votre jardin, identifions les végétaux et les points faibles du sol.' },
+  { title: 'Plan d\'entretien', text: 'Fréquence, saisonnalité et budget : un calendrier clair avant toute intervention.' },
+  { title: 'Intervention régulière', text: 'Même équipe, mêmes jours de passage, compte rendu après chaque passage.' },
+  { title: 'Bilan annuel', text: 'Point sur l\'état du jardin, renouvellement des massifs et ajustement du plan.' },
+];
+
+const benefits = [
+  { title: 'Zéro matériel à acheter', text: 'Nous venons avec tractive, taille-haies et désherbeuse : rien à louer ni entretenir.' },
+  { title: 'Finition soignée', text: 'Déchets évacués et triés, bordures nettes, allées balayées à chaque passage.' },
+  { title: 'Formules dès 3 passages', text: 'Mensuel, bimensuel ou hebdomadaire selon votre budget et la saison des pluies.' },
+];
+
+const faq = [
+  {
+    question: 'À quelle fréquence faut-il entretenir un jardin à Cotonou ?',
+    answer: 'En saison des pluies (avril à juillet), un passage toutes les deux semaines suffit en général. En saison sèche, un passage mensuel avec arrosage contrôlé maintient l\'état des massifs. Nous adaptons le calendrier à votre terrain.',
+  },
+  {
+    question: 'Que comprennent vos prestations de jardinage ?',
+    answer: 'Tonte et rognage, taille des haies et des arbustes, désherbage manuel, binage, arrosage, ramassage des feuilles, fertilisation et nettoyage des allées. L\'élagage des grands arbres fait l\'\'objet d\'une prestation spécifique.',
+  },
+  {
+    question: 'Gérez-vous aussi les petits espaces ?',
+    answer: 'Oui : balcons, terrasses et jardins de moins de 50 m² bénéficient d\'une formule compacte, idéale pour les résidences et bureaux du centre de Cotonou.',
+  },
+];
+
+const related = [
+  { href: '/jardinier-cotonou', label: 'Jardinier Cotonou', text: 'Jardinier professionnel à Cotonou' },
+  { href: '/services/entretien-espaces-verts', label: 'Entretien espaces verts', text: 'Détail de notre offre d\'entretien' },
+  { href: '/services', label: 'Nos services', text: 'Toutes nos prestations' },
+  { href: '/realisations', label: 'Nos réalisations', text: 'Portfolio de jardins réalisés' },
+  { href: '/devis', label: 'Devis gratuit', text: 'Demander un devis de jardinage' },
+];
+---
+
+<Layout
+  title="Jardinage Cotonou | Entretien de jardins & espaces verts | Be Clean"
+  description="Jardinage à Cotonou : tonte, taille, désherbage, arrosage et fertilisation. Entretien régulier par une équipe locale, formules mensuelles. Devis gratuit."
+  canonical="https://benin-paysage.com/jardinage-cotonou"
+>
+  <SeoLanding
+    badge="Jardinage"
+    title="Jardinage à Cotonou"
+    accent="entretien régulier"
+    description="Un jardin tropical pousse vite : nous le taillons, l'arrosons et le nourrissons à la bonne fréquence pour qu'il reste impeccable toute l'année."
+    steps={steps}
+    benefits={benefits}
+    faq={faq}
+    related={related}
+    ctaTitle="Confiez l'entretien de votre jardin à Cotonou"
+    ctaSubtitle="Passage d'essai gratuit : jugez de la qualité de notre finition avant de vous engager."
+  >
+    <p class="lead">
+      Entre les pluies d'avril et l'harmattan, un jardin à Cotonou ne dort jamais. Le
+      <strong>jardinage</strong> régulier évite les massifs envahis, les arbres mal taillés et
+      les factures d'eau élevées. Be Clean intervient chez les particuliers comme auprès des
+      hôtels, bureaux et résidences.
+    </p>
+
+    <h2>Nos prestations de jardinage à Cotonou</h2>
+    <ul>
+      <li><strong>Tonte et rognage</strong> — gazon à la bonne hauteur, bordures nettes.</li>
+      <li><strong>Taille des haies et arbustes</strong> — volumes respectés, saison de taille respectée.</li>
+      <li><strong>Désherbage et binage</strong> — manuel, sans excès de produits chimiques.</li>
+      <li><strong>Arrosage maîtrisé</strong> — programmation adaptée à la saison et au type de sol.</li>
+      <li><strong>Fertilisation et soins</strong> — amendements organiques, traitement ciblé des maladies.</li>
+      <li><strong>Évacuation des déchets verts</strong> — collecte et tri à chaque passage.</li>
+    </ul>
+
+    <h2>Entretenir, c'est also faire des économies</h2>
+    <p>
+      Un massif entretenu consomme moins d'eau, résiste mieux aux parasites et évite les
+      reprises coûteuses. Nos formules d'entretien démarrent à <strong>trois passages</strong> :
+      le budget est connu à l'avance, l'intervention est annoncée et la même équipe connaît
+      votre jardin à chaque visite.
+    </p>
+  </SeoLanding>
+</Layout>

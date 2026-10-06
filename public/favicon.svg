@@ -1,0 +1,20 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 128 128" width="128" height="128" role="img" aria-label="Be Clean">
+  <defs>
+    <clipPath id="fav-circle">
+      <circle cx="64" cy="60" r="44"/>
+    </clipPath>
+    <linearGradient id="fav-leaf" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#A6E24E"/>
+      <stop offset="1" stop-color="#2F9E44"/>
+    </linearGradient>
+  </defs>
+  <rect width="128" height="128" fill="#ffffff"/>
+  <circle cx="64" cy="60" r="44" fill="#ffffff"/>
+  <circle cx="64" cy="60" r="52" fill="none" stroke="#33628A" stroke-width="11"/>
+  <g clip-path="url(#fav-circle)">
+    <rect x="30" y="62" width="16" height="46" fill="#2FA8E0"/>
+    <rect x="50" y="46" width="22" height="62" fill="#93A9B8"/>
+    <rect x="76" y="58" width="16" height="50" fill="#3E7CB1"/>
+  </g>
+  <path d="M10,110 C36,92 78,92 112,112 C78,104 40,104 10,110 Z" fill="url(#fav-leaf)"/>
+</svg>

@@ -1,0 +1,15 @@
+---
+import fs from 'node:fs';
+import path from 'node:path';
+
+interface Props {
+  class?: string;
+}
+
+const { class: className = 'h-12 w-auto' } = Astro.props;
+
+const pngExists = fs.existsSync(path.join(process.cwd(), 'public/assets/logo.png'));
+const src = pngExists ? '/assets/logo.png' : '/assets/logo.svg';
+---
+
+<img src={src} alt="Be Clean" class={className} width="140" height="140" />

@@ -1,0 +1,215 @@
+---
+import Layout from '../layouts/Layout.astro';
+import PageHeader from '../components/PageHeader.astro';
+import CTA from '../components/CTA.astro';
+
+const projects = [
+  {
+    title: 'Villa contemporaine à Cotonou',
+    location: 'Haie Vive, Cotonou',
+    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80',
+    category: 'residentiel',
+  },
+  {
+    title: "Bureaux d'entreprise Cotonou",
+    location: 'Cadjèhoun, Cotonou',
+    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
+    category: 'entreprises',
+  },
+  {
+    title: 'Résidence Les Jardins de Porto-Novo',
+    location: 'Porto-Novo',
+    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80',
+    category: 'residentiel',
+  },
+  {
+    title: 'Hôtel Porto-Novo',
+    location: 'Porto-Novo',
+    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80',
+    category: 'entreprises',
+  },
+  {
+    title: 'Jardin Villa Akpakpa',
+    location: 'Akpakpa, Cotonou',
+    image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=800&q=80',
+    category: 'residentiel',
+  },
+  {
+    title: 'Parc d\'affaires de Parakou',
+    location: 'Parakou',
+    image: 'https://images.unsplash.com/photo-1633254103683-33143c7a4d3f?auto=format&fit=crop&w=800&q=80',
+    category: 'entreprises',
+  },
+  {
+    title: 'Parc municipal de Cotonou',
+    location: 'Boulevard de la Marina, Cotonou',
+    image: 'https://images.unsplash.com/photo-1740924771376-7396a0c0c8ca?auto=format&fit=crop&w=800&q=80',
+    category: 'publics',
+  },
+  {
+    title: 'Rond-point du Golfe',
+    location: 'Cadjèhoun, Cotonou',
+    image: 'https://images.unsplash.com/photo-1688083938768-e77209dc3cc4?auto=format&fit=crop&w=800&q=80',
+    category: 'publics',
+  },
+  {
+    title: 'Jardin public de Porto-Novo',
+    location: 'Porto-Novo',
+    image: 'https://images.unsplash.com/photo-1785644907645-44d865fcb2b8?auto=format&fit=crop&w=800&q=80',
+    category: 'publics',
+  },
+];
+
+const filters = [
+  { key: 'all', label: 'Tous' },
+  { key: 'residentiel', label: 'Résidentiel' },
+  { key: 'entreprises', label: 'Entreprises' },
+  { key: 'publics', label: 'Espaces publics' },
+];
+
+const categoryLabel: Record<string, string> = {
+  residentiel: 'Résidentiel',
+  entreprises: 'Entreprises',
+  publics: 'Espace public',
+};
+
+const stats = [
+  { value: '120+', label: 'projets livrés' },
+  { value: '13+', label: 'ans au Bénin' },
+  { value: '9', label: 'réalisations à découvrir' },
+  { value: '4', label: 'communes couvertes' },
+];
+---
+
+<Layout
+  title="Réalisations Paysagiste Cotonou | Be Clean"
+  description="Découvrez nos réalisations d'aménagement paysager à Cotonou : villas, entreprises, hôtels. Avant/après, projets sur mesure."
+>
+  <PageHeader
+    badge="Nos Réalisations"
+    title="Nos réalisations de paysagiste à Cotonou"
+    description="Découvrez nos projets d'aménagement paysager réalisés par nos jardiniers paysagiste à Cotonou et en Bénin. Chaque réalisation témoigne du savoir-faire de notre société de jardinage pour créer des espaces uniques."
+  />
+
+  <section class="section-padding bg-white">
+    <div class="container-custom">
+      <div class="mb-10 text-center reveal">
+        <span class="eyebrow justify-center">Portfolio</span>
+        <h2 class="mt-3 text-3xl font-bold text-gray-900 md:text-4xl">Nos chantiers récents</h2>
+        <span class="rule-leaf mx-auto mt-5 block"></span>
+        <p class="mx-auto mt-5 max-w-2xl leading-relaxed text-gray-600">
+          Filtrez par type de structure : résidences privées, entreprises et espaces publics aménagés par nos équipes.
+        </p>
+      </div>
+
+      <div class="mb-8 flex flex-wrap items-center justify-center gap-3 reveal" role="group" aria-label="Filtrer les réalisations">
+        {filters.map((filter, i) => (
+          <button
+            type="button"
+            data-filter={filter.key}
+            aria-pressed={i === 0 ? 'true' : 'false'}
+            class:list={[
+              'cursor-pointer rounded-full border px-5 py-2.5 text-sm font-semibold transition-all duration-200',
+              'focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-primary-500 focus-visible:ring-offset-2',
+              i === 0
+                ? 'border-primary-600 bg-primary-600 text-white shadow-[0_10px_24px_-14px_rgba(45,100,40,0.9)]'
+                : 'border-gray-200 bg-white text-gray-700 hover:border-primary-300 hover:bg-primary-50 hover:text-primary-700',
+            ]}
+          >
+            {filter.label}
+          </button>
+        ))}
+        <span class="ml-1 text-sm text-gray-500" data-count>{projects.length} réalisations</span>
+      </div>
+
+      <div class="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3 stagger">
+        {projects.map((project) => (
+          <article class="group reveal card-lift overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-[0_16px_44px_-30px_rgba(15,46,30,0.5)]" data-category={project.category}>
+            <div class="relative aspect-[4/3] overflow-hidden">
+              <img
+                src={project.image}
+                alt={`Réalisation ${project.title} à ${project.location}`}
+                loading="lazy"
+                decoding="async"
+                class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
+              />
+              <div class="absolute inset-0 bg-gradient-to-t from-gray-950/75 via-gray-950/10 to-transparent"></div>
+              <span class="absolute left-4 top-4 rounded-full border border-white/40 bg-white/90 px-3 py-1 text-xs font-bold uppercase tracking-wide text-primary-800 backdrop-blur">
+                {categoryLabel[project.category]}
+              </span>
+              <div class="absolute inset-x-4 bottom-4">
+                <h3 class="text-lg font-semibold text-white drop-shadow">{project.title}</h3>
+                <p class="mt-1 flex items-center gap-1.5 text-sm text-white/80">
+                  <svg class="h-4 w-4" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" /></svg>
+                  {project.location}
+                </p>
+              </div>
+            </div>
+            <div class="flex items-center justify-between gap-3 px-6 py-4">
+              <span class="text-sm font-medium text-gray-500">Projet {categoryLabel[project.category].toLowerCase()}</span>
+              <a href="/devis" class="group/link inline-flex cursor-pointer items-center gap-1.5 text-sm font-semibold text-primary-700 transition-colors hover:text-primary-800">
+                Projet similaire
+                <svg class="h-4 w-4 transition-transform duration-200 group-hover/link:translate-x-1" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M17 8l4 4m0 0l-4 4m4-4H3" /></svg>
+              </a>
+            </div>
+          </article>
+        ))}
+      </div>
+
+      <div class="mt-14 grid grid-cols-2 gap-4 md:grid-cols-4 stagger">
+        {stats.map((stat) => (
+          <div class="reveal rounded-2xl border border-gray-100 bg-gray-50 p-6 text-center">
+            <div class="font-display text-3xl font-bold text-primary-700">{stat.value}</div>
+            <div class="mt-1 text-sm text-gray-600">{stat.label}</div>
+          </div>
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <CTA
+    title="Votre projet de jardin à Cotonou pourrait être le prochain"
+    subtitle="Inspiré par nos réalisations ? Contactez-nous pour discuter de votre projet d'aménagement paysager à Cotonou."
+  />
+</Layout>
+
+<script>
+  const buttons = document.querySelectorAll('[data-filter]');
+  const projects = document.querySelectorAll('[data-category]');
+
+  buttons.forEach((btn) => {
+    btn.addEventListener('click', () => {
+      buttons.forEach((b) => {
+        b.setAttribute('aria-pressed', 'false');
+        b.classList.remove('bg-primary-600', 'text-white', 'border-primary-600', 'shadow-[0_10px_24px_-14px_rgba(45,100,40,0.9)]');
+        b.classList.add('bg-white', 'text-gray-700', 'border-gray-200');
+      });
+      btn.setAttribute('aria-pressed', 'true');
+      btn.classList.remove('bg-white', 'text-gray-700', 'border-gray-200');
+      btn.classList.add('bg-primary-600', 'text-white', 'border-primary-600', 'shadow-[0_10px_24px_-14px_rgba(45,100,40,0.9)]');
+
+      const filter = btn.getAttribute('data-filter');
+      let shown = 0;
+      let visibleCount = 0;
+      projects.forEach((project) => {
+        const visible = filter === 'all' || project.getAttribute('data-category') === filter;
+        if (visible) visibleCount++;
+        if (visible) {
+          const already = project.classList.contains('in');
+          project.style.display = '';
+          if (!already) {
+            project.style.transitionDelay = Math.min(shown, 8) * 50 + 'ms';
+            project.classList.add('in');
+            shown++;
+            window.setTimeout(() => { project.style.transitionDelay = ''; }, 900);
+          }
+        } else {
+          project.style.display = 'none';
+          project.style.transitionDelay = '';
+        }
+      });
+      const counter = document.querySelector('[data-count]');
+      if (counter) counter.textContent = visibleCount + ' réalisation' + (visibleCount > 1 ? 's' : '');
+    });
+  });
+</script>

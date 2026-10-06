@@ -1,0 +1,85 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SeoLanding from '../components/SeoLanding.astro';
+
+const steps = [
+  { title: 'Étude de site', text: 'Visite gratuite à Cotonou : sol, exposition, contraintes techniques et vos usages.' },
+  { title: 'Conception 3D', text: 'Plans, plan de massifs et rendu 3D pour valider chaque détail avant les travaux.' },
+  { title: 'Réalisation', text: 'Terrassement, plantation, arrosage automatique et finitions par nos équipes.' },
+  { title: 'Entretien', text: 'Un suivi régulier pour que votre jardin reste aussi beau la première année.' },
+];
+
+const benefits = [
+  { title: 'Climat maîtrisé', text: 'Des végétaux sélectionnés pour la côte béninoise : chaleur, harmattan et saison des pluies.' },
+  { title: 'Valorisation 10 à 20%', text: 'Un extérieur entretenu et dessiné augmente durablement la valeur de votre propriété.' },
+  { title: 'Équipe locale', text: 'Atelier à Cotonou, jardiniers salariés, interlocuteur unique du devis à la livraison.' },
+];
+
+const faq = [
+  {
+    question: 'Combien coûte un aménagement paysager à Cotonou ?',
+    answer: 'Tout dépend de la surface, du relief et des équipements (arrosage automatique, éclairage, clôture végétale). Nous établissons un devis gratuit après visite sur site, chiffré poste par poste.',
+  },
+  {
+    question: 'Combien de temps dure un projet de création de jardin ?',
+    answer: 'Comptez 2 à 4 semaines pour un jardin résidentiel de 100 à 400 m², délais de croissance des végétaux inclus dans notre plan d\'entretien de démarrage.',
+  },
+  {
+    question: 'Travaillez-vous en dehors de Cotonou ?',
+    answer: 'Oui : Abomey-Calavi, Porto-Novo, Grand-Popo, Sèmè-Podji ainsi que les communes de l\'intérieur du Bénin (Parakou, Natitingou, Kandi) pour les projets d\'envergure.',
+  },
+];
+
+const related = [
+  { href: '/paysagiste-cotonou', label: 'Paysagiste Cotonou', text: 'Notre équipe de paysagistes à Cotonou' },
+  { href: '/jardin-cotonou', label: 'Création de jardins', text: 'Création de jardins sur mesure à Cotonou' },
+  { href: '/jardinage-cotonou', label: 'Jardinage Cotonou', text: 'Entretien de jardins à Cotonou' },
+  { href: '/societe-jardinage-benin', label: 'Société de jardinage Bénin', text: 'Be Clean, société de jardinage au Bénin' },
+  { href: '/realisations', label: 'Nos réalisations', text: 'Portfolio de jardins réalisés' },
+];
+---
+
+<Layout
+  title="Aménagement paysager Cotonou | Création Jardins Sur Mesure | Be Clean"
+  description="Aménagement paysager à Cotonou : conception 3D, création de jardins tropicaux, terrasses, arrosage automatique. Expert jardinier paysagiste depuis 2013. Devis gratuit."
+  canonical="https://benin-paysage.com/amenagement-paysager-cotonou"
+>
+  <SeoLanding
+    badge="Aménagement paysager"
+    title="Aménagement paysager à Cotonou"
+    accent="sur mesure"
+    description="Conception 3D, jardins tropicaux, terrasses végétalisées et arrosage automatique : Be Clean dessine et réalise des extérieurs pensés pour le climat béninois."
+    steps={steps}
+    benefits={benefits}
+    faq={faq}
+    related={related}
+    ctaTitle="Votre projet d'aménagement à Cotonou commence ici"
+    ctaSubtitle="Décrivez-nous votre terrain : nous vous répondons sous 24h avec une première estimation."
+  >
+    <p class="lead">
+      Un aménagement paysager réussi, ce n'est pas une accumulation de plantes : c'est un plan.
+      Depuis 2013, <strong>Be Clean</strong> conçoit et réalise des jardins sur mesure à Cotonou,
+      en harmonie avec l'architecture de votre maison, vos usages et le climat tropical.
+    </p>
+
+    <h2>Types d'aménagement paysager que nous réalisons à Cotonou</h2>
+    <ul>
+      <li><strong>Jardins tropicaux luxuriants</strong> — massifs dense, palmiers, bananiers ornementaux et vivaces colorées.</li>
+      <li><strong>Jardins modernes et épurés</strong> — lignes nettes, graviers minéraux, bambous et plantes graphiques.</li>
+      <li><strong>Jardins zen et apaisants</strong> — zones de silence, mousses, éclairage doux et bassins discrets.</li>
+      <li><strong>Terrasses et balcons végétalisés</strong> — jardinières, treillages et solutions adaptées aux petits espaces.</li>
+      <li><strong>Espaces verts d'entreprise</strong> — parvis, parkings ombragés et cours intérieures pour hôtels et bureaux.</li>
+    </ul>
+
+    <h2>Un investissement durable qui valorise votre bien</h2>
+    <p>
+      Un extérieur soigné valorise un terrain de <strong>10 à 20 %</strong> et se paie seul :
+      l'ombrage réduit la température intérieure, l'arrosage automatique fait économiser l'eau,
+      les plantes correctement choisies demandent peu d'entretien. Chaque projet commence par
+      une étude gratuite sur site à Cotonou, puis un plan chiffré poste par poste — sans surprise.
+    </p>
+    <blockquote>
+      Du rêve à la réalité, en toute harmonie : votre jardin doit être beau, utile et facile à vivre au quotidien.
+    </blockquote>
+  </SeoLanding>
+</Layout>

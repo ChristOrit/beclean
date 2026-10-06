@@ -1,0 +1,91 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SeoLanding from '../components/SeoLanding.astro';
+
+const steps = [
+  { title: 'Contact', text: 'Téléphone, WhatsApp ou formulaire : un chargé d\'affaires vous rappelle sous 24h.' },
+  { title: 'Étude gratuite', text: 'Visite sur site, mesures et contraintes techniques, partout au Bénin.' },
+  { title: 'Offre détaillée', text: 'Plan, planning, palette végétale et budget poste par poste.' },
+  { title: 'Réalisation & suivi', text: 'Chantier conduit par nos équipes, puis entretien sur simple appel.' },
+];
+
+const benefits = [
+  { title: 'Ancrage local', text: 'Siège à Cotonou, atelier équipé et jardiniers salariés — pas de franchise, pas d\'intermédiaire.' },
+  { title: 'Couverture nationale', text: 'Littoral, Ouémé, Borgou, Atacora : nous nous déplaçons pour les projets d\'envergure.' },
+  { title: 'Références vérifiables', text: 'Hôtels, résidences, bureaux et collectivités : demandez-nous une liste de références.' },
+];
+
+const faq = [
+  {
+    question: 'Où intervient votre société de jardinage au Bénin ?',
+    answer: 'Principalement à Cotonou, Abomey-Calavi, Sèmè-Podji, Porto-Novo et Grand-Popo pour l\'entretien. Pour la création et l\'aménagement, nous nous déplaçons dans tout le Bénin (Parakou, Natitingou, Kandi, Bohicon).',
+  },
+  {
+    question: 'Travaillez-vous pour les entreprises et les collectivités ?',
+    answer: 'Oui. Nous répondons aux consultations, fournissons nos attestations d\'assurance et facturons avec les mentions légales requises pour les marchés publics et privés.',
+  },
+  {
+    question: 'Proposez-vous des contrats annuels ?',
+    answer: 'Oui, avec passages planifiés, interlocuteur dédié et rapport mensuel d\'intervention. Le contrat annuel inclut les périodes de forte croissance (saison des pluies).',
+  },
+];
+
+const related = [
+  { href: '/paysagiste-cotonou', label: 'Paysagiste Cotonou', text: 'Paysagiste à Cotonou' },
+  { href: '/services', label: 'Nos services', text: 'Toutes nos prestations' },
+  { href: '/secteurs/entreprises', label: 'Entreprises', text: 'Offres pour les entreprises' },
+  { href: '/secteurs/particuliers', label: 'Particuliers', text: 'Offres pour les particuliers' },
+  { href: '/contact', label: 'Contact', text: 'Nous joindre' },
+];
+---
+
+<Layout
+  title="Société de jardinage Bénin | Be Clean"
+  description="Société de jardinage en Bénin. Be Clean, paysagiste à Cotonou depuis 2013. Conception, création, entretien de jardins. Devis gratuit."
+  canonical="https://benin-paysage.com/societe-jardinage-benin"
+>
+  <SeoLanding
+    badge="Société de jardinage"
+    title="Société de jardinage au Bénin"
+    accent="Be Clean"
+    description="Conception, création et entretien d'espaces verts partout au Bénin : une équipe locale, un interlocuteur unique et des moyens humains et matériels réels."
+    steps={steps}
+    benefits={benefits}
+    faq={faq}
+    related={related}
+    ctaTitle="Contactez votre société de jardinage au Bénin"
+    ctaSubtitle="Téléphone, WhatsApp ou formulaire : nous répondons sous 24 heures ouvrées."
+  >
+    <p class="lead">
+      <strong>Be Clean</strong> est une société de jardinage basée à Cotonou, au Bénin.
+      Depuis 2013, nous accompagnons particuliers, entreprises, hôtels et collectivités dans
+      la conception, la création et l'entretien de leurs espaces verts — avec des équipes
+      salariées et un matériel professionnel.
+    </p>
+
+    <h2>Nos services de jardinage au Bénin</h2>
+    <ul>
+      <li><strong>Conception paysagère</strong> et modélisation 3D de votre projet.</li>
+      <li><strong>Création de jardins</strong> tropicaux et contemporains.</li>
+      <li><strong>Rénovation de jardins</strong> existants, terrasses et parvis.</li>
+      <li><strong>Entretien d'espaces verts</strong> résidentiels et professionnels.</li>
+      <li><strong>Traitement phytosanitaire</strong> et élagage en sécurité.</li>
+    </ul>
+
+    <h2>Une entreprise structurée, pas un artisan isolé</h2>
+    <p>
+      Assurée, en règle et joignable : nos équipes interviennent avec des tenues identifiées,
+      un planning communiqué à l'avance et des rapports d'intervention pour les gestionnaires
+      de résidences ou de sites professionnels. Pour un projet en dehors du littoral,
+      nous organisons la logistique et les hébergements d'équipe.
+    </p>
+
+    <h2>Comment contacter votre société de jardinage ?</h2>
+    <p>
+      Appelez-nous au <a href="tel:+2290167592319">+229 01 67 59 23 19</a>, écrivez sur
+      <a href="https://wa.me/22967592319">WhatsApp</a>, envoyez un email à
+      <a href="mailto:contact@benin-paysage.com">contact@benin-paysage.com</a> ou remplissez
+      le <a href="/devis">formulaire de devis</a>. Réponse sous 24 heures.
+    </p>
+  </SeoLanding>
+</Layout>

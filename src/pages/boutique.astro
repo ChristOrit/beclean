@@ -1,0 +1,64 @@
+---
+import Layout from '../layouts/Layout.astro';
+---
+
+<Layout
+  title="Boutique Paysagiste Cotonou | Plantes et accessoires jardinage | Be Clean"
+  description="Boutique en ligne Be Clean, paysagiste à Cotonou. Plantes tropicales, pots décoratifs et accessoires de jardinage en Bénin. Bientôt disponible."
+>
+  <section class="section-warm relative min-h-[62vh] overflow-hidden">
+    <div class="pointer-events-none absolute -left-24 -top-24 h-80 w-80 rounded-full bg-primary-500/10 blur-3xl" aria-hidden="true"></div>
+    <div class="pointer-events-none absolute -bottom-28 right-0 h-72 w-72 rounded-full bg-accent-500/12 blur-3xl" aria-hidden="true"></div>
+    <svg class="leaf-decor absolute right-6 top-10 w-40 rotate-[18deg] md:w-52" viewBox="0 0 200 200" fill="currentColor" aria-hidden="true">
+      <path d="M100 8c42 26 66 62 66 104 0 42-30 76-66 80-36-4-66-38-66-80C34 70 58 34 100 8zm0 24c-28 20-44 48-44 78 0 30 18 54 44 58 26-4 44-28 44-58 0-30-16-58-44-78z" />
+    </svg>
+
+    <div class="container-custom relative stagger flex min-h-[62vh] items-center py-16">
+      <div class="mx-auto max-w-2xl text-center">
+        <div class="reveal mx-auto grid h-20 w-20 place-items-center rounded-2xl border border-white/70 bg-white/70 shadow-[0_20px_40px_-24px_rgb(16_24_40/0.5)]">
+          <svg class="h-10 w-10 text-primary-700" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+        </div>
+
+        <span class="eyebrow reveal mt-7 justify-center">Bientôt disponible</span>
+
+        <h1 data-split class="mt-4 text-balance text-3xl leading-[1.12] text-gray-900 md:text-5xl">
+          Boutique paysagiste — <span class="accent">bientôt à Cotonou</span>
+        </h1>
+
+        <span class="rule-leaf reveal mx-auto mt-6"></span>
+
+        <p class="reveal mx-auto mt-4 max-w-xl text-lg leading-relaxed text-gray-600">
+          Plantes tropicales sélectionnées, pots décoratifs, substrats et accessoires de
+          jardinage : notre sélection arrive bientôt en ligne et en boutique à Cotonou.
+        </p>
+
+        <div class="reveal mt-8 flex flex-col justify-center gap-4 sm:flex-row">
+          <a href="/devis" class="btn-primary justify-center">
+            Être notifié
+            <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9" />
+            </svg>
+          </a>
+          <a href="/services" class="chip-link !px-6 !py-3.5">Découvrir nos services</a>
+        </div>
+
+        <ul class="reveal mx-auto mt-8 flex max-w-lg flex-wrap items-center justify-center gap-x-6 gap-y-2 text-sm text-gray-500">
+          <li class="inline-flex items-center gap-2">
+            <svg class="h-4 w-4 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
+            Plantes locales & importées
+          </li>
+          <li class="inline-flex items-center gap-2">
+            <svg class="h-4 w-4 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
+            Livraison à Cotonou
+          </li>
+          <li class="inline-flex items-center gap-2">
+            <svg class="h-4 w-4 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>
+            Conseil d'expert inclus
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+</Layout>

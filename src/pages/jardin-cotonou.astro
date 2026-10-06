@@ -1,0 +1,83 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SeoLanding from '../components/SeoLanding.astro';
+
+const steps = [
+  { title: 'Votre idée', text: 'Photos, croquis ou simple description : nous partons de ce que vous aimez.' },
+  { title: 'Proposition de plan', text: 'Implantation des massifs, circulations, points d\'eau et éclairage.' },
+  { title: 'Choix des végétaux', text: 'Une palette adaptée au sol et à l\'ombre de votre terrain, avec leur gabarit.' },
+  { title: 'Mise en œuvre', text: 'Préparation, plantation et réglages : votre jardin livré prêt à vivre.' },
+];
+
+const benefits = [
+  { title: 'Jardins pour petits et grands espaces', text: 'Du balcon de 6 m² à la villa de 1 000 m², même exigence de dessin.' },
+  { title: 'Palette tropicale adaptée', text: 'Heliconias, frangipaniers, bougainvilliers, palmiers nains et vivaces locales.' },
+  { title: 'Design et végétal pensés ensemble', text: 'Pierres, bois, graviers et plantes composent une seule scène cohérente.' },
+];
+
+const faq = [
+  {
+    question: 'Quelle est la meilleure période pour créer un jardin à Cotonou ?',
+    answer: 'Le début de la saison des pluies (mars-avril) est idéal : les végétaux s\'enracinent rapidement. Nous plantons toutefois toute l\'année avec un suivi d\'arrosage adapté en saison sèche.',
+  },
+  {
+    question: 'Pouvez-vous créer un jardin sans terrasser le terrain ?',
+    answer: 'Oui. De nombreuses créations se font en lavorant le sol existant, en ajoutant des massifs surélevés et des allées drainantes, sans modifier la structure de votre parcelle.',
+  },
+  {
+    question: 'Proposez-vous un entretien après la création ?',
+    answer: 'Nous incluons toujours une première année de suivi (visites de reprise et arrosage de establishment). Un contrat d\'entretien peut ensuite être mis en place.',
+  },
+];
+
+const related = [
+  { href: '/amenagement-paysager-cotonou', label: 'Aménagement paysager', text: 'Aménagement paysager à Cotonou' },
+  { href: '/services/creation-jardins', label: 'Création de jardins', text: 'Détail de notre offre de création' },
+  { href: '/realisations', label: 'Nos réalisations', text: 'Portfolio de jardins réalisés' },
+  { href: '/blog', label: 'Blog & conseils', text: 'Conseils d\'entretien et inspirations' },
+  { href: '/devis', label: 'Devis gratuit', text: 'Demander un devis de création' },
+];
+---
+
+<Layout
+  title="Jardin Cotonou | Création de jardins tropicaux sur mesure | Be Clean"
+  description="Création de jardins à Cotonou : jardins tropicaux, modernes et zen, gazon, massifs et arrosage. Plan et rendu 3D avant travaux. Devis gratuit."
+  canonical="https://benin-paysage.com/jardin-cotonou"
+>
+  <SeoLanding
+    badge="Création de jardins"
+    title="Votre jardin à Cotonou"
+    accent="pensé sur mesure"
+    description="Un jardin tropical qui pousse vite, mais se dessine lentement : nous concevons l'espace, choisissons les végétaux et livrons un jardin prêt à vivre."
+    steps={steps}
+    benefits={benefits}
+    faq={faq}
+    related={related}
+    ctaTitle="Dessinons votre jardin à Cotonou"
+    ctaSubtitle="Apportez-nous vos envies : nous repartons avec les mesures et vous revenons avec un plan."
+  >
+    <p class="lead">
+      Un <strong>jardin à Cotonou</strong> se joue sur trois leviers : l'ombrage, les circulations
+      et la palette végétale. Bien combinés, ils transforment une parcelle nue en un espace
+      vivable dès le premier mois, et magnifique la troisième année.
+    </p>
+
+    <h2>Trois familles de jardins que nous créons</h2>
+    <ul>
+      <li><strong>Jardin tropical dense</strong> — strates hautes, moyennes et basses pour un effet forêt en ville.</li>
+      <li><strong>Jardin contemporain minéral</strong> — graviers sombres, arbres sculpturaux, entretien réduit.</li>
+      <li><strong>Jardin de terrasse</strong> — contenants, treillages et brise-vue pour l'intimité en hauteur.</li>
+    </ul>
+
+    <h2>Ce qui fait la différence à la livraison</h2>
+    <p>
+      Le sol est préparé avant plantation (amendement, drainage), l'arrosage est posé
+      <strong>avant</strong> la fin des massifs, et chaque végétal est positionné selon sa
+      croissance future : pas d'arbre planté trop près d'un mur, pas de buisson qui cache
+      votre fenêtre dans deux ans.
+    </p>
+    <blockquote>
+      Un bon jardin ne se regarde pas seulement : il se traverse, s'écoute et se rafraîchit.
+    </blockquote>
+  </SeoLanding>
+</Layout>

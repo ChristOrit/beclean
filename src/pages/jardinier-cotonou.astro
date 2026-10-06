@@ -1,0 +1,82 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SeoLanding from '../components/SeoLanding.astro';
+
+const steps = [
+  { title: 'Prise de contact', text: 'Téléphone ou WhatsApp : nous qualifions votre besoin et fixons la visite.' },
+  { title: 'Visite sur place', text: 'État du jardin, accès, points d\'eau, matériel requis — le tout en 30 minutes.' },
+  { title: 'Proposition chiffrée', text: 'Prix au passage ou au forfait, avec fréquence et périmètre précis.' },
+  { title: 'Passages programmés', text: 'Un créneau fixe chaque mois et un rappel avant chaque intervention.' },
+];
+
+const benefits = [
+  { title: 'Jardiniers salariés', text: 'Pas de sous-traitance à l\'aveugle : vous savez qui vient chez vous.' },
+  { title: 'Matériel professionnel', text: 'Tractive, taille-haies, souffleur et nacelle selon les besoins du chantier.' },
+  { title: 'Assurance en cas de dégât', text: 'Nos interventions sont couvertes, y compris pour l\'élagage en hauteur.' },
+];
+
+const faq = [
+  {
+    question: 'Pourquoi faire appel à un jardinier professionnel ?',
+    answer: 'Un taille-haies mal utilisé abîme des années de croissance, et un arrosage mal réglé fait pourrir les racines. Un jardinier formé sait quand tailler, combien arroser et quel produit employer — et il le fait avec le bon matériel.',
+  },
+  {
+    question: 'Pouvez-vous intervenir chez moi tous les mois ?',
+    answer: 'Oui, avec un créneau fixe et une équipe stable. Les passages peuvent être mensuels, bimensuels ou hebdomadaires selon la saison et la surface.',
+  },
+  {
+    question: 'Intervenez-vous pour un seul passage ?',
+    answer: 'Bien sûr : remise en état après une absence, taille de rattrapage, débroussaillage avant une vente ou une réception. Le devis est établi après visite.',
+  },
+];
+
+const related = [
+  { href: '/jardinage-cotonou', label: 'Jardinage Cotonou', text: 'Prestations de jardinage à Cotonou' },
+  { href: '/paysagiste-cotonou', label: 'Paysagiste Cotonou', text: 'Notre équipe de paysagistes' },
+  { href: '/services/entretien-espaces-verts', label: 'Entretien espaces verts', text: 'Détail de notre offre d\'entretien' },
+  { href: '/secteurs/particuliers', label: 'Particuliers', text: 'Nos offres pour les particuliers' },
+  { href: '/devis', label: 'Devis gratuit', text: 'Demander un devis' },
+];
+---
+
+<Layout
+  title="Jardinier Cotonou | Jardinier à domicile & entreprise | Be Clean"
+  description="Jardinier à Cotonou : entretien régulier, taille, arrosage, élagage. Équipe salariée, matériel professionnel, devis gratuit sous 24h. Be Clean."
+  canonical="https://benin-paysage.com/jardinier-cotonou"
+>
+  <SeoLanding
+    badge="Jardinier"
+    title="Jardinier à Cotonou"
+    accent="à domicile & entreprise"
+    description="Un jardinier ponctuel, équipé et assuré qui entretient votre jardin à la bonne fréquence — avec le même visage à chaque passage."
+    steps={steps}
+    benefits={benefits}
+    faq={faq}
+    related={related}
+    ctaTitle="Un jardinier à Cotonou, dès cette semaine"
+    ctaSubtitle="Décrivez votre terrain et la fréquence souhaitée : nous vous proposons un créneau sous 24h."
+  >
+    <p class="lead">
+      Faire appel à un <strong>jardinier à Cotonou</strong>, c'est gagner du temps et éviter
+      les erreurs qui coûtent cher : taille au mauvais moment, arrosage en plein midi,
+      produits appliqués sans diagnostic. Nos jardiniers interviennent chez les particuliers,
+      les résidences, les hôtels et les entreprises.
+    </p>
+
+    <h2>Le périmètre d'un jardinier Be Clean</h2>
+    <ul>
+      <li><strong>Entretien courant</strong> — tonte, bordures, désherbage, ramassage.</li>
+      <li><strong>Taille raisonnée</strong> — arbustes, haies et frangipaniers selon la saison.</li>
+      <li><strong>Arrosage</strong> — vérification des goutteurs, réglage des programmateurs.</li>
+      <li><strong>Soins aux plantes</strong> — fertilisation, traitement des cochenilles et champignons.</li>
+      <li><strong>Nettoyage</strong> — allées, bassins, points d'eau et dégagement après épisode pluvieux.</li>
+    </ul>
+
+    <h2>Particuliers, entreprises, collectivités</h2>
+    <p>
+      Une même exigence quel que soit le volume : passage annoncé, tenue de l'équipe,
+      outils désinfectés entre les parcelles et compte rendu en fin de journée pour les
+      gestionnaires d'immeubles ou de sites professionnels.
+    </p>
+  </SeoLanding>
+</Layout>

@@ -1,0 +1,376 @@
+---
+interface Props {
+  title?: string;
+  subtitle?: string;
+  eyebrow?: string;
+  items: { question: string; answer: string }[];
+}
+
+const {
+  title = 'Questions fréquentes',
+  subtitle,
+  eyebrow = 'FAQ',
+  items,
+} = Astro.props;
+
+const baseId = `faq-${Math.random().toString(36).slice(2, 8)}`;
+const speed = 12;
+const startDelay = 260;
+---
+
+<section class="py-16 md:py-24 bg-white">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="mb-10 text-center reveal md:mb-12">
+      <span class="eyebrow justify-center">{eyebrow}</span>
+      <h2 class="mt-3 text-3xl font-bold text-gray-900 md:text-4xl">{title}</h2>
+      <span class="rule-leaf mx-auto mt-5 block"></span>
+      {subtitle && <p class="mx-auto mt-5 max-w-2xl leading-relaxed text-gray-600">{subtitle}</p>}
+    </div>
+
+    <div class="max-w-3xl mx-auto space-y-3 stagger" data-faq-root>
+      {items.map((item, index) => {
+        const open = index === 0;
+        const panelId = `${baseId}-panel-${index}`;
+        const btnId = `${baseId}-btn-${index}`;
+        return (
+          <div class="faq-item reveal" data-open={open ? 'true' : 'false'} data-idx="0">
+            <h3 class="m-0">
+              <button
+                type="button"
+                class="faq-trigger group"
+                id={btnId}
+                aria-expanded={open ? 'true' : 'false'}
+                aria-controls={panelId}
+              >
+                <span class="faq-icon" aria-hidden="true">
+                  <svg class="h-4 w-4" viewBox="0 0 24 24" fill="currentColor">
+                    <path d="M9.937 15.5A2 2 0 0 0 8.5 14.063l-6.135-1.582a.5.5 0 0 1 0-.962L8.5 9.936A2 2 0 0 0 9.937 8.5l1.582-6.135a.5.5 0 0 1 .963 0L14.063 8.5A2 2 0 0 0 15.5 9.937l6.135 1.581a.5.5 0 0 1 0 .964L15.5 14.063a2 2 0 0 0-1.437 1.437l-1.582 6.135a.5.5 0 0 1-.963 0z" />
+                  </svg>
+                </span>
+                <span class="faq-q">{item.question}</span>
+                <svg
+                  class="faq-chevron"
+                  aria-hidden="true"
+                  viewBox="0 0 24 24"
+                  fill="none"
+                  stroke="currentColor"
+                  stroke-width="2"
+                  stroke-linecap="round"
+                  stroke-linejoin="round"
+                >
+                  <path d="m6 9 6 6 6-6" />
+                </svg>
+              </button>
+            </h3>
+
+            <div class="faq-panel" id={panelId} role="region" aria-labelledby={btnId}>
+              <div class="faq-panel-inner">
+                <p class="faq-answer">
+                  {[...item.answer].map((ch) => <span class="faq-char">{ch}</span>)}
+                  <span class="faq-caret" aria-hidden="true"></span>
+                </p>
+              </div>
+            </div>
+          </div>
+        );
+      })}
+    </div>
+  </div>
+</section>
+
+<noscript>
+  <style is:inline>
+    .faq-panel { grid-template-rows: 1fr !important; }
+    .faq-panel-inner { visibility: visible !important; }
+    .faq-caret { display: none !important; }
+  </style>
+</noscript>
+
+<style is:inline>
+  .faq-item {
+    border: 1px solid #e5e7eb;
+    border-radius: 1rem;
+    background: #fff;
+    box-shadow: 0 1px 2px rgb(0 0 0 / 0.04);
+    transition: box-shadow 0.2s ease, border-color 0.2s ease, background-color 0.2s ease;
+    overflow: hidden;
+  }
+  .faq-item:hover {
+    box-shadow: 0 8px 24px -12px rgb(0 0 0 / 0.18);
+  }
+  html.js .faq-item.reveal {
+    transition:
+      opacity 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      translate 0.7s cubic-bezier(0.16, 1, 0.3, 1),
+      box-shadow 0.2s ease,
+      border-color 0.2s ease,
+      background-color 0.2s ease;
+  }
+  .faq-item[data-open='true'] {
+    border-color: #bbdbbb;
+    background: #fbfefb;
+    box-shadow: 0 10px 30px -18px rgb(45 100 40 / 0.45);
+  }
+
+  .faq-trigger {
+    display: flex;
+    width: 100%;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 1rem 1.25rem;
+    text-align: left;
+    cursor: pointer;
+    background: transparent;
+    border: 0;
+    font: inherit;
+  }
+  .faq-trigger:focus-visible {
+    outline: 2px solid #3a7d34;
+    outline-offset: -4px;
+    border-radius: 1rem;
+  }
+
+  .faq-icon {
+    display: flex;
+    height: 2rem;
+    width: 2rem;
+    flex-shrink: 0;
+    align-items: center;
+    justify-content: center;
+    border-radius: 0.5rem;
+    background: #f0f7f0;
+    color: #3a7d34;
+    transition: background-color 0.2s ease, color 0.2s ease, transform 0.2s ease;
+  }
+  .faq-item:hover .faq-icon {
+    background: #dceddc;
+  }
+  .faq-item[data-open='true'] .faq-icon {
+    background: #3a7d34;
+    color: #fff;
+  }
+
+  .faq-q {
+    flex: 1;
+    font-size: 0.95rem;
+    line-height: 1.45;
+    font-weight: 600;
+    color: #111827;
+    transition: color 0.2s ease;
+  }
+  @media (min-width: 768px) {
+    .faq-q {
+      font-size: 1rem;
+    }
+  }
+  .faq-item:hover .faq-q,
+  .faq-item[data-open='true'] .faq-q {
+    color: #2d6428;
+  }
+
+  .faq-chevron {
+    height: 1.25rem;
+    width: 1.25rem;
+    flex-shrink: 0;
+    color: #9ca3af;
+    transition: transform 0.25s ease, color 0.2s ease;
+  }
+  .faq-item:hover .faq-chevron {
+    color: #3a7d34;
+  }
+  .faq-item[data-open='true'] .faq-chevron {
+    transform: rotate(180deg);
+    color: #3a7d34;
+  }
+
+  .faq-panel {
+    display: grid;
+    grid-template-rows: 0fr;
+    transition: grid-template-rows 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  }
+  .faq-item[data-open='true'] .faq-panel {
+    grid-template-rows: 1fr;
+  }
+  .faq-panel-inner {
+    overflow: hidden;
+    visibility: hidden;
+    transition: visibility 0s linear 0.3s;
+  }
+  .faq-item[data-open='true'] .faq-panel-inner {
+    visibility: visible;
+    transition-delay: 0s;
+  }
+
+  .faq-answer {
+    position: relative;
+    margin: 0;
+    padding: 0 1.25rem 1.15rem 3.75rem;
+    font-size: 0.9rem;
+    line-height: 1.7;
+    color: #4b5563;
+  }
+  @media (min-width: 768px) {
+    .faq-answer {
+      font-size: 0.95rem;
+    }
+  }
+
+  [data-faq-root][data-js] .faq-char {
+    opacity: 0;
+  }
+  [data-faq-root][data-js] .faq-char.is-on {
+    opacity: 1;
+  }
+
+  .faq-caret {
+    display: inline-block;
+    width: 0;
+    height: 0.85em;
+    position: relative;
+    vertical-align: baseline;
+  }
+  .faq-caret::after {
+    content: '';
+    position: absolute;
+    left: -1px;
+    top: 0;
+    bottom: 0;
+    width: 2px;
+    background: #3a7d34;
+    animation: faq-blink 1s step-end infinite;
+  }
+  .faq-caret.is-done {
+    display: none;
+  }
+
+  @keyframes faq-blink {
+    50% {
+      opacity: 0;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .faq-panel,
+    .faq-panel-inner,
+    .faq-item,
+    .faq-icon,
+    .faq-chevron {
+      transition-duration: 0.01ms !important;
+    }
+    .faq-caret {
+      display: none;
+    }
+  }
+</style>
+
+<script is:inline define:vars={{ speed, startDelay }}>
+  (function () {
+    const reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function init(root) {
+      root.setAttribute('data-js', 'on');
+      const items = Array.from(root.querySelectorAll('.faq-item'));
+
+      function finish(item) {
+        item.querySelectorAll('.faq-char').forEach(function (c) {
+          c.classList.add('is-on');
+        });
+        const caret = item.querySelector('.faq-caret');
+        if (caret) caret.remove();
+        item.dataset.idx = String(item.querySelectorAll('.faq-char').length);
+        delete item._t;
+      }
+
+      function tick(item) {
+        if (item.dataset.open !== 'true') {
+          delete item._t;
+          return;
+        }
+        const chars = item.querySelectorAll('.faq-char');
+        let i = parseInt(item.dataset.idx || '0', 10);
+
+        if (i >= chars.length) {
+          finish(item);
+          return;
+        }
+
+        const ch = chars[i];
+        ch.classList.add('is-on');
+        i += 1;
+        item.dataset.idx = String(i);
+
+        const caret = item.querySelector('.faq-caret');
+        if (caret && chars[i]) chars[i].before(caret);
+
+        const pause = '.,;:!?\u2026'.indexOf(ch.textContent) > -1 ? 170 : 0;
+        item._t = setTimeout(function () {
+          tick(item);
+        }, speed + pause);
+      }
+
+      function stream(item) {
+        if (reduced) {
+          finish(item);
+          return;
+        }
+        if (item._t) return;
+        const chars = item.querySelectorAll('.faq-char');
+        if (parseInt(item.dataset.idx || '0', 10) >= chars.length) return;
+        item._t = setTimeout(function () {
+          tick(item);
+        }, startDelay);
+      }
+
+      function close(item) {
+        item.dataset.open = 'false';
+        const btn = item.querySelector('.faq-trigger');
+        if (btn) btn.setAttribute('aria-expanded', 'false');
+        if (item._t) {
+          clearTimeout(item._t);
+          delete item._t;
+        }
+      }
+
+      function open(item) {
+        item.dataset.open = 'true';
+        const btn = item.querySelector('.faq-trigger');
+        if (btn) btn.setAttribute('aria-expanded', 'true');
+        stream(item);
+      }
+
+      items.forEach(function (item) {
+        const btn = item.querySelector('.faq-trigger');
+        btn.addEventListener('click', function () {
+          const isOpen = item.dataset.open === 'true';
+          items.forEach(function (other) {
+            if (other !== item && other.dataset.open === 'true') close(other);
+          });
+          if (isOpen) close(item);
+          else open(item);
+        });
+      });
+
+      const first = items[0];
+      if (first && first.dataset.open === 'true') {
+        if (reduced) {
+          finish(first);
+        } else {
+          const observer = new IntersectionObserver(
+            function (entries) {
+              entries.forEach(function (entry) {
+                if (entry.isIntersecting) {
+                  stream(first);
+                  observer.disconnect();
+                }
+              });
+            },
+            { threshold: 0.4 }
+          );
+          observer.observe(first);
+        }
+      }
+    }
+
+    document.querySelectorAll('[data-faq-root]').forEach(init);
+  })();
+</script>

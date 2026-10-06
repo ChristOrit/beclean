@@ -1,0 +1,436 @@
+---
+import '../styles/global.css';
+import Header from '../components/Header.astro';
+import Footer from '../components/Footer.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  canonical?: string;
+  ogImage?: string;
+  ogType?: string;
+  structuredData?: object;
+}
+
+const {
+  title,
+  description,
+  canonical,
+  ogImage = 'https://benin-paysage.com/og-image.jpg',
+  ogType = 'website',
+  structuredData,
+} = Astro.props;
+
+const url = canonical || new URL(Astro.url.pathname, Astro.site).toString();
+---
+
+<!doctype html>
+<html lang="fr">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>{title}</title>
+    <meta name="description" content={description} />
+    <link rel="canonical" href={url} />
+    <meta name="robots" content="index, follow" />
+
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="icon" type="image/png" href="/favicon.png" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <link rel="manifest" href="/manifest.json" />
+    <meta name="theme-color" content="#3A7D34" />
+
+    <meta property="og:title" content={title} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content={ogType} />
+    <meta property="og:url" content={url} />
+    <meta property="og:image" content={ogImage} />
+    <meta property="og:locale" content="fr_BJ" />
+    <meta property="og:site_name" content="Be Clean" />
+
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:title" content={title} />
+    <meta name="twitter:description" content={description} />
+    <meta name="twitter:image" content={ogImage} />
+
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet" />
+
+    <script is:inline>
+      document.documentElement.classList.add('js');
+    </script>
+
+    {structuredData && (
+      <script type="application/ld+json" set:html={JSON.stringify(structuredData)} />
+    )}
+  </head>
+  <body>
+    <Header />
+    <main>
+      <slot />
+    </main>
+    <Footer />
+
+    <script is:inline>
+      (function () {
+        var reduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+        /* --- Reveal au scroll -------------------------------------------------
+           Balayage rAF plutot qu'IntersectionObserver seul : un scroll tres rapide
+           (fleche, molette, capture headless) peut faire sauter une entree IO et
+           laisser un bloc invisible. Tout element dont le haut a franchi le bas de
+           l'ecran est ici revele, quoi qu'il arrive. */
+        var pendingReveal = [];
+        var pendingSplit = [];
+        var pendingCount = [];
+        var pendingJobs = [];
+        var sweepQueued = false;
+
+        function isHidden(el) {
+          return el.offsetParent === null && el.getClientRects().length === 0;
+        }
+
+        function sweep() {
+          sweepQueued = false;
+          var vh = window.innerHeight;
+          var limit = vh * 0.94;
+          var i;
+          for (i = pendingReveal.length - 1; i >= 0; i--) {
+            var el = pendingReveal[i];
+            if (isHidden(el)) continue;
+            if (el.getBoundingClientRect().top < limit) {
+              el.classList.add('in');
+              pendingReveal.splice(i, 1);
+            }
+          }
+          for (i = pendingSplit.length - 1; i >= 0; i--) {
+            var sp = pendingSplit[i];
+            if (isHidden(sp)) continue;
+            if (sp.getBoundingClientRect().top < limit) {
+              sp.classList.add('in');
+              pendingSplit.splice(i, 1);
+            }
+          }
+          for (i = pendingJobs.length - 1; i >= 0; i--) {
+            var job = pendingJobs[i];
+            if (isHidden(job.el)) continue;
+            if (job.el.getBoundingClientRect().top < limit) {
+              pendingJobs.splice(i, 1);
+              job.fn();
+            }
+          }
+          for (i = pendingCount.length - 1; i >= 0; i--) {
+            var c = pendingCount[i];
+            if (isHidden(c)) continue;
+            var cr = c.getBoundingClientRect();
+            if (cr.top < vh * 0.85 && cr.bottom > 0) {
+              pendingCount.splice(i, 1);
+              animateCount(c);
+            }
+          }
+        }
+
+        function requestSweep() {
+          if (!sweepQueued) {
+            sweepQueued = true;
+            requestAnimationFrame(sweep);
+          }
+        }
+
+        window.sweepMotion = requestSweep;
+
+        /* --- Reveal au scroll --- */
+        var revealEls = Array.prototype.slice.call(document.querySelectorAll('.reveal'));
+        if (reduced) {
+          revealEls.forEach(function (el) { el.classList.add('in'); });
+        } else {
+          pendingReveal = revealEls;
+          window.addEventListener('scroll', requestSweep, { passive: true });
+          window.addEventListener('resize', requestSweep);
+          window.addEventListener('load', requestSweep);
+        }
+
+        /* --- Compteurs animés --- */
+        function animateCount(el) {
+          var to = parseInt(el.getAttribute('data-count'), 10) || 0;
+          var suffix = el.getAttribute('data-suffix') || '';
+          if (reduced) {
+            el.textContent = to + suffix;
+            return;
+          }
+          var duration = 1500;
+          var start = performance.now();
+          function step(now) {
+            var p = Math.min(1, (now - start) / duration);
+            var eased = 1 - Math.pow(1 - p, 3);
+            el.textContent = Math.round(to * eased) + suffix;
+            if (p < 1) requestAnimationFrame(step);
+          }
+          requestAnimationFrame(step);
+        }
+
+        var counters = Array.prototype.slice.call(document.querySelectorAll('[data-count]'));
+        if (counters.length) {
+          if (reduced) {
+            counters.forEach(animateCount);
+          } else {
+            pendingCount = counters;
+          }
+        }
+
+        /* --- Titres : révélation mot à mot --- */
+        var splits = Array.prototype.slice.call(document.querySelectorAll('[data-split]'));
+        if (splits.length && !reduced) {
+          splits.forEach(function (el) {
+            var walker = document.createTreeWalker(el, NodeFilter.SHOW_TEXT, null);
+            var nodes = [];
+            while (walker.nextNode()) nodes.push(walker.currentNode);
+            var idx = 0;
+            nodes.forEach(function (node) {
+              var value = node.nodeValue;
+              if (!value || !value.trim()) return;
+              var frag = document.createDocumentFragment();
+              value.split(/(\s+)/).forEach(function (part) {
+                if (!part) return;
+                if (/^\s+$/.test(part)) {
+                  frag.appendChild(document.createTextNode(part));
+                  return;
+                }
+                var span = document.createElement('span');
+                span.className = 'w';
+                span.style.setProperty('--i', idx++);
+                span.textContent = part;
+                frag.appendChild(span);
+              });
+              node.parentNode.replaceChild(frag, node);
+            });
+          });
+
+          /* Les mots decoupes heritent `color: transparent` du titre accentue :
+             on leur redonne le degrade avec un decalage horizontal pour qu'il
+             reste continu d'un mot a l'autre. Recalcule apres chargement des
+             polices et au resize (la largeur mesuree change avec la fonte). */
+          window.paintAccents = function () {
+            splits.forEach(function (el) {
+              Array.prototype.slice.call(el.querySelectorAll('.accent, .accent-on-dark')).forEach(function (acc) {
+                var words = Array.prototype.slice.call(acc.querySelectorAll('.w'));
+                if (!words.length) return;
+                var cs = getComputedStyle(acc);
+                var aLeft = acc.getBoundingClientRect().left;
+                var width = acc.getBoundingClientRect().width;
+                words.forEach(function (word) {
+                  var rect = word.getBoundingClientRect();
+                  width = Math.max(width, rect.right - aLeft);
+                });
+                words.forEach(function (word) {
+                  var dx = word.getBoundingClientRect().left - aLeft;
+                  word.style.backgroundImage = cs.backgroundImage;
+                  word.style.backgroundRepeat = 'no-repeat';
+                  word.style.backgroundSize = width + 'px 100%';
+                  word.style.backgroundPosition = -dx + 'px 0';
+                  word.style.webkitBackgroundClip = 'text';
+                  word.style.backgroundClip = 'text';
+                  word.style.color = 'transparent';
+                });
+              });
+            });
+          };
+          window.paintAccents();
+          if (document.fonts && document.fonts.ready) {
+            document.fonts.ready.then(function () { window.paintAccents(); });
+          }
+          var accentResizeTimer = null;
+          window.addEventListener('resize', function () {
+            clearTimeout(accentResizeTimer);
+            accentResizeTimer = setTimeout(function () { window.paintAccents(); }, 150);
+          });
+        }
+        if (splits.length) {
+          if (reduced) {
+            splits.forEach(function (el) { el.classList.add('in'); });
+          } else {
+            pendingSplit = splits;
+          }
+        }
+
+        requestSweep();
+        setTimeout(requestSweep, 400);
+        setTimeout(requestSweep, 1500);
+
+        /* --- Parallaxe douce (propriete `translate`, sans conflit hover) --- */
+        var parallaxEls = Array.prototype.slice.call(document.querySelectorAll('[data-parallax]'));
+        if (parallaxEls.length && !reduced) {
+          var pTicking = false;
+          var updateParallax = function () {
+            var vh = window.innerHeight;
+            parallaxEls.forEach(function (el) {
+              var rect = el.getBoundingClientRect();
+              if (rect.bottom < -120 || rect.top > vh + 120) return;
+              var speed = parseFloat(el.getAttribute('data-parallax')) || 0.1;
+              var center = rect.top + rect.height / 2;
+              var offset = (vh / 2 - center) * speed;
+              el.style.translate = '0 ' + offset.toFixed(1) + 'px';
+            });
+            pTicking = false;
+          };
+          var requestParallax = function () {
+            if (!pTicking) {
+              pTicking = true;
+              requestAnimationFrame(updateParallax);
+            }
+          };
+          updateParallax();
+          window.addEventListener('scroll', requestParallax, { passive: true });
+          window.addEventListener('resize', requestParallax);
+        }
+
+        /* --- Comparateur Avant / Après --- */
+        Array.prototype.slice.call(document.querySelectorAll('[data-ba]')).forEach(function (root) {
+          var handle = root.querySelector('.ba-handle');
+          var pos = 50;
+          var setPos = function (pct) {
+            pos = Math.max(2, Math.min(98, pct));
+            root.style.setProperty('--pos', pos + '%');
+            if (handle) handle.setAttribute('aria-valuenow', Math.round(pos));
+          };
+          setPos(100);
+          if (reduced) {
+            root.classList.add('instant');
+            setPos(50);
+          } else {
+            pendingJobs.push({
+              el: root,
+              fn: function () {
+                root.classList.remove('instant');
+                setPos(50);
+              },
+            });
+          }
+
+          var moveFrom = function (clientX) {
+            var rect = root.getBoundingClientRect();
+            setPos(((clientX - rect.left) / rect.width) * 100);
+          };
+          var dragging = false;
+          root.addEventListener('pointerdown', function (e) {
+            dragging = true;
+            root.classList.add('dragging');
+            if (root.setPointerCapture) {
+              try { root.setPointerCapture(e.pointerId); } catch (err) {}
+            }
+            moveFrom(e.clientX);
+            e.preventDefault();
+          });
+          root.addEventListener('pointermove', function (e) {
+            if (dragging) moveFrom(e.clientX);
+          });
+          var stop = function () {
+            dragging = false;
+            root.classList.remove('dragging');
+          };
+          root.addEventListener('pointerup', stop);
+          root.addEventListener('pointercancel', stop);
+          root.addEventListener('lostpointercapture', stop);
+
+          if (handle) {
+            handle.addEventListener('keydown', function (e) {
+              if (e.key === 'ArrowLeft') { setPos(pos - 4); e.preventDefault(); }
+              if (e.key === 'ArrowRight') { setPos(pos + 4); e.preventDefault(); }
+              if (e.key === 'Home') { setPos(2); e.preventDefault(); }
+              if (e.key === 'End') { setPos(98); e.preventDefault(); }
+            });
+            handle.addEventListener('click', function (e) { e.preventDefault(); });
+          }
+        });
+
+        /* --- Carrousel d'avis --- */
+        Array.prototype.slice.call(document.querySelectorAll('[data-carousel]')).forEach(function (root) {
+          var track = root.querySelector('.t-track');
+          var cards = Array.prototype.slice.call(root.querySelectorAll('.t-card'));
+          var prev = root.querySelector('[data-prev]');
+          var next = root.querySelector('[data-next]');
+          var dotsWrap = root.querySelector('[data-dots]');
+          if (!track || cards.length < 2) return;
+
+          var index = 0;
+          var maxIndex = 0;
+          var dots = [];
+
+          var measure = function () {
+            var visible = 1;
+            if (window.matchMedia('(min-width: 1024px)').matches) visible = 3;
+            else if (window.matchMedia('(min-width: 768px)').matches) visible = 2;
+            maxIndex = Math.max(0, cards.length - visible);
+            if (index > maxIndex) index = maxIndex;
+            if (dotsWrap) {
+              dotsWrap.innerHTML = '';
+              dots = [];
+              for (var i = 0; i <= maxIndex; i++) {
+                (function (i) {
+                  var dot = document.createElement('button');
+                  dot.type = 'button';
+                  dot.className = 't-dot';
+                  dot.setAttribute('aria-label', 'Aller au témoignage ' + (i + 1));
+                  dot.addEventListener('click', function () { go(i); restart(); });
+                  dotsWrap.appendChild(dot);
+                  dots.push(dot);
+                })(i);
+              }
+            }
+            apply();
+          };
+
+          var apply = function () {
+            var offset = cards[index] ? cards[index].offsetLeft - cards[0].offsetLeft : 0;
+            track.style.transform = 'translate3d(' + -offset + 'px, 0, 0)';
+            dots.forEach(function (d, i) {
+              d.setAttribute('aria-current', i === index ? 'true' : 'false');
+            });
+            if (prev) prev.disabled = maxIndex === 0;
+            if (next) next.disabled = maxIndex === 0;
+          };
+
+          var go = function (i) {
+            index = Math.max(0, Math.min(maxIndex, i));
+            apply();
+          };
+
+          if (prev) prev.addEventListener('click', function () { go(index - 1); restart(); });
+          if (next) next.addEventListener('click', function () { go(index + 1); restart(); });
+
+          var timer = null;
+          var start = function () {
+            if (reduced || maxIndex === 0) return;
+            stopTimer();
+            timer = setInterval(function () {
+              go(index >= maxIndex ? 0 : index + 1);
+            }, 6500);
+          };
+          var stopTimer = function () {
+            if (timer) { clearInterval(timer); timer = null; }
+          };
+          var restart = function () { stopTimer(); start(); };
+          root.addEventListener('mouseenter', stopTimer);
+          root.addEventListener('mouseleave', start);
+          root.addEventListener('focusin', stopTimer);
+          root.addEventListener('focusout', start);
+
+          measure();
+          window.addEventListener('resize', function () { measure(); });
+          start();
+        });
+
+        /* --- Header : ombre au scroll --- */
+        var header = document.querySelector('header');
+        if (header) {
+          var onScroll = function () {
+            header.classList.toggle('shadow-lg', window.scrollY > 12);
+          };
+          onScroll();
+          window.addEventListener('scroll', onScroll, { passive: true });
+        }
+      })();
+    </script>
+  </body>
+</html>

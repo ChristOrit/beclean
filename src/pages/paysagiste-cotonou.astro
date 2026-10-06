@@ -1,0 +1,85 @@
+---
+import Layout from '../layouts/Layout.astro';
+import SeoLanding from '../components/SeoLanding.astro';
+
+const steps = [
+  { title: 'Visite & devis gratuit', text: 'Nous venons sur votre terrain à Cotonou, relevons les mesures et écoutons votre projet.' },
+  { title: 'Plan & rendu 3D', text: 'Vous validez le plan de plantation, les matériaux et le budget avant tout démarrage.' },
+  { title: 'Chantier maîtrisé', text: 'Terrassement, plantations, pavage et arrosage réalisés par nos équipes salariées.' },
+  { title: 'Suivi & entretien', text: 'Visites de reprise offertes la première année et contrat d\'entretien si vous le souhaitez.' },
+];
+
+const benefits = [
+  { title: 'Paysagistes depuis 2013', text: 'Plus de 50 jardins livrés à Cotonou et dans le département de l\'Ouémé.' },
+  { title: 'Un seul interlocuteur', text: 'Un conducteur de travaux dédié, joignable par téléphone et WhatsApp pendant le chantier.' },
+  { title: 'Devis sous 24h', text: 'Chiffrage clair, poste par poste, sans frais cachés ni engagement de votre part.' },
+];
+
+const faq = [
+  {
+    question: 'Quelle est la différence entre un paysagiste et un jardinier ?',
+    answer: 'Le paysagiste conçoit : plan, volumes, choix des végétaux, éclairage et équipements. Le jardinier entretient l\'existant. Be Clean couvre les deux métiers, ce qui garantit un jardin aussi beau en année 3 qu\'au jour de la livraison.',
+  },
+  {
+    question: 'Intervenez-vous rapidement à Cotonou ?',
+    answer: 'Oui. Pour les urgences (arrosage en panne, élagage, débroussaillage après épisode pluvieux), nous nous déplaçons sous 48h. Pour un projet complet, la visite d\'étude est planifiée sous 5 jours.',
+  },
+  {
+    question: 'Quels types de clients accompagnez-vous ?',
+    answer: 'Particuliers (villas, résidences), hôtels et restaurants, entreprises, promoteurs immobiliers et collectivités. Chaque secteur bénéficie d\'un interlocuteur dédié.',
+  },
+];
+
+const related = [
+  { href: '/amenagement-paysager-cotonou', label: 'Aménagement paysager', text: 'Aménagement paysager à Cotonou' },
+  { href: '/jardinier-cotonou', label: 'Jardinier Cotonou', text: 'Jardinier professionnel à Cotonou' },
+  { href: '/jardinage-cotonou', label: 'Jardinage Cotonou', text: 'Prestations de jardinage à Cotonou' },
+  { href: '/services', label: 'Nos services', text: 'Toutes nos prestations' },
+  { href: '/realisations', label: 'Nos réalisations', text: 'Portfolio de jardins réalisés' },
+];
+---
+
+<Layout
+  title="Paysagiste Cotonou | Be Clean — Création & entretien de jardins"
+  description="Paysagiste à Cotonou depuis 2013 : création de jardins, aménagement paysager, entretien et arrosage automatique. Devis gratuit sous 24h. Be Clean, votre expert local."
+  canonical="https://benin-paysage.com/paysagiste-cotonou"
+>
+  <SeoLanding
+    badge="Paysagiste"
+    title="Paysagiste à Cotonou"
+    accent="depuis 2013"
+    description="Création de jardins, aménagement paysager et entretien d'espaces verts : une équipe salariée basée à Cotonou, du premier croquis à l'entretien annuel."
+    steps={steps}
+    benefits={benefits}
+    faq={faq}
+    related={related}
+    ctaTitle="Parlez-nous de votre jardin à Cotonou"
+    ctaSubtitle="Réponse sous 24h, visite d'étude gratuite et devis détaillé sans engagement."
+  >
+    <p class="lead">
+      <strong>Be Clean</strong> est une entreprise de paysagiste basée à Cotonou. Nous accompagnons
+      particuliers, hôtels et entreprises de la première idée jusqu'à l'entretien : plan d'ensemble,
+      création de massifs, gazon, éclairage, clôture végétale et arrosage automatique.
+    </p>
+
+    <h2>Nos prestations de paysagiste à Cotonou</h2>
+    <ul>
+      <li><strong>Création de jardins</strong> — préparation des sols, plantations, gazons et allées.</li>
+      <li><strong>Aménagement paysager</strong> — étude, plan d'ensemble et rendu 3D avant travaux.</li>
+      <li><strong>Entretien d'espaces verts</strong> — tonte, taille, désherbage et fertilisation.</li>
+      <li><strong>Arrosage automatique</strong> — programmateur, goutte-à-goutte, économie d'eau.</li>
+      <li><strong>Élagage & traitement phytosanitaire</strong> — sécurité et santé des arbres.</li>
+    </ul>
+
+    <h2>Un paysagiste local, pas un intermédiaire</h2>
+    <p>
+      Nos jardiniers sont salariés, formés au climat béninois et équipés du matériel nécessaire
+      (tractive, taille-haies, nacelle). Vous savez qui intervient chez vous, quand et pour combien :
+      <strong>un devis chiffré poste par poste</strong>, des dates d'intervention annoncées et un
+      suivi de chantier accessible par téléphone.
+    </p>
+    <blockquote>
+      Du rêve à la réalité, en toute harmonie — notre devise n'est pas un slogan, c'est la façon dont nous travaillons.
+    </blockquote>
+  </SeoLanding>
+</Layout>

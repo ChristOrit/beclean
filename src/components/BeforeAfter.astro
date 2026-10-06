@@ -1,0 +1,85 @@
+---
+const projets = [
+  {
+    titre: "Résidence privée — Haie Vive",
+    contexte: "Terrain nu · 320 m² · 5 semaines",
+    avant: "https://images.unsplash.com/photo-1684867430916-ede9dc95eca5?auto=format&fit=crop&w=1200&q=75",
+    apres: "https://images.unsplash.com/photo-1750762286053-28632f48e717?auto=format&fit=crop&w=1200&q=75",
+    altAvant: "Cour clôturée avec pelouse morte avant travaux",
+    altApres: "Jardin tropical aménagé avec pelouse verte et allée de pierres",
+  },
+  {
+    titre: "Villa familiale — Akpakpa",
+    contexte: "Terrain envahi · 180 m² · 3 semaines",
+    avant: "https://images.unsplash.com/photo-1694885170774-f90599352204?auto=format&fit=crop&w=1200&q=75",
+    apres: "https://images.unsplash.com/photo-1779888793240-898dec4b9c08?auto=format&fit=crop&w=1200&q=75",
+    altAvant: "Devanture de maison recouverte d'herbes sèches avant intervention",
+    altApres: "Pelouse entretenue avec palmiers et arrosage automatique",
+  },
+  {
+    titre: "Terrain — Abomey-Calavi",
+    contexte: "Parcelle en friche · 540 m² · 7 semaines",
+    avant: "https://images.unsplash.com/photo-1780866701868-ddf82ea1f67e?auto=format&fit=crop&w=1200&q=75",
+    apres: "https://images.unsplash.com/photo-1775667447799-14acb2dae9da?auto=format&fit=crop&w=1200&q=75",
+    altAvant: "Parcelle en friche avec débris de bois avant aménagement",
+    altApres: "Espace aménagé avec bassin, palmiers et végétation dense",
+  },
+];
+---
+
+<section class="py-16 md:py-24 bg-white" aria-labelledby="titre-avant-apres">
+  <div class="container-custom">
+    <div class="max-w-2xl mb-10 md:mb-14">
+      <span class="eyebrow reveal">Avant / Après</span>
+      <h2 id="titre-avant-apres" data-split class="mt-3 text-3xl md:text-4xl lg:text-[2.75rem] leading-[1.12] text-gray-900">
+        La transformation, <span class="accent">image par image</span>
+      </h2>
+      <p class="mt-5 text-lg text-gray-600 leading-relaxed reveal">
+        Faites glisser le curseur pour voir ce qu'une équipe professionnelle fait d'un terrain négligé à Cotonou, Abomey-Calavi et alentours.
+      </p>
+      <span class="rule-leaf reveal mt-6"></span>
+    </div>
+
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-6 md:gap-8 stagger">
+      {
+        projets.map((p) => (
+          <article class="reveal">
+            <div class="ba" data-ba>
+              <img class="ba-base" src={p.apres} alt={p.altApres} loading="lazy" decoding="async" />
+              <img class="ba-top" src={p.avant} alt={p.altAvant} loading="lazy" decoding="async" />
+              <span class="ba-tag ba-tag-before">Avant</span>
+              <span class="ba-tag ba-tag-after">Après</span>
+              <div class="ba-bar" />
+              <button
+                type="button"
+                class="ba-handle"
+                role="slider"
+                aria-label={`Comparateur avant / après : ${p.titre}`}
+                aria-valuemin="0"
+                aria-valuemax="100"
+                aria-valuenow="50"
+                aria-orientation="horizontal"
+              >
+                <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 9l-4 3 4 3m8-6l4 3-4 3M4 12h16" />
+                </svg>
+              </button>
+            </div>
+            <div class="mt-4 flex items-start justify-between gap-3">
+              <div>
+                <h3 class="font-semibold text-gray-900">{p.titre}</h3>
+                <p class="text-sm text-gray-500 mt-0.5">{p.contexte}</p>
+              </div>
+              <span class="shrink-0 inline-flex items-center gap-1.5 text-[11px] font-semibold uppercase tracking-wider text-primary-700 bg-primary-50 border border-primary-100 rounded-full px-2.5 py-1">
+                <svg class="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+                </svg>
+                Réalisé
+              </span>
+            </div>
+          </article>
+        ))
+      }
+    </div>
+  </div>
+</section>

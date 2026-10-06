@@ -1,0 +1,89 @@
+---
+import Layout from '../../layouts/Layout.astro';
+import PageHeader from '../../components/PageHeader.astro';
+import FAQ from '../../components/FAQ.astro';
+import CTA from '../../components/CTA.astro';
+---
+
+<Layout
+  title="Paysagiste Particuliers Cotonou | Jardin villa | Be Clean"
+  description="Aménagement paysager pour particuliers à Cotonou. Création de jardins, entretien, rénovation pour villas et résidences. Devis gratuit."
+>
+  <PageHeader
+    badge="Secteurs · Particuliers"
+    title="Nos services pour les particuliers"
+    accent="à Cotonou"
+    description="Création, entretien et rénovation de jardins pour vos villas, résidences et terrasses — avec un interlocuteur unique et un devis gratuit sous 24h."
+  />
+
+  <section class="section-padding bg-white">
+    <div class="container-custom">
+      <div class="max-w-4xl mx-auto">
+        <h2 data-split class="text-3xl font-bold text-gray-900 mb-6">Votre jardin de rêve à Cotonou</h2>
+        <p class="reveal text-lg text-gray-600 leading-relaxed mb-6">
+          Vous rêvez d'un jardin luxuriant autour de votre villa ? Be Clean conçoit, crée et entretient des jardins d'exception pour les particuliers à Cotonou.
+        </p>
+
+        <h2 data-split class="text-3xl font-bold text-gray-900 mb-6 mt-12">Nos services pour particuliers</h2>
+        <ul class="space-y-4 text-lg text-gray-600 stagger">
+          <li class="reveal flex items-start gap-3">
+            <svg class="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span><strong>Conception et modélisation 3D</strong> — Visualisez votre futur jardin avant les travaux.</span>
+          </li>
+          <li class="reveal flex items-start gap-3">
+            <svg class="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span><strong>Création de jardins tropicaux</strong> — Aménagement complet avec plantes adaptées au climat.</span>
+          </li>
+          <li class="reveal flex items-start gap-3">
+            <svg class="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span><strong>Rénovation de jardins</strong> — Redonnez vie à votre jardin vieillissant.</span>
+          </li>
+          <li class="reveal flex items-start gap-3">
+            <svg class="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span><strong>Entretien d'espaces verts</strong> — Contrats d'entretien hebdomadaires ou bimensuels.</span>
+          </li>
+          <li class="reveal flex items-start gap-3">
+            <svg class="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
+            </svg>
+            <span><strong>Traitement phytosanitaire</strong> — Protection de vos plantes contre maladies et parasites.</span>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <FAQ
+    items={[
+    {
+      question: "Combien coûte l'aménagement d'un jardin de villa à Cotonou ?",
+      answer: "Pour une villa, comptez généralement à partir de 500 000 FCFA selon la surface et l'équipement (arrosage automatique, éclairage, gazon). Le devis est établi après visite."
+    },
+    {
+      question: "Gérez-vous aussi l'entretien après les travaux ?",
+      answer: "Oui : nous proposons des contrats mensuels ou bimensuels avec passages planifiés, la même équipe et un compte rendu après chaque intervention."
+    },
+    {
+      question: "Intervenez-vous dans toutes les communes du Littoral ?",
+      answer: "Oui : Cotonou, Abomey-Calavi, Sèmè-Podji, Grand-Popo et Porto-Novo au quotidien."
+    },
+    ]}
+    subtitle="Questions fréquentes de nos clients {'« particuliers »' if False else ''}."
+  />
+
+  <CTA
+    title="Prêt à transformer votre jardin ?"
+    subtitle="Devis gratuit et sans engagement, réponse sous 24h."
+    secondaryText="Voir nos réalisations"
+    secondaryHref="/realisations"
+  />
+
+</Layout>

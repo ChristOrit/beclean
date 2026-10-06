@@ -1,0 +1,122 @@
+---
+const testimonials = [
+  {
+    quote:
+      "Nous avons fait appel à Be Clean pour l'aménagement de la cour de notre villa à Haie Vive. Le rendu est exactement celui du plan 3D, et l'équipe a tenu les délais malgré la saison des pluies.",
+    name: "Aïssatou Sossou",
+    role: "Propriétaire",
+    place: "Cotonou, Haie Vive",
+    initials: "AS",
+    tint: "from-primary-600 to-primary-500",
+  },
+  {
+    quote:
+      "Entretien mensuel impeccable depuis 18 mois. Tonte, taille, fertilisation : tout est fait avec méthode, et le jardin reste vert même en pleine saison sèche.",
+    name: "Marc Adjovi",
+    role: "Directeur technique",
+    place: "Abomey-Calavi",
+    initials: "MA",
+    tint: "from-accent-800 to-accent-600",
+  },
+  {
+    quote:
+      "Leur équipe a repensé nos espaces verts et notre piscine. Nos clients photographient le jardin avant même de entrer à l'hôtel. Un vrai plus pour notre image.",
+    name: "Dr Kodjo Hounkpatin",
+    role: "Gérant, Hôtel Azaléa",
+    place: "Porto-Novo",
+    initials: "KH",
+    tint: "from-primary-700 to-accent-600",
+  },
+  {
+    quote:
+      "Devis détaillé, transparent, sans mauvaise surprise. Ils ont su nous conseiller sur des espèces adaptées au climat béninois plutôt que de vendre du superflu.",
+    name: "Famille Dossou-Yovo",
+    role: "Particulier",
+    place: "Cotonou, Akpakpa",
+    initials: "DY",
+    tint: "from-primary-600 to-primary-800",
+  },
+  {
+    quote:
+      "Installation d'un gazon synthétique et de massifs pour notre résidence. Résultat net, propre, et surtout un interlocuteur unique du début à la fin du chantier.",
+    name: "Sylvie Agbodjan",
+    role: "Syndic de copropriété",
+    place: "Cotonou, Cadjèhoun",
+    initials: "SA",
+    tint: "from-accent-600 to-primary-700",
+  },
+];
+
+const star = "M11.48 3.5a.56.56 0 011.04 0l2.13 4.9 5.32.46c.5.04.7.66.32 1l-4.04 3.5 1.2 5.2c.12.5-.42.9-.85.62L12 17.34l-4.62 2.9c-.43.28-.97-.12-.85-.62l1.2-5.2-4.04-3.5c-.38-.34-.18-.96.32-1l5.32-.46 2.13-4.9z";
+---
+
+<section class="section-warm relative py-16 md:py-24 overflow-hidden" aria-labelledby="titre-avis">
+  <svg class="leaf-decor leaf-decor-gold absolute -top-10 right-[-40px] w-56 md:w-72 rotate-12" viewBox="0 0 200 200" fill="currentColor" aria-hidden="true">
+    <path d="M100 8c42 26 66 62 66 104 0 42-30 76-66 80-36-4-66-38-66-80C34 70 58 34 100 8zm0 24c-28 20-44 48-44 78 0 30 18 54 44 58 26-4 44-28 44-58 0-30-16-58-44-78z" />
+  </svg>
+
+  <div class="container-custom relative" data-carousel>
+    <div class="flex flex-col md:flex-row md:items-end md:justify-between gap-6 mb-10 md:mb-14">
+      <div class="max-w-2xl">
+        <span class="eyebrow reveal">Témoignages</span>
+        <h2 id="titre-avis" data-split class="mt-3 text-3xl md:text-4xl lg:text-[2.75rem] leading-[1.12] text-gray-900">
+          Ils nous confient <span class="accent">leur jardin</span>
+        </h2>
+        <span class="rule-leaf reveal mt-6"></span>
+      </div>
+
+      <div class="flex items-center gap-3 reveal">
+        <button type="button" class="arrow-btn" data-prev aria-label="Témoignage précédent">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+        <button type="button" class="arrow-btn" data-next aria-label="Témoignage suivant">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+    </div>
+
+    <div class="reveal">
+      <div class="t-viewport">
+        <div class="t-track">
+          {
+            testimonials.map((t) => (
+              <figure class="t-card bg-white rounded-2xl border border-gray-100 p-6 md:p-7 shadow-[0_18px_40px_-32px_rgb(17_24_39/0.5)] flex flex-col">
+                <div class="stars mb-4" role="img" aria-label="Note 5 sur 5">
+                  {[0, 1, 2, 3, 4].map(() => (
+                    <svg class="w-4 h-4" viewBox="0 0 24 24" fill="currentColor" aria-hidden="true">
+                      <path d={star} />
+                    </svg>
+                  ))}
+                </div>
+                <blockquote class="text-[15px] leading-relaxed text-gray-700 grow">“{t.quote}”</blockquote>
+                <figcaption class="mt-6 pt-5 border-t border-gray-100 flex items-center gap-3">
+                  <span
+                    class:list={[
+                      'grid place-items-center w-11 h-11 rounded-full text-white text-sm font-semibold bg-gradient-to-br shrink-0',
+                      t.tint,
+                    ]}
+                    aria-hidden="true"
+                  >
+                    {t.initials}
+                  </span>
+                  <span class="min-w-0">
+                    <span class="block font-semibold text-gray-900 truncate">{t.name}</span>
+                    <span class="block text-[13px] text-gray-500 truncate">
+                      {t.role} · {t.place}
+                    </span>
+                  </span>
+                </figcaption>
+              </figure>
+            ))
+          }
+        </div>
+      </div>
+
+      <div class="mt-7 flex items-center justify-center gap-2" data-dots></div>
+    </div>
+  </div>
+</section>

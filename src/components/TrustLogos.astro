@@ -1,0 +1,63 @@
+---
+const partenaires = [
+  {
+    nom: "Azaléa Hôtel",
+    secteur: "Hôtellerie",
+    path: "M3 21h18M5 21V7l7-4 7 4v14M9 9h2m2 0h2M9 13h2m2 0h2M9 17h6",
+  },
+  {
+    nom: "Résidence Golf",
+    secteur: "Résidentiel",
+    path: "M3 10.5L12 3l9 7.5M5 9.5V21h14V9.5M9 21v-6h6v6",
+  },
+  {
+    nom: "Cocotier Immo",
+    secteur: "Immobilier",
+    path: "M3 21h18M6 21V8l6-4 6 4v13M10 12h4v4h-4z",
+  },
+  {
+    nom: "Clinique La Palmeraie",
+    secteur: "Santé",
+    path: "M12 21s-7-4.5-7-10a4 4 0 017-2.6A4 4 0 0119 11c0 5.5-7 10-7 10z",
+  },
+  {
+    nom: "École Les Palmiers",
+    secteur: "Éducation",
+    path: "M12 4L2 9l10 5 10-5-10-5zM6 11.5V16c0 1.5 2.7 3 6 3s6-1.5 6-3v-4.5",
+  },
+  {
+    nom: "Wôrô Maison",
+    secteur: "Restauration",
+    path: "M4 3v7a3 3 0 006 0V3M7 3v18M17 3c-1.7 1.5-2.5 3.6-2.5 6.5 0 2 .8 3.5 2.5 4V21",
+  },
+];
+---
+
+<section class="py-12 md:py-14 bg-white border-y border-gray-100" aria-labelledby="titre-confiance">
+  <div class="container-custom">
+    <div class="flex flex-col items-center text-center">
+      <p class="text-[11px] font-semibold uppercase tracking-[0.2em] text-gray-500 reveal">
+        Ils nous font confiance
+      </p>
+      <h2 id="titre-confiance" class="sr-only">Partenaires et clients de Be Clean</h2>
+
+      <ul class="mt-7 grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-3 md:gap-5 w-full stagger">
+        {
+          partenaires.map((p) => (
+            <li class="reveal">
+              <div class="logo-tile h-full rounded-xl border border-gray-100 bg-gray-50/60">
+                <svg class="w-5 h-5 shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.6" d={p.path} />
+                </svg>
+                <span class="min-w-0 text-left">
+                  <span class="block font-display text-[15px] leading-tight font-semibold truncate">{p.nom}</span>
+                  <span class="block text-[10px] uppercase tracking-[0.14em] opacity-70">{p.secteur}</span>
+                </span>
+              </div>
+            </li>
+          ))
+        }
+      </ul>
+    </div>
+  </div>
+</section>

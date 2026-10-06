@@ -1,0 +1,42 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 360 480" width="360" height="480" role="img" aria-label="Be Clean">
+  <defs>
+    <clipPath id="bc-circle">
+      <circle cx="180" cy="185" r="137"/>
+    </clipPath>
+    <linearGradient id="bc-leaf1" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#A6E24E"/>
+      <stop offset="1" stop-color="#4FBF3F"/>
+    </linearGradient>
+    <linearGradient id="bc-leaf2" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#8BD44A"/>
+      <stop offset="1" stop-color="#2F9E44"/>
+    </linearGradient>
+    <path id="bc-arc" d="M 58,215 A 126,126 0 0 1 302,215"/>
+  </defs>
+
+  <circle cx="180" cy="185" r="137" fill="#ffffff"/>
+  <circle cx="180" cy="185" r="150" fill="none" stroke="#33628A" stroke-width="26"/>
+
+  <g clip-path="url(#bc-circle)">
+    <polygon points="105,210 120,196 165,196 150,210" fill="#63C6EF"/>
+    <polygon points="150,210 165,196 165,340 150,354" fill="#1E86B8"/>
+    <rect x="105" y="210" width="45" height="144" fill="#2FA8E0"/>
+
+    <polygon points="155,165 170,151 230,151 215,165" fill="#BCCBD5"/>
+    <polygon points="215,165 230,151 230,340 215,354" fill="#7A90A0"/>
+    <rect x="155" y="165" width="60" height="189" fill="#93A9B8"/>
+
+    <polygon points="220,200 235,186 275,186 260,200" fill="#6BA3D0"/>
+    <polygon points="260,200 275,186 275,340 260,354" fill="#2F6594"/>
+    <rect x="220" y="200" width="40" height="154" fill="#3E7CB1"/>
+  </g>
+
+  <text font-family="'Trebuchet MS','Segoe UI',Arial,sans-serif" font-size="60" font-weight="700" fill="#33628A" letter-spacing="3">
+    <textPath href="#bc-arc" startOffset="50%" text-anchor="middle">Be Clean</textPath>
+  </text>
+
+  <g>
+    <path d="M40,400 C110,346 245,344 344,404 C255,384 130,388 40,400 Z" fill="url(#bc-leaf1)"/>
+    <path d="M74,436 C155,398 262,410 342,466 C255,444 145,442 74,436 Z" fill="url(#bc-leaf2)"/>
+  </g>
+</svg>

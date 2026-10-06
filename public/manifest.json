@@ -1,0 +1,16 @@
+{
+  "name": "Be Clean",
+  "short_name": "Be Clean",
+  "description": "Be Clean - Paysagiste à Cotonou, Bénin : aménagement paysager haut de gamme",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#3A7D34",
+  "icons": [
+    {
+      "src": "/favicon.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
