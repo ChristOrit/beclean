@@ -1,0 +1,55 @@
+---
+import Layout from '../layouts/Layout.astro';
+
+const links = [
+  { href: '/services', label: 'Nos services', hint: 'Conception, création, entretien' },
+  { href: '/realisations', label: 'Réalisations', hint: 'Nos chantiers à Cotonou' },
+  { href: '/devis', label: 'Devis gratuit', hint: 'Réponse sous 24 h' },
+  { href: '/contact', label: 'Contact', hint: 'Téléphone et WhatsApp' },
+];
+---
+
+<Layout
+  title="Page introuvable | Be Clean"
+  description="Cette page n'existe pas ou a été déplacée. Retrouvez nos services de paysagiste à Cotonou et demandez votre devis gratuit."
+  noindex
+>
+  <section class="container-custom py-20 md:py-28">
+    <p class="eyebrow">Erreur 404</p>
+    <h1 class="mt-4 max-w-3xl text-4xl font-bold leading-tight text-gray-900 md:text-5xl">
+      Cette page a quitté le jardin
+    </h1>
+    <p class="mt-5 max-w-2xl text-lg text-gray-600">
+      L'adresse demandée n'existe pas ou a été déplacée. Voici par où continuer.
+    </p>
+
+    <nav aria-label="Pages principales" class="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-4">
+      {
+        links.map((l) => (
+          <a
+            href={l.href}
+            class="group cursor-pointer rounded-2xl border border-gray-200 bg-white p-5 transition-all duration-200 hover:-translate-y-0.5 hover:border-primary-300 hover:shadow-lg focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-primary-600"
+          >
+            <span class="block font-semibold text-gray-900 group-hover:text-primary-700">{l.label}</span>
+            <span class="mt-1 block text-sm text-gray-500">{l.hint}</span>
+          </a>
+        ))
+      }
+    </nav>
+
+    <div class="mt-10 flex flex-wrap gap-3">
+      <a
+        href="/"
+        class="cursor-pointer rounded-full bg-primary-600 px-6 py-3 font-semibold text-white transition-colors hover:bg-primary-700"
+      >
+        Retour à l'accueil
+      </a>
+      <a
+        href="tel:+2290167592319"
+        class="cursor-pointer rounded-full border border-primary-200 bg-primary-50 px-6 py-3 font-semibold text-primary-800 transition-colors hover:bg-primary-100"
+      >
+        Nous appeler
+      </a>
+    </div>
+  </section>
+</Layout>

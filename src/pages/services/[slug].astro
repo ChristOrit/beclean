@@ -1,8 +1,10 @@
 ---
+import Img from '../../components/Img.astro';
 import Layout from '../../layouts/Layout.astro';
 import FAQ from '../../components/FAQ.astro';
 import CTA from '../../components/CTA.astro';
 import { services } from '../../data/services.js';
+import { serviceData } from '../../lib/structured';
 
 export function getStaticPaths() {
   return services.map((service) => ({
@@ -23,6 +25,47 @@ const includes = [
   'Conseils d\'entretien après la livraison',
 ];
 
+const steps = [
+  { title: 'Visite technique', text: "Prise de mesures, analyse du sol et de l'exposition. Gratuite et sans engagement." },
+  { title: 'Devis détaillé', text: "Chiffrage poste par poste et planning prévisionnel transmis sous 24 h." },
+  { title: 'Réalisation', text: "Équipe dédiée, matériaux livrés sur site et point d'avancement régulier." },
+  { title: 'Réception et suivi', text: "Vérification avec vous, conseils d'entretien et garantie de 3 mois." },
+];
+
+const specifics: Record<string, { delai: string; entretien: string; plus: { question: string; answer: string } }> = {
+  'conception-paysagere': {
+    delai: "Le premier rendu 3D est présenté sous 5 à 10 jours après la visite. Deux allers-retours de modification sont inclus avant validation du plan.",
+    entretien: "Une fois le plan validé, nous réalisons nous-mêmes le chantier, puis vous proposons un contrat d'entretien pour préserver la mise en œuvre.",
+    plus: { question: 'Puis-je faire réaliser le chantier par une autre entreprise ?', answer: "Oui. Le plan livré est exploitable par tout entrepreneur : nous restons disponibles pour répondre à ses questions techniques pendant la réalisation." },
+  },
+  'creation-jardins': {
+    delai: "Le chantier démarre 7 à 15 jours après validation du devis. Comptez 1 à 3 semaines de réalisation pour une villa, selon la surface et les ouvrages (gazon, dallage, arrosage).",
+    entretien: "Un contrat d'entretien est proposé dès la réception : les premiers mois sont décisifs pour l'enracinement des nouvelles plantations.",
+    plus: { question: 'Fournissez-vous les plantes et le substrat ?', answer: "Oui, tout est compris : végétaux sélectionnés en pépinière locale, substrat adapté, engrais de constitution et paillage." },
+  },
+  'renovation-jardins': {
+    delai: "Le diagnostic est réalisé sous 48 h. La rénovation démarre ensuite sous 1 à 2 semaines, avec éventuellement une élagage lourd avant replantation.",
+    entretien: "Après rénovation, un suivi à 3 mois vérifie la reprise des végétaux, puis un contrat d'entretien peut être mis en place.",
+    plus: { question: 'Que devient la végétation existante que l’on retire ?', answer: "Elle est triée sur place : les sujets en bonne santé sont replantés ailleurs sur le terrain, le reste est évacué et composté quand c'est possible." },
+  },
+  'entretien-espaces-verts': {
+    delai: "Le premier passage peut être programmé sous 7 jours. Les suivants sont planifiés à l'avance sur la durée du contrat (mensuel ou bimensuel).",
+    entretien: "Le contrat est justement ce service : passages récurrents, équipe qui connaît votre jardin et facturation mensuelle prévisible.",
+    plus: { question: 'Que se passe-t-il si une intervention est manquée ?', answer: "Nous la rattrapons sous 48 h, sans facturation supplémentaire, et le passage suivant est avancé si nécessaire." },
+  },
+  'traitement-phytosanitaire': {
+    delai: "Intervention sous 48 h pour une urgence (flambée de maladies, insectes). Les traitements préventifs suivent le calendrier des saisons du Bénin.",
+    entretien: "Le traitement s'intègre à votre contrat d'entretien existant ou fait l'objet d'une visite de suivi à 3 semaines.",
+    plus: { question: 'Les traitements sont-ils sans danger pour les enfants et animaux ?', answer: "Nous privilégions des produits biologiques et à faible toxicité, avec une fenêtre de réentrée indiquée par écrit après chaque passage." },
+  },
+};
+
+const spec = specifics[service.slug] ?? {
+  delai: "La visite d'étude est planifiée sous 5 jours. Selon l'ampleur du chantier, la réalisation démarre sous 1 à 3 semaines, avec un planning communiqué avant le démarrage.",
+  entretien: "Nous proposons après chaque chantier un contrat d'entretien afin que les finitions restent impeccables toute l'année.",
+  plus: { question: 'Proposez-vous un contrat d’entretien après cette prestation ?', answer: "Oui, avec passages planifiés, équipe dédiée et facturation mensuelle. Le premier mois peut être testé sans engagement." },
+};
+
 const faqItems = [
   {
     question: `Combien coûte « ${service.shortTitle} » à Cotonou ?`,
@@ -31,9 +74,13 @@ const faqItems = [
   },
   {
     question: 'Quels sont les délais d\'intervention ?',
-    answer:
-      'La visite d\'étude est planifiée sous 5 jours. Selon l\'ampleur du chantier, la réalisation démarre sous 1 à 3 semaines, avec un planning communiqué avant le démarrage.',
+    answer: spec.delai,
   },
+  {
+    question: 'Proposez-vous un contrat d\'entretien après cette prestation ?',
+    answer: spec.entretien,
+  },
+  spec.plus,
   {
     question: 'Intervenez-vous en dehors de Cotonou ?',
     answer:
@@ -45,7 +92,7 @@ const faqItems = [
 <Layout
   title={`${service.title} | Be Clean`}
   description={service.description}
-  canonical={`https://benin-paysage.com/services/${service.slug}`}
+  structuredData={serviceData({ slug: service.slug, title: service.title, description: service.description })}
 >
   <!-- En-tête du service -->
   <section class="section-warm relative overflow-hidden">
@@ -86,13 +133,13 @@ const faqItems = [
 
       <div class="reveal">
         <div class="relative overflow-hidden rounded-3xl shadow-[0_36px_70px_-40px_rgb(16_24_40/0.55)]">
-          <img
+          <Img
             src={service.image}
             alt={service.title}
             class="aspect-[4/3] w-full object-cover"
             loading="eager"
             decoding="async"
-          />
+          width="1200" height="900" />
           <div class="absolute inset-0 bg-gradient-to-t from-gray-950/45 via-transparent to-transparent" aria-hidden="true"></div>
           <span class="absolute bottom-4 left-4 inline-flex items-center gap-2 rounded-full bg-white/95 px-3.5 py-1.5 text-xs font-semibold uppercase tracking-[0.14em] text-primary-800">
             <svg class="h-3.5 w-3.5 text-accent-600" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -110,6 +157,26 @@ const faqItems = [
     <div class="container-custom">
       <div class="rich mx-auto max-w-3xl reveal" data-split-paragraphs>
         <div set:html={service.content} />
+      </div>
+    </div>
+  </section>
+
+  <!-- Déroulé du projet -->
+  <section class="section-warm section-padding">
+    <div class="container-custom">
+      <div class="reveal mb-10 text-center md:mb-12">
+        <span class="eyebrow justify-center">Méthode Be Clean</span>
+        <h2 class="mt-3 text-3xl font-bold text-gray-900 md:text-4xl">Comment se déroule votre projet</h2>
+        <span class="rule-leaf mx-auto mt-5 block"></span>
+      </div>
+      <div class="stagger grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
+        {steps.map((step, i) => (
+          <article class="step-card reveal">
+            <span class="font-display text-3xl font-bold text-accent-700">{String(i + 1).padStart(2, '0')}</span>
+            <h3 class="mt-3 text-lg font-semibold text-gray-900">{step.title}</h3>
+            <p class="mt-2 text-sm leading-relaxed text-gray-600">{step.text}</p>
+          </article>
+        ))}
       </div>
     </div>
   </section>

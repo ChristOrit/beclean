@@ -1,89 +1,130 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import PageHeader from '../../components/PageHeader.astro';
-import FAQ from '../../components/FAQ.astro';
-import CTA from '../../components/CTA.astro';
+import SeoLanding from '../../components/SeoLanding.astro';
+
+const steps = [
+  {
+    title: 'Visite et échange',
+    text: "Nous venons sur place, écoutons vos envies et prenons les mesures du terrain. Gratuit et sans engagement.",
+  },
+  {
+    title: 'Conception et devis',
+    text: "Plan d'aménagement, palette végétale adaptée au climat et chiffrage détaillé reçu sous 24 h.",
+  },
+  {
+    title: 'Chantier',
+    text: "Équipe dédiée, planning annoncé à l'avance, chantier propre et photos d'avancement envoyées.",
+  },
+  {
+    title: 'Suivi',
+    text: "Garantie de 3 mois sur les plantations, puis contrat d'entretien si vous souhaitez nous confier la suite.",
+  },
+];
+
+const benefits = [
+  {
+    title: 'Un interlocuteur unique',
+    text: "Une seule personne suit votre projet, du premier appel à la remise des clés du jardin.",
+  },
+  {
+    title: 'Des plantes qui tiennent',
+    text: "Sélection de végétaux résistants à la chaleur, au vent marin et aux pluies du Littoral.",
+  },
+  {
+    title: 'Budget maîtrisé',
+    text: "Devis ligne par ligne, aucun frais caché, paiement échelonné possible sur les grands chantiers.",
+  },
+  {
+    title: 'Équipe locale',
+    text: "Jardiniers formés en interne à Cotonou, présents toute l'année et joignables directement.",
+  },
+  {
+    title: 'Propreté sur site',
+    text: "Évacuation et tri des déchets verts à chaque intervention : votre villa reste nette.",
+  },
+  {
+    title: 'Devis sous 24 h',
+    text: "Estimation rapide après la visite, plan et planning joints pour décider sereinement.",
+  },
+];
+
+const faq = [
+  {
+    question: "Combien coûte l'aménagement d'un jardin de villa à Cotonou ?",
+    answer:
+      "Pour une villa, comptez généralement à partir de 500 000 FCFA selon la surface et l'équipement (arrosage automatique, éclairage, gazon). Une mise en point vert démarre autour de 150 000 FCFA. Le devis est établi après visite, gratuitement.",
+  },
+  {
+    question: 'Gérez-vous aussi l’entretien après les travaux ?',
+    answer:
+      "Oui : contrats mensuels ou bimensuels avec passages planifiés, la même équipe et un compte rendu avec photos après chaque intervention.",
+  },
+  {
+    question: 'Intervenez-vous dans toutes les communes du Littoral ?',
+    answer:
+      "Oui : Cotonou, Abomey-Calavi, Sèmè-Podji, Ouidah et Porto-Novo au quotidien. Nous nous déplaçons aussi à Parakou pour les projets d'envergure.",
+  },
+  {
+    question: 'Faut-il arrêter l’arrosage ou déplacer des meubles avant votre venue ?',
+    answer:
+      "Non. Nous protégeons les zones sensibles et déplaçons nous-mêmes les éléments légers. Vous recevez une courte liste de préparatifs seulement si elle est nécessaire.",
+  },
+];
+
+const related = [
+  { href: '/services/creation-jardins', label: 'Création de jardins', text: 'Créer un jardin tropical pour votre villa' },
+  { href: '/services/entretien-espaces-verts', label: 'Entretien', text: "Contrat d'entretien régulier" },
+  { href: '/services/conception-paysagere', label: 'Conception 3D', text: 'Visualiser votre jardin avant les travaux' },
+  { href: '/realisations', label: 'Réalisations', text: 'Voir nos jardins livrés' },
+  { href: '/devis', label: 'Devis gratuit', text: 'Demander un devis pour votre jardin' },
+];
 ---
 
 <Layout
-  title="Paysagiste Particuliers Cotonou | Jardin villa | Be Clean"
+  title="Paysagiste particuliers Cotonou | Jardin villa | Be Clean"
   description="Aménagement paysager pour particuliers à Cotonou. Création de jardins, entretien, rénovation pour villas et résidences. Devis gratuit."
 >
-  <PageHeader
+  <SeoLanding
     badge="Secteurs · Particuliers"
     title="Nos services pour les particuliers"
     accent="à Cotonou"
     description="Création, entretien et rénovation de jardins pour vos villas, résidences et terrasses — avec un interlocuteur unique et un devis gratuit sous 24h."
-  />
+    steps={steps}
+    benefits={benefits}
+    faq={faq}
+    related={related}
+    ctaTitle="Prêt à transformer votre jardin ?"
+    ctaSubtitle="Décrivez-nous votre espace : nous vous rappelons sous 24 h avec une estimation claire."
+  >
+    <p class="lead">
+      Vous rêvez d'un jardin luxuriant autour de votre villa, d'une terrasse ombragée ou d'un
+      gazon vert toute l'année ? <strong>Be Clean</strong> conçoit, crée et entretient des
+      jardins d'exception pour les particuliers à Cotonou et dans tout le département du Littoral.
+    </p>
 
-  <section class="section-padding bg-white">
-    <div class="container-custom">
-      <div class="max-w-4xl mx-auto">
-        <h2 data-split class="text-3xl font-bold text-gray-900 mb-6">Votre jardin de rêve à Cotonou</h2>
-        <p class="reveal text-lg text-gray-600 leading-relaxed mb-6">
-          Vous rêvez d'un jardin luxuriant autour de votre villa ? Be Clean conçoit, crée et entretient des jardins d'exception pour les particuliers à Cotonou.
-        </p>
+    <h2>Nos services pour particuliers</h2>
+    <ul>
+      <li><strong>Conception et modélisation 3D</strong> — visualisez votre futur jardin avant les travaux.</li>
+      <li><strong>Création de jardins tropicaux</strong> — aménagement complet avec plantes adaptées au climat.</li>
+      <li><strong>Rénovation de jardins</strong> — redonnez vie à un jardin vieillissant ou envahi.</li>
+      <li><strong>Entretien d'espaces verts</strong> — contrats hebdomadaires ou bimensuels.</li>
+      <li><strong>Traitement phytosanitaire</strong> — protection contre maladies et parasites.</li>
+      <li><strong>Arrosage automatique et éclairage</strong> — confort au quotidien, consommation maîtrisée.</li>
+    </ul>
 
-        <h2 data-split class="text-3xl font-bold text-gray-900 mb-6 mt-12">Nos services pour particuliers</h2>
-        <ul class="space-y-4 text-lg text-gray-600 stagger">
-          <li class="reveal flex items-start gap-3">
-            <svg class="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span><strong>Conception et modélisation 3D</strong> — Visualisez votre futur jardin avant les travaux.</span>
-          </li>
-          <li class="reveal flex items-start gap-3">
-            <svg class="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span><strong>Création de jardins tropicaux</strong> — Aménagement complet avec plantes adaptées au climat.</span>
-          </li>
-          <li class="reveal flex items-start gap-3">
-            <svg class="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span><strong>Rénovation de jardins</strong> — Redonnez vie à votre jardin vieillissant.</span>
-          </li>
-          <li class="reveal flex items-start gap-3">
-            <svg class="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span><strong>Entretien d'espaces verts</strong> — Contrats d'entretien hebdomadaires ou bimensuels.</span>
-          </li>
-          <li class="reveal flex items-start gap-3">
-            <svg class="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span><strong>Traitement phytosanitaire</strong> — Protection de vos plantes contre maladies et parasites.</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section>
+    <h2>Pour qui travaillons-nous ?</h2>
+    <p>
+      Villas individuelles et duplex, résidences en copropriété, terrasses et toitures-terrasses,
+      maisons de vacances à Fidjrossè ou Grand-Popo : chaque espace est traité sur mesure, avec un
+      budget annoncé avant le premier coup de pelle.
+    </p>
 
-  <FAQ
-    items={[
-    {
-      question: "Combien coûte l'aménagement d'un jardin de villa à Cotonou ?",
-      answer: "Pour une villa, comptez généralement à partir de 500 000 FCFA selon la surface et l'équipement (arrosage automatique, éclairage, gazon). Le devis est établi après visite."
-    },
-    {
-      question: "Gérez-vous aussi l'entretien après les travaux ?",
-      answer: "Oui : nous proposons des contrats mensuels ou bimensuels avec passages planifiés, la même équipe et un compte rendu après chaque intervention."
-    },
-    {
-      question: "Intervenez-vous dans toutes les communes du Littoral ?",
-      answer: "Oui : Cotonou, Abomey-Calavi, Sèmè-Podji, Grand-Popo et Porto-Novo au quotidien."
-    },
-    ]}
-    subtitle="Questions fréquentes de nos clients {'« particuliers »' if False else ''}."
-  />
-
-  <CTA
-    title="Prêt à transformer votre jardin ?"
-    subtitle="Devis gratuit et sans engagement, réponse sous 24h."
-    secondaryText="Voir nos réalisations"
-    secondaryHref="/realisations"
-  />
-
+    <h2>Un budget clair dès le départ</h2>
+    <p>
+      Une mise en point vert démarre autour de <strong>150 000 FCFA</strong>, une création complète
+      de jardin à partir de <strong>500 000 FCFA</strong>, et un contrat d'entretien mensuel à
+      partir de <strong>75 000 FCFA</strong>. Vous recevez un devis détaillé, ligne par ligne,
+      après la visite technique gratuite.
+    </p>
+  </SeoLanding>
 </Layout>

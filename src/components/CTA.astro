@@ -16,15 +16,9 @@ const {
   secondaryText,
   secondaryHref,
 } = Astro.props;
-
-const guarantees = [
-  'Devis gratuit sous 24h',
-  'Sans engagement',
-  'Équipe locale à Cotonou',
-];
 ---
 
-<section class="section-forest relative overflow-hidden text-white py-16 md:py-20">
+<section class="section-forest relative overflow-hidden text-white">
   <svg class="leaf-decor leaf-decor-gold absolute -left-16 -bottom-24 w-64 -rotate-12 md:w-80" viewBox="0 0 200 200" fill="currentColor" aria-hidden="true">
     <path d="M100 8c42 26 66 62 66 104 0 42-30 76-66 80-36-4-66-38-66-80C34 70 58 34 100 8zm0 24c-28 20-44 48-44 78 0 30 18 54 44 58 26-4 44-28 44-58 0-30-16-58-44-78z" />
   </svg>
@@ -32,40 +26,31 @@ const guarantees = [
     <path d="M100 8c42 26 66 62 66 104 0 42-30 76-66 80-36-4-66-38-66-80C34 70 58 34 100 8zm0 24c-28 20-44 48-44 78 0 30 18 54 44 58 26-4 44-28 44-58 0-30-16-58-44-78z" />
   </svg>
 
-  <div class="container-custom relative stagger text-center">
+  <div class="container-custom relative stagger py-16 text-center md:py-20">
     <span class="eyebrow eyebrow-light reveal justify-center">Passons à l'action</span>
 
     <h2 data-split class="mx-auto mt-4 max-w-3xl text-balance text-3xl leading-[1.14] md:text-4xl">
       {title}
     </h2>
 
+    <span class="rule-leaf reveal mx-auto mt-6 !mb-0" aria-hidden="true"></span>
+
     {subtitle && (
-      <p class="reveal mx-auto mt-5 max-w-2xl leading-relaxed text-white/75">{subtitle}</p>
+      <p class="reveal mx-auto mt-6 max-w-2xl text-balance leading-relaxed text-white/75">{subtitle}</p>
     )}
 
-    <div class="reveal mt-8 flex flex-col justify-center gap-4 sm:flex-row">
-      <a href={primaryHref} class="btn-primary justify-center !rounded-full !bg-white !px-7 !py-3.5 !text-primary-800 hover:!bg-accent-400 hover:!text-gray-950">
+    <div class="reveal mt-9 flex flex-col items-stretch justify-center gap-4 sm:flex-row sm:items-center">
+      <a href={primaryHref} class="btn-primary justify-center !rounded-full !bg-white !px-8 !py-3.5 !text-primary-800 hover:!bg-accent-400 hover:!text-gray-950">
         {primaryText}
         <svg class="h-5 w-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3" />
         </svg>
       </a>
       {secondaryText && secondaryHref && (
-        <a href={secondaryHref} class="btn-ghost justify-center !px-7 !py-3.5">
+        <a href={secondaryHref} class="btn-ghost justify-center !px-8 !py-3.5">
           {secondaryText}
         </a>
       )}
     </div>
-
-    <ul class="reveal mx-auto mt-9 flex max-w-3xl flex-wrap items-center justify-center gap-x-7 gap-y-3 text-sm text-white/70">
-      {guarantees.map((item) => (
-        <li class="inline-flex items-center gap-2">
-          <svg class="h-4 w-4 text-accent-400" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-          </svg>
-          {item}
-        </li>
-      ))}
-    </ul>
   </div>
 </section>

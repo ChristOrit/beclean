@@ -1,9 +1,9 @@
 export const blogPosts = [
   {
     slug: 'combien-coute-amenagement-paysager-cotonou',
-    title: "Combien coûte un aménagement paysager à Cotonou ? Guide complet des prix",
+    title: "Prix d'un aménagement paysager à Cotonou",
     excerpt: "Budget d'un aménagement paysager à Cotonou. Prix moyens selon les prestations et la taille de votre projet.",
-    image: 'https://images.unsplash.com/photo-1724786594289-41ebbf53a35b?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1724786594289-41ebbf53a35b.jpg',
     category: 'Prix',
     content: `
       <p>Vous envisagez d'aménager votre jardin à Cotonou et vous vous demandez quel budget prévoir ? Ce guide complet détaille les prix moyens selon les prestations et la taille de votre projet.</p>
@@ -22,9 +22,9 @@ export const blogPosts = [
   },
   {
     slug: 'comment-choisir-paysagiste-cotonou',
-    title: "Comment choisir son paysagiste à Cotonou : guide complet 2026",
+    title: "Comment choisir son paysagiste à Cotonou",
     excerpt: "Choisir un paysagiste à Cotonou peut sembler complexe. Ce guide 2026 vous donne toutes les clés pour trouver le professionnel idéal.",
-    image: 'https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1558904541-efa843a96f01.jpg',
     category: 'Conseils',
     content: `
       <p>Trouver le bon paysagiste à Cotonou peut sembler complexe face aux nombreuses offres. Voici les 7 critères essentiels pour faire le bon choix et réussir votre projet d'aménagement.</p>
@@ -44,9 +44,9 @@ export const blogPosts = [
   },
   {
     slug: 'top-10-plantes-jardin-tropical-benin',
-    title: "Top 10 des plantes pour un jardin tropical en Bénin",
+    title: "Top 10 plantes pour jardin tropical au Bénin",
     excerpt: "Découvrez les 10 meilleures plantes pour un jardin tropical luxuriant en Bénin.",
-    image: 'https://images.unsplash.com/photo-1521706862577-47b053587f91?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1521706862577-47b053587f91.jpg',
     category: 'Plantes',
     content: `
       <p>Le climat tropical de la Bénin permet une végétation luxuriante. Voici les 10 meilleures plantes pour un jardin tropical réussi.</p>
@@ -69,9 +69,9 @@ export const blogPosts = [
   },
   {
     slug: 'entretenir-jardin-climat-tropical-guide-complet',
-    title: "Comment entretenir son jardin en climat tropical : le guide complet",
+    title: "Entretenir son jardin en climat tropical",
     excerpt: "Guide complet pour entretenir votre jardin en climat tropical à Cotonou. Arrosage, taille, fertilisation.",
-    image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1416879595882-3373a0480b5b.jpg',
     category: 'Entretien',
     content: `
       <p>Un jardin tropical exige un entretien régulier. À Cotonou, la croissance rapide de la végétation tropicale exige une attention constante.</p>
@@ -87,9 +87,9 @@ export const blogPosts = [
   },
   {
     slug: 'garder-pelouse-verte-saison-seche-cotonou',
-    title: "Comment garder une pelouse verte pendant la saison sèche à Cotonou",
+    title: "Garder une pelouse verte à Cotonou",
     excerpt: "Techniques pour maintenir votre pelouse verte pendant la saison sèche à Cotonou : arrosage, variétés résistantes, fertilisation.",
-    image: 'https://images.unsplash.com/photo-1606749482582-8c73563adc2b?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1606749482582-8c73563adc2b.jpg',
     category: 'Conseils',
     content: `
       <p>Garder une pelouse verte pendant la saison sèche à Cotonou est un défi. Voici les techniques de nos experts pour y parvenir.</p>
@@ -105,9 +105,9 @@ export const blogPosts = [
   },
   {
     slug: 'idees-amenagement-jardin-villa-cotonou',
-    title: "Idées d'aménagement de jardin pour villa à Cotonou",
+    title: "Idées de jardin pour villa à Cotonou",
     excerpt: "Un jardin bien conçu transforme une villa ordinaire en propriété d'exception. Découvrez les tendances et idées.",
-    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1564013799919-ab600027ffc6.jpg',
     category: 'Inspiration',
     content: `
       <p>Un jardin bien conçu transforme une villa ordinaire en propriété d'exception. À Cotonou, les possibilités sont infinies grâce au climat tropical qui permet une végétation luxuriante. Voici les tendances et idées qui inspirent nos plus beaux projets.</p>
@@ -121,9 +121,9 @@ export const blogPosts = [
   },
   {
     slug: 'erreurs-eviter-amenager-jardin-cotonou',
-    title: "5 erreurs à éviter pour aménager son jardin à Cotonou",
+    title: "5 erreurs pour aménager son jardin à Cotonou",
     excerpt: "Évitez ces 5 erreurs courantes lors de l'aménagement de votre jardin à Cotonou.",
-    image: 'https://images.unsplash.com/photo-1519331379826-f10be5486c6f?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1519331379826-f10be5486c6f.jpg',
     category: 'Conseils',
     content: `
       <p>Aménager un jardin à Cotonou demande une bonne connaissance du climat tropical. Voici les 5 erreurs à éviter absolument.</p>
@@ -131,7 +131,7 @@ export const blogPosts = [
       <p>Le sol béninois est souvent argileux et pauvre. Une étude préalable est indispensable.</p>
       <h2>2. Choisir des plantes inadaptées</h2>
       <p>Succomber à une plante vue en magazine sans vérifier son adaptation au climat tropical est une erreur fréquente. Certaines espèces tempérées ne survivent pas aux fortes chaleurs ou à l'humidité béninoises. Consultez un paysagiste pour sélectionner des plantes qui prospèreront chez vous.</p>
-      <h2.3. Sous-estimer l'arrosage</h2>
+      <h2>3. Sous-estimer l'arrosage</h2>
       <p>Un système d'arrosage automatique est presque indispensable en saison sèche.</p>
       <h2>4. Ignorer l'entretien futur</h2>
       <p>Un jardin trop dense devient rapidement une jungle ingérable où les plantes s'étouffent mutuellement. À l'inverse, un jardin trop clairsemé paraît vide et laisse la place aux mauvaises herbes. Il faut anticiper la taille adulte des végétaux et prévoir l'espacement adéquat.</p>
@@ -141,9 +141,9 @@ export const blogPosts = [
   },
   {
     slug: 'contrat-entretien-espaces-verts-entreprise-cotonou',
-    title: "Contrat d'entretien d'espaces verts pour entreprise à Cotonou",
+    title: "Contrat d'entretien espaces verts entreprise",
     excerpt: "Aménagement et entretien d'espaces verts pour entreprises, hôtels et commerces à Cotonou. Contrats professionnels.",
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1566073771259-6a8506099945.jpg',
     category: 'Entreprises',
     content: `
       <p>Aménagement et entretien d'espaces verts pour entreprises, hôtels et commerces à Cotonou. Contrats professionnels, équipes dédiées. Devis gratuit.</p>
@@ -165,9 +165,9 @@ export const blogPosts = [
   },
   {
     slug: 'traitement-phytosanitaire-espaces-verts-cotonou',
-    title: "Traitement phytosanitaire des espaces verts à Cotonou : ce que vous devez savoir",
+    title: "Traitement phytosanitaire des espaces verts",
     excerpt: "Guide expert sur le traitement phytosanitaire des espaces verts à Cotonou. Maladies, parasites, solutions.",
-    image: 'https://images.unsplash.com/photo-1711900177627-1182b446bc8f?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1711900177627-1182b446bc8f.jpg',
     category: 'Guide',
     content: `
       <p>Le traitement phytosanitaire est essentiel pour maintenir la santé de vos espaces verts à Cotonou. Voici ce que vous devez savoir.</p>
@@ -190,7 +190,7 @@ export const blogPosts = [
     slug: 'idees-amenagement-terrasse-benin',
     title: "Idées d'aménagement de terrasse en Bénin",
     excerpt: "Aménagement terrasse Cotonou. Idées et conseils pour végétaliser votre terrasse en Bénin.",
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1600596542815-ffad4c1539a9.jpg',
     category: 'Inspiration',
     content: `
       <p>Une terrasse végétalisée est un havre de paix en plein cœur d'Cotonou. Voici nos idées pour aménager votre terrasse.</p>
@@ -208,9 +208,9 @@ export const blogPosts = [
   },
   {
     slug: 'guide-choisir-paysagiste-cotonou-2026',
-    title: "Guide pour choisir un paysagiste à Cotonou en 2026",
+    title: "Choisir un paysagiste à Cotonou en 2026",
     excerpt: "Guide complet 2026 pour choisir le bon paysagiste à Cotonou. Critères, questions à poser, pièges à éviter.",
-    image: 'https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1558904541-efa843a96f01.jpg',
     category: 'Guide',
     content: `
       <p>Choisir un paysagiste à Cotonou peut sembler complexe. Ce guide 2026 vous donne toutes les clés pour trouver le professionnel idéal et réussir votre projet d'aménagement.</p>
@@ -230,9 +230,9 @@ export const blogPosts = [
   },
   {
     slug: 'entretien-jardin-cotonou-tarifs-conseils',
-    title: "Tout savoir sur l'entretien de jardin à Cotonou : tarifs 2026, fréquence, prestations",
+    title: "Entretien de jardin à Cotonou : tarifs 2026",
     excerpt: "Combien coûte l'entretien d'un jardin à Cotonou ? À quelle fréquence ? Quelles prestations ? Ce guide répond à toutes vos questions.",
-    image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1416879595882-3373a0480b5b.jpg',
     category: 'Prix',
     content: `
       <p>Combien coûte l'entretien d'un jardin à Cotonou ? À quelle fréquence ? Quelles prestations ? Ce guide répond à toutes vos questions sur le jardinage professionnel.</p>
@@ -254,9 +254,9 @@ export const blogPosts = [
   },
   {
     slug: 'amenagement-paysager-benin-tendances',
-    title: "Aménagement paysager en Bénin : les tendances 2026",
+    title: "Tendances du paysagisme au Bénin en 2026",
     excerpt: "Découvrez les tendances 2026 de l'aménagement paysager en Bénin. Jardins durables, éclairage LED, plantes locales.",
-    image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1585320806297-9794b3e4eeae.jpg',
     category: 'Tendances',
     content: `
       <p>Les tendances 2026 de l'aménagement paysager en Bénin évoluent vers plus de durabilité et de respect de l'environnement.</p>
@@ -274,7 +274,7 @@ export const blogPosts = [
     slug: 'meilleurs-plantes-jardin-cotonou',
     title: "Les meilleures plantes pour un jardin à Cotonou",
     excerpt: "Découvrez les meilleures plantes pour un jardin luxuriant à Cotonou. Plantes tropicales, arbres, fleurs.",
-    image: 'https://images.unsplash.com/photo-1461887197298-4b315a1472f5?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1461887197298-4b315a1472f5.jpg',
     category: 'Plantes',
     content: `
       <p>Le climat tropical d'Cotonou permet une grande diversité de plantes. Voici les meilleures pour votre jardin.</p>

@@ -1,4 +1,5 @@
 ---
+import Img from '../../components/Img.astro';
 import Layout from '../../layouts/Layout.astro';
 import PageHeader from '../../components/PageHeader.astro';
 import FAQ from '../../components/FAQ.astro';
@@ -22,8 +23,8 @@ const faqItems = [
 ---
 
 <Layout
-  title="Services Paysagiste Cotonou | Conception, Création, Entretien | Be Clean"
-  description="Services de paysagiste à Cotonou : conception 3D, création de jardins tropicaux, rénovation, entretien d'espaces verts, traitement phytosanitaire. Devis gratuit."
+  title="Services paysagiste Cotonou | Be Clean"
+  description="Services de paysagiste à Cotonou : conception 3D, création de jardins, rénovation, entretien et traitement. Devis gratuit."
 >
   <PageHeader
     badge="Nos Services"
@@ -42,13 +43,13 @@ const faqItems = [
         {services.map((service) => (
           <a href={`/services/${service.slug}`} class="reveal group flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white transition-all duration-300 hover:-translate-y-1.5 hover:border-accent-500/50 hover:shadow-[0_28px_56px_-32px_rgb(16_24_40/0.45)]">
             <div class="relative aspect-[16/10] overflow-hidden bg-primary-100">
-              <img
+              <Img
                 src={service.image}
                 alt={service.shortTitle}
                 loading="lazy"
                 decoding="async"
                 class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.06]"
-              />
+              width="1200" height="800" />
               <div class="absolute inset-0 bg-gradient-to-t from-gray-950/55 via-gray-950/10 to-transparent" aria-hidden="true"></div>
               <span class="absolute bottom-3 left-3 rounded-full bg-white/95 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary-800">
                 {service.shortTitle}

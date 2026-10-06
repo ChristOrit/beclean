@@ -1,6 +1,8 @@
 ---
+import Img from '../../components/Img.astro';
 import Layout from '../../layouts/Layout.astro';
 import CTA from '../../components/CTA.astro';
+import FAQ from '../../components/FAQ.astro';
 import { blogPosts } from '../../data/blog.js';
 
 export function getStaticPaths() {
@@ -13,12 +15,133 @@ export function getStaticPaths() {
 const { post } = Astro.props;
 const readTime = Math.max(2, Math.ceil(post.content.split(/\s+/).length / 200));
 const related = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
+
+const chipsByCategory: Record<string, { href: string; label: string; text: string }[]> = {
+  Plantes: [
+    { href: '/services/creation-jardins', label: 'Création de jardins', text: 'Choisir et planter les bonnes espèces' },
+    { href: '/services/entretien-espaces-verts', label: 'Entretien', text: 'Maintenir vos massifs toute l\'année' },
+    { href: '/jardin-cotonou', label: 'Jardin à Cotonou', text: 'Guide complet du jardin tropical' },
+  ],
+  Entretien: [
+    { href: '/services/entretien-espaces-verts', label: "Contrat d'entretien", text: 'Passages planifiés et équipe dédiée' },
+    { href: '/jardinage-cotonou', label: 'Jardinage', text: 'Tonte, taille, désherbage' },
+    { href: '/secteurs/particuliers', label: 'Particuliers', text: 'Entretien pour villas et résidences' },
+  ],
+  Prix: [
+    { href: '/devis', label: 'Devis gratuit', text: 'Chiffrage sous 24 h' },
+    { href: '/amenagement-paysager-cotonou', label: 'Aménagement paysager', text: 'Prestations et budgets' },
+    { href: '/services/creation-jardins', label: 'Création de jardins', text: 'Création clé en main' },
+  ],
+  Guide: [
+    { href: '/devis', label: 'Demander un devis', text: 'Échangez avec un paysagiste' },
+    { href: '/a-propos', label: 'Qui sommes-nous', text: 'Notre équipe à Cotonou' },
+    { href: '/realisations', label: 'Réalisations', text: 'Nos chantiers livrés' },
+  ],
+  Entreprises: [
+    { href: '/secteurs/entreprises', label: 'Espaces verts entreprises', text: 'Contrats et rapports' },
+    { href: '/services/entretien-espaces-verts', label: "Entretien professionnel", text: 'Équipe dédiée à vos sites' },
+    { href: '/services/traitement-phytosanitaire', label: 'Traitement', text: 'Protection des massifs' },
+  ],
+  Inspiration: [
+    { href: '/services/conception-paysagere', label: 'Conception 3D', text: 'Visualisez avant les travaux' },
+    { href: '/realisations', label: 'Réalisations', text: 'Inspirez-vous de nos jardins' },
+    { href: '/services/creation-jardins', label: 'Création de jardins', text: 'Du plan au chantier' },
+  ],
+  Tendances: [
+    { href: '/services/conception-paysagere', label: 'Conception paysagère', text: 'Plans et modélisation 3D' },
+    { href: '/services/creation-jardins', label: 'Création de jardins', text: 'Jardins modernes et durables' },
+    { href: '/blog', label: 'Tous nos conseils', text: 'Le carnet Be Clean' },
+  ],
+  Conseils: [
+    { href: '/jardinage-cotonou', label: 'Jardinage', text: 'Nos conseils d\'entretien' },
+    { href: '/services/entretien-espaces-verts', label: 'Entretien', text: 'Confiez-le à une équipe' },
+    { href: '/devis', label: 'Devis gratuit', text: 'Un avis sur votre jardin' },
+  ],
+};
+
+const chips = chipsByCategory[post.category] ?? chipsByCategory.Conseils;
+
+const faqByCategory: Record<string, { question: string; answer: string }> = {
+  Plantes: {
+    question: 'Quelles plantes choisir pour un jardin à Cotonou ?',
+    answer:
+      "Privilégiez les espèces adaptées à la chaleur et aux pluies : flamboyants, plumbago, hibiscus, bougainvillier, palmiers et graminées. Nous sélectionnons les végétaux en pépinière locale selon votre exposition et votre sol.",
+  },
+  Entretien: {
+    question: 'À quelle fréquence faut-il entretenir un jardin à Cotonou ?',
+    answer:
+      "En saison des pluies, un passage bimensuel suffit souvent ; en saison sèche, un passage mensuel avec arrosage adapté est préférable. Nos contrats prévoient la bonne fréquence selon votre terrain.",
+  },
+  Prix: {
+    question: 'Combien coûte un aménagement paysager à Cotonou ?',
+    answer:
+      "Une mise en point vert démarre autour de 150 000 FCFA, une création complète de jardin à partir de 500 000 FCFA. Le devis est gratuit, établi après visite et chiffré poste par poste.",
+  },
+  Guide: {
+    question: 'Comment choisir un bon paysagiste à Cotonou ?',
+    answer:
+      "Vérifiez les références photo, la transparence du devis, l'assurance professionnelle et les avis de clients locaux. Be Clean vous remet un devis détaillé et un planning avant tout engagement.",
+  },
+  Entreprises: {
+    question: "Proposez-vous des contrats d'entretien pour les entreprises ?",
+    answer:
+      "Oui : passages planifiés, équipe dédiée, facturation mensuelle et compte rendu d'intervention avec photos pour vos services techniques.",
+  },
+  Inspiration: {
+    question: 'Puis-je voir mon jardin avant les travaux ?',
+    answer:
+      "Oui. Notre service de conception 3D produit des rendus photoréalistes, une vue 360° et une simulation jour/nuit : vous validez le projet avant le premier coup de pelle.",
+  },
+  Tendances: {
+    question: 'Quelles sont les tendances paysagères au Bénin en 2026 ?',
+    answer:
+      "Jardins durables et xérophytes, éclairage LED basse consommation, arrosage intelligent et espaces multifonctions : autant de pistes que nous intégrons déjà dans nos chantiers.",
+  },
+  Conseils: {
+    question: 'Qui peut m’aider à entretenir mon jardin à Cotonou ?',
+    answer:
+      "Une équipe locale, formée au climat tropical : Be Clean intervient chez les particuliers et les professionnels avec des passages planifiés et un interlocuteur unique.",
+  },
+};
+
+const faqBySlug: Record<string, { question: string; answer: string }> = {
+  'comment-choisir-paysagiste-cotonou': {
+    question: 'Quelles questions poser avant de choisir un paysagiste à Cotonou ?',
+    answer:
+      "Demandez des photos de chantiers récents, une assurance professionnelle, un devis poste par poste et un planning écrit. Be Clean fournit l'ensemble de ces éléments avant tout engagement.",
+  },
+  'traitement-phytosanitaire-espaces-verts-cotonou': {
+    question: 'Faut-il traiter son jardin à Cotonou toute l’année ?',
+    answer:
+      "Non : deux à trois traitements préventifs par an suffisent en général, plus une intervention curative si des maladies apparaissent. Nous adaptons le calendrier à la saison des pluies et à l'harmattan.",
+  },
+  'garder-pelouse-verte-saison-seche-cotonou': {
+    question: 'Quel gazon résiste le mieux à la saison sèche à Cotonou ?',
+    answer:
+      "Le gazon Coberco et certaines zoysias résistent bien à la chaleur et à l’eau salée du littoral. Avec un arrosage tôt le matin et un paillage, votre pelouse reste verte de novembre à mars.",
+  },
+  'erreurs-eviter-amenager-jardin-cotonou': {
+    question: 'Quelle est l’erreur la plus fréquente dans un jardin à Cotonou ?',
+    answer:
+      "Choisir des plantes uniquement pour leur aspect, sans regarder le sol ni l’exposition. Une étude simple du terrain évite 80 % des reprises coûteuses la première année.",
+  },
+  'idees-amenagement-terrasse-benin': {
+    question: 'Peut-on végétaliser une terrasse exposée au soleil à Cotonou ?',
+    answer:
+      "Oui : optez pour des espèces résistantes (bougainvillier, aloès, palmiers nains, succulentes), des contenants profonds et un arrosage goutte-à-goutte programmé.",
+  },
+};
+
+const categoryFaq = faqBySlug[post.slug] ?? faqByCategory[post.category] ?? faqByCategory.Conseils;
+const faqItems = [
+  { question: `« ${post.title} » : que faut-il retenir ?`, answer: post.excerpt },
+  categoryFaq,
+];
 ---
 
 <Layout
   title={`${post.title} | Be Clean`}
   description={post.excerpt}
-  canonical={`https://benin-paysage.com/blog/${post.slug}`}
   ogType="article"
 >
   <!-- En-tête d'article -->
@@ -72,13 +195,13 @@ const related = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
   <section class="section-padding bg-white">
     <div class="container-custom">
       <div class="mx-auto max-w-4xl">
-        <img
+        <Img
           src={post.image}
           alt={post.title}
           class="reveal card-lift mb-9 aspect-video w-full rounded-2xl object-cover"
           loading="lazy"
           decoding="async"
-        />
+        width="1200" height="675" />
         <div class="rich reveal" data-split-paragraphs>
           <div set:html={post.content} />
         </div>
@@ -89,6 +212,21 @@ const related = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
             Nos paysagistes se déplacent gratuitement à Cotonou et alentours.
           </p>
           <a href="/devis" class="btn-primary justify-center">Obtenir mon devis</a>
+        </div>
+
+        <!-- Pages liées -->
+        <div class="reveal mt-11">
+          <p class="text-sm font-semibold uppercase tracking-[0.16em] text-gray-500">Pour aller plus loin</p>
+          <div class="stagger mt-4 flex flex-wrap gap-3">
+            {chips.map((item) => (
+              <a href={item.href} class="chip-link reveal" title={item.text}>
+                {item.label}
+                <svg class="h-4 w-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </a>
+            ))}
+          </div>
         </div>
       </div>
     </div>
@@ -111,13 +249,13 @@ const related = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
                 class="group reveal flex flex-col overflow-hidden rounded-2xl border border-gray-100 bg-white transition-all duration-300 hover:-translate-y-1.5 hover:border-accent-500/50 hover:shadow-[0_28px_56px_-32px_rgb(16_24_40/0.45)]"
               >
                 <div class="relative aspect-video overflow-hidden bg-primary-100">
-                  <img
+                  <Img
                     src={item.image}
                     alt={item.title}
                     loading="lazy"
                     decoding="async"
                     class="h-full w-full object-cover transition-transform duration-500 group-hover:scale-[1.06]"
-                  />
+                  width="1200" height="800" />
                   <div class="absolute inset-0 bg-gradient-to-t from-gray-950/45 via-transparent to-transparent" aria-hidden="true" />
                   <span class="absolute left-3 top-3 rounded-full bg-white/95 px-3 py-1 text-[11px] font-semibold uppercase tracking-[0.14em] text-primary-800">
                     {item.category}
@@ -143,6 +281,8 @@ const related = blogPosts.filter((p) => p.slug !== post.slug).slice(0, 3);
       </section>
     )
   }
+
+  <FAQ items={faqItems} eyebrow="À retenir" title="Questions fréquentes sur ce sujet" subtitle="Les réponses aux questions les plus posées à nos paysagistes à Cotonou." />
 
   <CTA
     title="Besoin d'un paysagiste à Cotonou ?"

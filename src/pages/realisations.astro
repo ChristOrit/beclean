@@ -1,4 +1,5 @@
 ---
+import Img from '../components/Img.astro';
 import Layout from '../layouts/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import CTA from '../components/CTA.astro';
@@ -7,55 +8,55 @@ const projects = [
   {
     title: 'Villa contemporaine à Cotonou',
     location: 'Haie Vive, Cotonou',
-    image: 'https://images.unsplash.com/photo-1564013799919-ab600027ffc6?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1564013799919-ab600027ffc6.jpg',
     category: 'residentiel',
   },
   {
     title: "Bureaux d'entreprise Cotonou",
     location: 'Cadjèhoun, Cotonou',
-    image: 'https://images.unsplash.com/photo-1566073771259-6a8506099945?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1566073771259-6a8506099945.jpg',
     category: 'entreprises',
   },
   {
     title: 'Résidence Les Jardins de Porto-Novo',
     location: 'Porto-Novo',
-    image: 'https://images.unsplash.com/photo-1512917774080-9991f1c4c750?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1512917774080-9991f1c4c750.jpg',
     category: 'residentiel',
   },
   {
     title: 'Hôtel Porto-Novo',
     location: 'Porto-Novo',
-    image: 'https://images.unsplash.com/photo-1600596542815-ffad4c1539a9?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1600596542815-ffad4c1539a9.jpg',
     category: 'entreprises',
   },
   {
     title: 'Jardin Villa Akpakpa',
     location: 'Akpakpa, Cotonou',
-    image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1585320806297-9794b3e4eeae.jpg',
     category: 'residentiel',
   },
   {
     title: 'Parc d\'affaires de Parakou',
     location: 'Parakou',
-    image: 'https://images.unsplash.com/photo-1633254103683-33143c7a4d3f?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1633254103683-33143c7a4d3f.jpg',
     category: 'entreprises',
   },
   {
     title: 'Parc municipal de Cotonou',
     location: 'Boulevard de la Marina, Cotonou',
-    image: 'https://images.unsplash.com/photo-1740924771376-7396a0c0c8ca?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1740924771376-7396a0c0c8ca.jpg',
     category: 'publics',
   },
   {
     title: 'Rond-point du Golfe',
     location: 'Cadjèhoun, Cotonou',
-    image: 'https://images.unsplash.com/photo-1688083938768-e77209dc3cc4?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1688083938768-e77209dc3cc4.jpg',
     category: 'publics',
   },
   {
     title: 'Jardin public de Porto-Novo',
     location: 'Porto-Novo',
-    image: 'https://images.unsplash.com/photo-1785644907645-44d865fcb2b8?auto=format&fit=crop&w=800&q=80',
+    image: '/assets/img/photo-1785644907645-44d865fcb2b8.jpg',
     category: 'publics',
   },
 ];
@@ -82,7 +83,7 @@ const stats = [
 ---
 
 <Layout
-  title="Réalisations Paysagiste Cotonou | Be Clean"
+  title="Réalisations paysagiste Cotonou | Be Clean"
   description="Découvrez nos réalisations d'aménagement paysager à Cotonou : villas, entreprises, hôtels. Avant/après, projets sur mesure."
 >
   <PageHeader
@@ -126,13 +127,13 @@ const stats = [
         {projects.map((project) => (
           <article class="group reveal card-lift overflow-hidden rounded-2xl border border-gray-100 bg-white shadow-[0_16px_44px_-30px_rgba(15,46,30,0.5)]" data-category={project.category}>
             <div class="relative aspect-[4/3] overflow-hidden">
-              <img
+              <Img
                 src={project.image}
                 alt={`Réalisation ${project.title} à ${project.location}`}
                 loading="lazy"
                 decoding="async"
                 class="h-full w-full object-cover transition-transform duration-500 ease-out group-hover:scale-105"
-              />
+              width="1200" height="800" />
               <div class="absolute inset-0 bg-gradient-to-t from-gray-950/75 via-gray-950/10 to-transparent"></div>
               <span class="absolute left-4 top-4 rounded-full border border-white/40 bg-white/90 px-3 py-1 text-xs font-bold uppercase tracking-wide text-primary-800 backdrop-blur">
                 {categoryLabel[project.category]}

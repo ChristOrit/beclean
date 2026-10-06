@@ -1,26 +1,27 @@
 ---
+import Img from './Img.astro';
 const projets = [
   {
     titre: "Résidence privée — Haie Vive",
     contexte: "Terrain nu · 320 m² · 5 semaines",
-    avant: "https://images.unsplash.com/photo-1684867430916-ede9dc95eca5?auto=format&fit=crop&w=1200&q=75",
-    apres: "https://images.unsplash.com/photo-1750762286053-28632f48e717?auto=format&fit=crop&w=1200&q=75",
+    avant: "/assets/img/photo-1684867430916-ede9dc95eca5.jpg",
+    apres: "/assets/img/photo-1750762286053-28632f48e717.jpg",
     altAvant: "Cour clôturée avec pelouse morte avant travaux",
     altApres: "Jardin tropical aménagé avec pelouse verte et allée de pierres",
   },
   {
     titre: "Villa familiale — Akpakpa",
     contexte: "Terrain envahi · 180 m² · 3 semaines",
-    avant: "https://images.unsplash.com/photo-1694885170774-f90599352204?auto=format&fit=crop&w=1200&q=75",
-    apres: "https://images.unsplash.com/photo-1779888793240-898dec4b9c08?auto=format&fit=crop&w=1200&q=75",
+    avant: "/assets/img/photo-1694885170774-f90599352204.jpg",
+    apres: "/assets/img/photo-1779888793240-898dec4b9c08.jpg",
     altAvant: "Devanture de maison recouverte d'herbes sèches avant intervention",
     altApres: "Pelouse entretenue avec palmiers et arrosage automatique",
   },
   {
     titre: "Terrain — Abomey-Calavi",
     contexte: "Parcelle en friche · 540 m² · 7 semaines",
-    avant: "https://images.unsplash.com/photo-1780866701868-ddf82ea1f67e?auto=format&fit=crop&w=1200&q=75",
-    apres: "https://images.unsplash.com/photo-1775667447799-14acb2dae9da?auto=format&fit=crop&w=1200&q=75",
+    avant: "/assets/img/photo-1780866701868-ddf82ea1f67e.jpg",
+    apres: "/assets/img/photo-1775667447799-14acb2dae9da.jpg",
     altAvant: "Parcelle en friche avec débris de bois avant aménagement",
     altApres: "Espace aménagé avec bassin, palmiers et végétation dense",
   },
@@ -45,8 +46,8 @@ const projets = [
         projets.map((p) => (
           <article class="reveal">
             <div class="ba" data-ba>
-              <img class="ba-base" src={p.apres} alt={p.altApres} loading="lazy" decoding="async" />
-              <img class="ba-top" src={p.avant} alt={p.altAvant} loading="lazy" decoding="async" />
+              <Img class="ba-base" src={p.apres} alt={p.altApres} loading="lazy" decoding="async" width="1200" height="800" />
+              <Img class="ba-top" src={p.avant} alt={p.altAvant} loading="lazy" decoding="async" width="1200" height="800" />
               <span class="ba-tag ba-tag-before">Avant</span>
               <span class="ba-tag ba-tag-after">Après</span>
               <div class="ba-bar" />

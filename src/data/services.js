@@ -4,7 +4,7 @@ export const services = [
     title: 'Conception paysagère et modélisation 3D',
     shortTitle: 'Conception & modélisation 3D',
     description: 'Conception de Jardin et Modélisation 3D à Cotonou. Visualisez votre futur jardin avant les travaux grâce à nos rendus photoréalistes.',
-    image: 'https://images.unsplash.com/photo-1558904541-efa843a96f01?auto=format&fit=crop&w=1200&q=80',
+    image: '/assets/img/photo-1558904541-efa843a96f01.jpg',
     content: `
       <p>Bien plus que l'agencement de plantes et d'éléments structuraux, la conception est un processus de création sur mesure où l'on matérialise les désirs et les aspirations de nos clients.</p>
       <h2>Visualisez votre futur jardin en 3D</h2>
@@ -30,7 +30,7 @@ export const services = [
     title: 'Création de jardins tropicaux',
     shortTitle: 'Création de jardins',
     description: 'Création de jardins tropicaux à Cotonou. Aménagement complet, plantation, éclairage, arrosage automatique. Devis gratuit.',
-    image: 'https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1200&q=80',
+    image: '/assets/img/photo-1585320806297-9794b3e4eeae.jpg',
     content: `
       <p>Un jardin bien conçu transforme une villa ordinaire en propriété d'exception. À Cotonou, les possibilités sont infinies grâce au climat tropical qui permet une végétation luxuriante.</p>
       <h2>Types d'aménagement paysager que nous réalisons</h2>
@@ -52,7 +52,7 @@ export const services = [
     title: 'Rénovation de jardins',
     shortTitle: 'Rénovation de jardins',
     description: 'Rénovation de jardins à Cotonou. Redonnez vie à votre jardin vieillissant. Diagnostic gratuit et devis personnalisé.',
-    image: 'https://images.unsplash.com/photo-1592417817098-8fd3d9eb14a5?auto=format&fit=crop&w=1200&q=80',
+    image: '/assets/img/photo-1592417817098-8fd3d9eb14a5.jpg',
     content: `
       <p>Un jardin négligé ou vieillissant peut retrouver toute sa splendeur grâce à une rénovation bien menée. À Cotonou, de nombreuses villas possèdent des jardins créés il y a 10 ou 20 ans qui méritent un nouveau souffle.</p>
       <h2>Signes que votre jardin a besoin d'une rénovation</h2>
@@ -79,7 +79,7 @@ export const services = [
     title: "Entretien d'espaces verts",
     shortTitle: "Entretien d'espaces verts",
     description: "Entretien d'espaces verts à Cotonou. Contrats d'entretien hebdomadaires ou bimensuels. Tonte, taille, arrosage, fertilisation.",
-    image: 'https://images.unsplash.com/photo-1416879595882-3373a0480b5b?auto=format&fit=crop&w=1200&q=80',
+    image: '/assets/img/photo-1416879595882-3373a0480b5b.jpg',
     content: `
       <p>Un beau jardin nécessite un entretien régulier. À Cotonou, la croissance rapide de la végétation tropicale exige une attention constante. Be Clean vous propose des contrats d'entretien sur mesure pour maintenir votre jardin en parfait état tout au long de l'année.</p>
       <h2>Un jardin impeccable toute l'année</h2>
@@ -103,7 +103,7 @@ export const services = [
     title: 'Traitement phytosanitaire',
     shortTitle: 'Traitement phytosanitaire',
     description: 'Traitement phytosanitaire professionnel à Cotonou. Lutte contre maladies, parasites et nuisibles des jardins tropicaux. Solutions écologiques.',
-    image: 'https://images.unsplash.com/photo-1711900177627-1182b446bc8f?auto=format&fit=crop&w=1200&q=80',
+    image: '/assets/img/photo-1711900177627-1182b446bc8f.jpg',
     content: `
       <p>Le traitement phytosanitaire professionnel à Cotonou. Lutte contre maladies, parasites et nuisibles des jardins tropicaux. Solutions écologiques. Devis gratuit.</p>
       <h2>Protégez vos plantes des maladies et parasites</h2>

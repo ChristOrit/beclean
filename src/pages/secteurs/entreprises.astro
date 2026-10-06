@@ -1,83 +1,131 @@
 ---
 import Layout from '../../layouts/Layout.astro';
-import PageHeader from '../../components/PageHeader.astro';
-import FAQ from '../../components/FAQ.astro';
-import CTA from '../../components/CTA.astro';
+import SeoLanding from '../../components/SeoLanding.astro';
+
+const steps = [
+  {
+    title: 'Audit de site',
+    text: "Visite de vos espaces, relevé des contraintes d'exploitation et des horaires d'intervention.",
+  },
+  {
+    title: 'Proposition commerciale',
+    text: "Prestations, fréquences, équipe dédiée et budget global transmis sous 24 h ouvrées.",
+  },
+  {
+    title: 'Chantier ou démarrage',
+    text: "Aménagement complet si besoin, puis prise en charge planifiée avec un référent unique.",
+  },
+  {
+    title: 'Rapports mensuels',
+    text: "Compte rendu d'intervention, photos et facturation unique pour vos services techniques.",
+  },
+];
+
+const benefits = [
+  {
+    title: 'Équipes dédiées',
+    text: "La même équipe à chaque passage : vos locataires et vos clients reconnaissent nos jardiniers.",
+  },
+  {
+    title: 'Interventions invisibles',
+    text: "Passages tôt le matin ou en horaires creux pour ne jamais perturber votre activité.",
+  },
+  {
+    title: 'Rapports d’intervention',
+    text: "Compte rendu daté avec photos, transmis à vos services techniques ou à votre gestionnaire.",
+  },
+  {
+    title: 'Facturation unique',
+    text: "Une facture mensuelle claire, un seul interlocuteur administratif, aucun frais imprévu.",
+  },
+  {
+    title: 'Dossier marché prêt',
+    text: "Assurance professionnelle, immatriculation et références de chantiers fournis sur demande.",
+  },
+  {
+    title: 'Réactivité 24 h',
+    text: "Arbre à abattre, massif abîmé avant un événement : nous intervenons sous 48 h.",
+  },
+];
+
+const faq = [
+  {
+    question: "Proposez-vous des contrats d'entretien pour les entreprises ?",
+    answer:
+      "Oui, avec passages planifiés, interlocuteur dédié, facturation mensuelle et rapports d'intervention pour vos services techniques ou immobiliers.",
+  },
+  {
+    question: 'Travaillez-vous avec les hôtels et restaurants ?',
+    answer:
+      "Oui : jardins d'accueil, terrasses, parkings ombragés et espaces piscine. Nous nous adaptons aux horaires d'ouverture pour ne jamais perturber votre activité.",
+  },
+  {
+    question: 'Fournissez-vous les attestations nécessaires aux marchés ?',
+    answer:
+      "Oui : assurance professionnelle, extrait d'immatriculation et références de chantiers sont fournis sur demande, avec devis signé et planning d'intervention.",
+  },
+  {
+    question: 'Peut-on commencer par une mission test ?',
+    answer:
+      "Oui : un premier mois facturé au réel, sans engagement. Si le niveau de finition ne vous convainc pas, aucun abonnement n'est reconduit.",
+  },
+];
+
+const related = [
+  { href: '/services/entretien-espaces-verts', label: "Contrat d'entretien", text: 'Entretien d’espaces verts professionnels' },
+  { href: '/services/conception-paysagere', label: 'Aménagement', text: 'Conception d’espaces verts professionnels' },
+  { href: '/services/traitement-phytosanitaire', label: 'Traitement', text: 'Protection phytosanitaire des massifs' },
+  { href: '/realisations', label: 'Réalisations', text: 'Nos chantiers pour entreprises et hôtels' },
+  { href: '/devis', label: 'Proposition commerciale', text: 'Demander une proposition sous 24 h' },
+];
 ---
 
 <Layout
-  title="Paysagiste Entreprises Cotonou | Espaces verts hôtel | Be Clean"
+  title="Paysagiste entreprises Cotonou | Espaces verts | Be Clean"
   description="Aménagement paysager pour entreprises et hôtels à Cotonou. Contrats d'entretien, espaces verts professionnels. Devis gratuit."
 >
-  <PageHeader
+  <SeoLanding
     badge="Secteurs · Entreprises"
     title="Nos services pour les entreprises"
     accent="hôtels & commerces"
     description="Aménagement et entretien d'espaces verts pour entreprises, hôtels, restaurants et copropriétés à Cotonou : contrats, rapports d'intervention et équipes dédiées."
-  />
+    steps={steps}
+    benefits={benefits}
+    faq={faq}
+    related={related}
+    ctaTitle="Un contrat d'entretien, c'est la tranquillité d'esprit"
+    ctaSubtitle="Demandez une proposition commerciale à Be Clean : chiffrage et planning sous 24 h ouvrées."
+  >
+    <p class="lead">
+      Vos espaces verts sont la première impression que vous donnez à vos clients, partenaires et
+      collaborateurs. Un jardin négligé envoie un message négatif sur votre attention aux détails ;
+      à l'inverse, des espaces soignés renforcent votre image de professionnalisme.
+      <strong>Be Clean</strong> entretient et aménage les jardins d'entreprises, d'hôtels et de
+      résidences à Cotonou.
+    </p>
 
-  <section class="section-padding bg-white">
-    <div class="container-custom">
-      <div class="max-w-4xl mx-auto">
-        <h2 data-split class="text-3xl font-bold text-gray-900 mb-6">Valorisez votre image professionnelle</h2>
-        <p class="reveal text-lg text-gray-600 leading-relaxed mb-6">
-          Vos espaces verts sont la première impression que vous donnez à vos clients, partenaires et collaborateurs. Un jardin négligé envoie un message négatif sur votre attention aux détails. À l'inverse, des espaces soignés renforcent votre image de professionnalisme et de sérieux.
-        </p>
+    <h2>Nos services pour les entreprises</h2>
+    <ul>
+      <li><strong>Conception d'espaces verts professionnels</strong> — aménagement adapté à votre image de marque.</li>
+      <li><strong>Contrats d'entretien</strong> — passages planifiés, équipe dédiée, facturation mensuelle.</li>
+      <li><strong>Parcs et jardins d'entreprise</strong> — campus, sièges sociaux, parkings paysagers.</li>
+      <li><strong>Jardins d'hôtels et de restaurants</strong> — accueil, terrasses et espaces piscine.</li>
+      <li><strong>Copropriétés et résidences</strong> — parties communes entretenues toute l'année.</li>
+      <li><strong>Traitement phytosanitaire</strong> — massifs protégés, intervention curative rapide.</li>
+    </ul>
 
-        <h2 data-split class="text-3xl font-bold text-gray-900 mb-6 mt-12">Nos services pour entreprises</h2>
-        <ul class="space-y-4 text-lg text-gray-600 stagger">
-          <li class="reveal flex items-start gap-3">
-            <svg class="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span><strong>Conception d'espaces verts professionnels</strong> — Aménagement adapté à votre image de marque.</span>
-          </li>
-          <li class="reveal flex items-start gap-3">
-            <svg class="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span><strong>Contrats d'entretien</strong> — Entretien régulier avec équipes dédiées.</span>
-          </li>
-          <li class="reveal flex items-start gap-3">
-            <svg class="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span><strong>Aménagement de parcs et jardins d'entreprise</strong> — Espaces verts pour campus et sièges sociaux.</span>
-          </li>
-          <li class="reveal flex items-start gap-3">
-            <svg class="w-6 h-6 text-primary-600 mt-1 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7" />
-            </svg>
-            <span><strong>Jardins d'hôtels</strong> — Aménagement paysager pour hôtels et resorts.</span>
-          </li>
-        </ul>
-      </div>
-    </div>
-  </section>
+    <h2>Des espaces verts pensés pour l'exploitation</h2>
+    <p>
+      Nos équipes interviennent tôt le matin, en horaires creux ou pendant vos travaux, pour ne
+      jamais couper l'accès à votre établissement. Chaque passage fait l'objet d'un compte rendu
+      daté avec photos, transmis à votre service technique ou à votre gestionnaire.
+    </p>
 
-  <FAQ
-    items={[
-    {
-      question: "Proposez-vous des contrats d'entretien pour les entreprises ?",
-      answer: "Oui, avec passages planifiés, interlocuteur dédié, facturation mensuelle et rapports d'intervention pour vos services techniques ou immobiliers."
-    },
-    {
-      question: "Travaillez-vous avec les hôtels et restaurants ?",
-      answer: "Oui : jardins d'accueil, terrasses, parkings ombragés et espaces piscine. Nous nous adaptons aux horaires d'ouverture pour ne jamais perturber votre activité."
-    },
-    {
-      question: "Fournissez-vous les attestations nécessaires aux marchés ?",
-      answer: "Oui : assurance professionnelle, extrait d'immatriculation et références de chantiers sont fournis sur demande."
-    },
-    ]}
-    subtitle="Questions fréquentes de nos clients {'« particuliers »' if False else ''}."
-  />
-
-  <CTA
-    title="Un contrat d'entretien, c'est la tranquillité d'esprit"
-    subtitle="Demandez une proposition commerciale à Be Clean : réponse sous 24h."
-    secondaryText="Voir nos réalisations"
-    secondaryHref="/realisations"
-  />
-
+    <h2>Un interlocuteur unique pour tous vos sites</h2>
+    <p>
+      Un référent Be Clean suit vos lieux à Cotonou, Abomey-Calavi et Porto-Novo : un seul appel
+      pour signaler un besoin, une seule facture mensuelle, et la possibilité de regrouper
+      plusieurs adresses sur le même contrat.
+    </p>
+  </SeoLanding>
 </Layout>

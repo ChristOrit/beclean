@@ -1,4 +1,5 @@
 ---
+import Img from './Img.astro';
 import fs from 'node:fs';
 import path from 'node:path';
 
@@ -12,4 +13,4 @@ const pngExists = fs.existsSync(path.join(process.cwd(), 'public/assets/logo.png
 const src = pngExists ? '/assets/logo.png' : '/assets/logo.svg';
 ---
 
-<img src={src} alt="Be Clean" class={className} width="140" height="140" />
+<Img src={src} alt="Be Clean" class={className} width="140" height="140" decoding="async" fetchpriority="low" />

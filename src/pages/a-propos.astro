@@ -1,4 +1,5 @@
 ---
+import Img from '../components/Img.astro';
 import Layout from '../layouts/Layout.astro';
 import CTA from '../components/CTA.astro';
 import PageHeader from '../components/PageHeader.astro';
@@ -35,13 +36,13 @@ import PageHeader from '../components/PageHeader.astro';
       </div>
       <div class="reveal">
         <div class="relative overflow-hidden rounded-3xl shadow-[0_36px_70px_-42px_rgb(16_24_40/0.5)]">
-          <img
-            src="https://images.unsplash.com/photo-1585320806297-9794b3e4eeae?auto=format&fit=crop&w=1200&q=80"
+          <Img
+            src="/assets/img/photo-1585320806297-9794b3e4eeae.jpg"
             alt="Jardin tropical entretenu à Cotonou"
             class="aspect-[4/3] w-full object-cover"
             loading="lazy"
             decoding="async"
-          />
+          width="1200" height="900" />
         </div>
       </div>
     </div>

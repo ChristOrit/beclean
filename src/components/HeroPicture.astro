@@ -1,0 +1,45 @@
+---
+/**
+ * Image d'accroche responsive : AVIF > WebP > JPEG, trois largeurs selon
+ * la taille de l'écran. `fetchpriority="high"` uniquement sur la variante
+ * principale (LCP), lazy sur les variantes secondaires.
+ */
+interface Props {
+  alt: string;
+  class?: string;
+  priority?: boolean;
+  ariaHidden?: boolean;
+}
+
+const { alt, class: className = '', priority = false, ariaHidden = false } = Astro.props;
+
+const widths = [720, 1100, 1600];
+const dims: Record<number, [number, number]> = {
+  720: [720, 408],
+  1100: [1100, 623],
+  1600: [1600, 907],
+};
+
+const base = '/assets/hero-garden';
+const srcset = (ext: string) => widths.map((w) => `${base}-${w}.${ext} ${w}w`).join(', ');
+const fallback = `${base}-1600.jpg`;
+const [fw, fh] = dims[1600];
+---
+
+<picture>
+  <source type="image/avif" srcset={srcset('avif')} sizes="100vw" />
+  <source type="image/webp" srcset={srcset('webp')} sizes="100vw" />
+  <img
+    src={fallback}
+    srcset={srcset('jpg')}
+    sizes="100vw"
+    width={fw}
+    height={fh}
+    alt={alt}
+    class={className}
+    decoding="async"
+    loading={priority ? 'eager' : 'lazy'}
+    fetchpriority={priority ? 'high' : undefined}
+    aria-hidden={ariaHidden || undefined}
+  />
+</picture>

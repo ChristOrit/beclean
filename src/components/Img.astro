@@ -1,0 +1,70 @@
+---
+/**
+ * <Img> : comme <img>, mais sert automatiquement les variantes AVIF et WebP
+ * lorsqu'elles existent à côté du JPEG dans public/. Sinon, <img> strict.
+ */
+import fs from 'node:fs';
+import path from 'node:path';
+
+interface Props {
+  src: string;
+  alt: string;
+  class?: string;
+  width?: number | string;
+  height?: number | string;
+  loading?: 'eager' | 'lazy';
+  decoding?: 'async' | 'auto' | 'sync';
+  fetchpriority?: 'high' | 'low' | 'auto';
+  'aria-hidden'?: string;
+}
+
+const {
+  src,
+  alt,
+  class: className,
+  width,
+  height,
+  loading,
+  decoding,
+  fetchpriority,
+  'aria-hidden': ariaHidden,
+} = Astro.props;
+
+const isLocal = typeof src === 'string' && /^\/assets\/[\w./-]+\.jpe?g$/.test(src);
+const base = isLocal ? src.replace(/\.jpe?g$/, '') : '';
+const publicDir = path.join(process.cwd(), 'public');
+const hasAvif = isLocal && fs.existsSync(path.join(publicDir, `${base}.avif`));
+const hasWebp = isLocal && fs.existsSync(path.join(publicDir, `${base}.webp`));
+---
+
+{
+  hasAvif || hasWebp ? (
+    <picture>
+      {hasAvif && <source type="image/avif" srcset={`${base}.avif`} />}
+      {hasWebp && <source type="image/webp" srcset={`${base}.webp`} />}
+      <img
+        src={src}
+        alt={alt}
+        class={className}
+        width={width}
+        height={height}
+        loading={loading}
+        decoding={decoding ?? 'async'}
+        fetchpriority={fetchpriority}
+        aria-hidden={ariaHidden}
+      />
+    </picture>
+  ) : (
+    <img
+      src={src}
+      alt={alt}
+      class={className}
+      width={width}
+      height={height}
+      loading={loading}
+      decoding={decoding ?? 'async'}
+      fetchpriority={fetchpriority}
+      aria-hidden={ariaHidden}
+    />
+  )
+}
