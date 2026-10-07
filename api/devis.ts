@@ -1,5 +1,5 @@
-import { handleLead } from '../src/lib/mailer';
-import type { VercelRequest, VercelResponse } from '../src/lib/vercel';
+import { handleLead } from './_lib/mailer';
+import type { VercelRequest, VercelResponse } from './_lib/vercel';
 
 export default async function handler(req: VercelRequest, res: VercelResponse) {
   if (req.method !== 'POST') {
