@@ -1,0 +1,133 @@
+---
+/**
+ * Handler commun des formulaires marqués `data-lead-form` :
+ * anti-spam (honeypot + time-trap), POST JSON, statut en ligne,
+ * et repli WhatsApp systématique.
+ */
+---
+
+<script>
+  type LeadResponse = { ok: boolean; delivered?: boolean; whatsapp?: string; error?: string };
+
+  const checkSvg =
+    '<svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-primary-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M5 13l4 4m0 0l-4 4m4-4H3"/></svg>';
+  const alertSvg =
+    '<svg class="mt-0.5 h-4 w-4 flex-shrink-0 text-amber-700" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" d="M12 9v4m0 4h.01M4.93 19h14.14a2 2 0 001.74-3L13.74 4a2 2 0 00-3.48 0L3.19 16a2 2 0 001.74 3z"/></svg>';
+
+  const SERVICE_LABELS: Record<string, string> = {
+    conception: 'Conception paysagère',
+    creation: 'Création de jardins',
+    renovation: 'Rénovation de jardins',
+    entretien: 'Entretien espaces verts',
+    traitement: 'Traitement phytosanitaire',
+    arrosage: "Système d'arrosage",
+    autre: 'Autre',
+  };
+
+  function whatsappText(form: HTMLFormElement, kind: string): string {
+    const get = (n: string) => (form.elements.namedItem(n) as HTMLInputElement | null)?.value?.trim() || '';
+    const service = get('service');
+    return encodeURIComponent(
+      [
+        `Bonjour Be Clean, je vous contacte via votre site (${kind === 'Devis' ? 'demande de devis' : 'page contact'}).`,
+        '',
+        `Nom : ${get('name') || '—'}`,
+        `Téléphone : ${get('phone') || '—'}`,
+        service ? `Service : ${SERVICE_LABELS[service] || service}` : '',
+        get('zone') ? `Commune : ${get('zone')}` : '',
+        '',
+        get('message'),
+      ]
+        .filter((l) => l !== undefined)
+        .join('\n'),
+    );
+  }
+
+  function renderStatus(el: HTMLElement | null, tone: 'ok' | 'warn' | 'error', html: string) {
+    if (!el) return;
+    const tones = {
+      ok: 'border-primary-200 bg-primary-50 text-primary-900',
+      warn: 'border-amber-200 bg-amber-50 text-amber-900',
+      error: 'border-red-200 bg-red-50 text-red-900',
+    } as const;
+    el.className = `mt-4 flex flex-col gap-3 rounded-xl border p-4 text-sm leading-relaxed ${tones[tone]}`;
+    el.innerHTML = html;
+    el.hidden = false;
+    el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  }
+
+  document.querySelectorAll<HTMLFormElement>('[data-lead-form]').forEach((form) => {
+    const endpoint = form.dataset.endpoint || '/api/contact';
+    const kind = form.dataset.kind || 'Message';
+    const status = form.querySelector<HTMLElement>('[data-form-status]');
+    const button = form.querySelector<HTMLButtonElement>('[data-submit]');
+    const label = form.querySelector<HTMLElement>('[data-submit-label]');
+    const tsField = form.querySelector<HTMLInputElement>('input[name="ts"]');
+
+    if (tsField) tsField.value = String(Date.now());
+
+    const waUrl = () => `https://wa.me/22967592319?text=${whatsappText(form, kind)}`;
+    const waButton = (text: string) =>
+      `<a href="${waUrl()}" target="_blank" rel="noopener" class="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 font-semibold text-white transition hover:brightness-105">${text}</a>`;
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      if (!form.reportValidity()) return;
+
+      const payload = Object.fromEntries(new FormData(form).entries());
+      if (button) button.disabled = true;
+      if (label) label.textContent = 'Envoi en cours…';
+      if (status) status.hidden = true;
+
+      try {
+        const res = await fetch(endpoint, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data: LeadResponse = await res.json().catch(() => ({ ok: false }));
+
+        if (res.ok && data.ok) {
+          form.reset();
+          if (tsField) tsField.value = String(Date.now());
+          if (data.delivered) {
+            renderStatus(
+              status,
+              'ok',
+              `<span class="flex gap-2 font-semibold">${checkSvg} Votre message est bien parti.</span>
+               <span>Nous vous répondons sous 24 h ouvrées. Pour une réponse immédiate, continuez sur WhatsApp :</span>
+               ${waButton('Continuer sur WhatsApp')}`,
+            );
+          } else {
+            renderStatus(
+              status,
+              'warn',
+              `<span class="flex gap-2 font-semibold">${alertSvg} Envoi e-mail momentanément indisponible.</span>
+               <span>Votre demande n'est pas perdue : envoyez-la directement sur WhatsApp, nous y répondons en priorité.</span>
+               ${waButton('Envoyer sur WhatsApp')}`,
+            );
+          }
+        } else {
+          renderStatus(
+            status,
+            'error',
+            `<span class="flex gap-2 font-semibold">${alertSvg} ${data.error || "L'envoi a échoué."}</span>
+             <span>Vérifiez les champs obligatoires, ou passez par WhatsApp / téléphone :</span>
+             ${waButton('Envoyer sur WhatsApp')}
+             <a href="tel:+2290167592319" class="font-semibold underline underline-offset-2">+229 01 67 59 23 19</a>`,
+          );
+        }
+      } catch {
+        renderStatus(
+          status,
+          'error',
+          `<span class="flex gap-2 font-semibold">${alertSvg} Connexion impossible.</span>
+           <span>Votre demande peut partir par WhatsApp : ${waButton('Envoyer sur WhatsApp')}</span>`,
+        );
+      } finally {
+        if (button) button.disabled = false;
+        if (label) label.textContent = kind === 'Devis' ? 'Envoyer ma demande de devis' : 'Envoyer le message';
+      }
+    });
+  });
+</script>

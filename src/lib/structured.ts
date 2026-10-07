@@ -4,7 +4,7 @@ export const NAP = {
   name: 'Be Clean',
   alternateName: 'Paysage Plus Cotonou',
   telephone: '+2290167592319',
-  email: 'contact@benin-paysage.com',
+  email: 'oritchrist@gmail.com',
   street: 'Rue 12.045, Haie Vive',
   city: 'Cotonou',
   region: 'Littoral',

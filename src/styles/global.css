@@ -45,8 +45,8 @@
 
   /* Sur-titre de section */
   .eyebrow {
-    @apply inline-flex items-center gap-2 text-[11px] font-semibold uppercase tracking-[0.18em];
-    color: #8a6414; /* 5.37:1 sur blanc — AA pour du 11px */
+    @apply inline-flex items-center gap-2 text-xs font-semibold uppercase tracking-[0.18em];
+    color: #8a6414; /* 5.37:1 sur blanc — AA */
   }
   .eyebrow::before {
     content: '';
@@ -401,16 +401,27 @@ html.js [data-split].in .w {
   }
 }
 .t-dot {
+  position: relative;
+  width: 40px;
+  height: 40px;
+  background: transparent;
+  border: 0;
+  padding: 0;
+  cursor: pointer;
+}
+.t-dot::after {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  translate: -50% -50%;
   width: 8px;
   height: 8px;
   border-radius: 9999px;
   background: #d1d5db;
-  border: 0;
-  padding: 0;
-  cursor: pointer;
   transition: width 0.3s cubic-bezier(0.16, 1, 0.3, 1), background-color 0.3s ease;
 }
-.t-dot[aria-current='true'] {
+.t-dot[aria-current='true']::after {
   width: 26px;
   background: #3a7d34;
 }
@@ -545,7 +556,7 @@ html.js [data-split].in .w {
     box-shadow: 0 24px 48px -28px rgb(16 24 40 / 0.35);
   }
   .chip-link {
-    @apply inline-flex cursor-pointer items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2 text-sm font-medium text-gray-700 transition-all duration-200;
+    @apply inline-flex cursor-pointer items-center gap-2 rounded-full border border-gray-200 bg-white px-4 py-2.5 text-sm font-medium text-gray-700 transition-all duration-200;
   }
   .chip-link:hover {
     border-color: #3a7d34;
@@ -565,6 +576,11 @@ html.js [data-split].in .w {
     position: relative;
     display: inline-block;
     transition: color 0.2s ease, padding-left 0.2s ease;
+  }
+  @media (max-width: 767px) {
+    .footer-link {
+      padding-block: 0.625rem;
+    }
   }
   .footer-link::before {
     content: '';
@@ -587,7 +603,7 @@ html.js [data-split].in .w {
     width: 9px;
   }
   .footer-title {
-    @apply mb-5 text-[11px] font-semibold uppercase tracking-[0.2em] text-accent-400;
+    @apply mb-5 text-xs font-semibold uppercase tracking-[0.2em] text-accent-400;
   }
   .footer-panel {
     background: rgb(255 255 255 / 0.045);

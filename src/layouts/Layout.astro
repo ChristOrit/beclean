@@ -305,7 +305,12 @@ if (isHome) {
           var handle = root.querySelector('.ba-handle');
           var pos = 50;
           var setPos = function (pct) {
-            pos = Math.max(2, Math.min(98, pct));
+            var rect = root.getBoundingClientRect();
+            var hw = handle ? handle.getBoundingClientRect().width : 0;
+            // garde la poignée entièrement dans le cadre (pas de débordement clipé)
+            var margin = rect.width > 0 && hw > 0 ? (hw / 2 / rect.width) * 100 : 4;
+            margin = Math.min(margin, 30);
+            pos = Math.max(margin, Math.min(100 - margin, pct));
             root.style.setProperty('--pos', pos + '%');
             if (handle) handle.setAttribute('aria-valuenow', Math.round(pos));
           };
@@ -352,8 +357,8 @@ if (isHome) {
             handle.addEventListener('keydown', function (e) {
               if (e.key === 'ArrowLeft') { setPos(pos - 4); e.preventDefault(); }
               if (e.key === 'ArrowRight') { setPos(pos + 4); e.preventDefault(); }
-              if (e.key === 'Home') { setPos(2); e.preventDefault(); }
-              if (e.key === 'End') { setPos(98); e.preventDefault(); }
+              if (e.key === 'Home') { setPos(0); e.preventDefault(); }
+              if (e.key === 'End') { setPos(100); e.preventDefault(); }
             });
             handle.addEventListener('click', function (e) { e.preventDefault(); });
           }
