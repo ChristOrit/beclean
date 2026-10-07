@@ -1,11 +1,3 @@
-import { handleLead } from '../src/lib/mailer';
-import type { VercelRequest, VercelResponse } from '../src/lib/vercel';
-
-export default async function handler(req: VercelRequest, res: VercelResponse) {
-  if (req.method !== 'POST') {
-    res.status(405).json({ ok: false, error: 'Method not allowed' });
-    return;
-  }
-  const result = await handleLead('Message', (req.body ?? {}) as Record<string, string>);
-  res.status(result.ok ? 200 : 400).json(result);
+export default function handler(req: { method?: string }, res: { status: (c: number) => unknown; json: (p: unknown) => unknown }) {
+  res.status(200).json({ ok: true, probe: 'minimal-v1', method: req.method ?? 'none' });
 }
