@@ -70,3 +70,15 @@ export const zones = [
 /** Liens dérivés de la config (jamais recodés). */
 export const telHref = `tel:${contact.phoneE164}`;
 export const whatsappHref = `https://wa.me/${contact.whatsapp}`;
+
+/**
+ * Réseaux sociaux.
+ * Tant qu'une URL est vide (''), l'icône reste affichée mais désactivée
+ * (« bientôt disponible »). Renseigner l'URL suffit à activer le lien.
+ */
+export const socialUrls = {
+  facebook: '',
+  instagram: '',
+  linkedin: '',
+};
+
