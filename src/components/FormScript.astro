@@ -7,6 +7,8 @@
 ---
 
 <script>
+  import { contact, telHref, whatsappHref } from '../data/site.js';
+
   type LeadResponse = { ok: boolean; delivered?: boolean; whatsapp?: string; error?: string };
 
   const checkSvg =
@@ -29,10 +31,11 @@
     const service = get('service');
     return encodeURIComponent(
       [
-        `Bonjour Be Clean, je vous contacte via votre site (${kind === 'Devis' ? 'demande de devis' : 'page contact'}).`,
+        `Bonjour BeClean, je vous contacte via votre site (${kind === 'Devis' ? 'demande de devis' : 'page contact'}).`,
         '',
         `Nom : ${get('name') || '—'}`,
         `Téléphone : ${get('phone') || '—'}`,
+        get('email') ? `E-mail : ${get('email')}` : '',
         service ? `Service : ${SERVICE_LABELS[service] || service}` : '',
         get('zone') ? `Commune : ${get('zone')}` : '',
         '',
@@ -66,7 +69,7 @@
 
     if (tsField) tsField.value = String(Date.now());
 
-    const waUrl = () => `https://wa.me/22967592319?text=${whatsappText(form, kind)}`;
+    const waUrl = () => `${whatsappHref}?text=${whatsappText(form, kind)}`;
     const waButton = (text: string) =>
       `<a href="${waUrl()}" target="_blank" rel="noopener" class="inline-flex cursor-pointer items-center justify-center gap-2 rounded-full bg-[#25D366] px-5 py-2.5 font-semibold text-white transition hover:brightness-105">${text}</a>`;
 
@@ -114,7 +117,7 @@
             `<span class="flex gap-2 font-semibold">${alertSvg} ${data.error || "L'envoi a échoué."}</span>
              <span>Vérifiez les champs obligatoires, ou passez par WhatsApp / téléphone :</span>
              ${waButton('Envoyer sur WhatsApp')}
-             <a href="tel:+2290167592319" class="font-semibold underline underline-offset-2">+229 01 67 59 23 19</a>`,
+             <a href={telHref} class="font-semibold underline underline-offset-2">${contact.phoneDisplay}</a>`,
           );
         }
       } catch {

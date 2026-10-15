@@ -14,8 +14,8 @@ const {
 } = Astro.props;
 
 const baseId = `faq-${Math.random().toString(36).slice(2, 8)}`;
-const speed = 12;
-const startDelay = 260;
+const speed = 58;
+const startDelay = 200;
 ---
 
 <section class="py-16 md:py-24 bg-white">
@@ -66,7 +66,9 @@ const startDelay = 260;
             <div class="faq-panel" id={panelId} role="region" aria-labelledby={btnId}>
               <div class="faq-panel-inner">
                 <p class="faq-answer">
-                  {[...item.answer].map((ch) => <span class="faq-char">{ch}</span>)}
+                  {item.answer.split(' ').map((word, wi) => (
+                    <>{wi > 0 && ' '}<span class="faq-word">{word}</span></>
+                  ))}
                   <span class="faq-caret" aria-hidden="true"></span>
                 </p>
               </div>
@@ -215,11 +217,14 @@ const startDelay = 260;
     }
   }
 
-  [data-faq-root][data-js] .faq-char {
+  [data-faq-root][data-js] .faq-word {
     opacity: 0;
+    transform: translateY(3px);
+    transition: opacity 0.35s ease, transform 0.35s ease;
   }
-  [data-faq-root][data-js] .faq-char.is-on {
+  [data-faq-root][data-js] .faq-word.is-on {
     opacity: 1;
+    transform: none;
   }
 
   .faq-caret {
@@ -272,12 +277,12 @@ const startDelay = 260;
       const items = Array.from(root.querySelectorAll('.faq-item'));
 
       function finish(item) {
-        item.querySelectorAll('.faq-char').forEach(function (c) {
+        item.querySelectorAll('.faq-word').forEach(function (c) {
           c.classList.add('is-on');
         });
         const caret = item.querySelector('.faq-caret');
         if (caret) caret.remove();
-        item.dataset.idx = String(item.querySelectorAll('.faq-char').length);
+        item.dataset.idx = String(item.querySelectorAll('.faq-word').length);
         delete item._t;
       }
 
@@ -286,23 +291,24 @@ const startDelay = 260;
           delete item._t;
           return;
         }
-        const chars = item.querySelectorAll('.faq-char');
+        const words = item.querySelectorAll('.faq-word');
         let i = parseInt(item.dataset.idx || '0', 10);
 
-        if (i >= chars.length) {
+        if (i >= words.length) {
           finish(item);
           return;
         }
 
-        const ch = chars[i];
-        ch.classList.add('is-on');
+        const word = words[i];
+        word.classList.add('is-on');
         i += 1;
         item.dataset.idx = String(i);
 
         const caret = item.querySelector('.faq-caret');
-        if (caret && chars[i]) chars[i].before(caret);
+        if (caret && words[i]) words[i].before(caret);
 
-        const pause = '.,;:!?\u2026'.indexOf(ch.textContent) > -1 ? 170 : 0;
+        const text = word.textContent || '';
+        const pause = /[.\u2026]$/.test(text) ? 200 : /[,;:!?]$/.test(text) ? 120 : 0;
         item._t = setTimeout(function () {
           tick(item);
         }, speed + pause);
@@ -314,8 +320,8 @@ const startDelay = 260;
           return;
         }
         if (item._t) return;
-        const chars = item.querySelectorAll('.faq-char');
-        if (parseInt(item.dataset.idx || '0', 10) >= chars.length) return;
+        const words = item.querySelectorAll('.faq-word');
+        if (parseInt(item.dataset.idx || '0', 10) >= words.length) return;
         item._t = setTimeout(function () {
           tick(item);
         }, startDelay);

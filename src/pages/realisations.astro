@@ -3,6 +3,7 @@ import Img from '../components/Img.astro';
 import Layout from '../layouts/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
 import CTA from '../components/CTA.astro';
+import { stats as siteStats, experienceLabel } from '../data/site.js';
 
 const projects = [
   {
@@ -75,15 +76,15 @@ const categoryLabel: Record<string, string> = {
 };
 
 const stats = [
-  { value: '120+', label: 'projets livrés' },
-  { value: '13+', label: 'ans au Bénin' },
-  { value: '9', label: 'réalisations à découvrir' },
+  { value: siteStats.projectsLabel, label: 'projets livrés' },
+  { value: experienceLabel, label: 'ans au Bénin' },
+  { value: String(projects.length), label: 'réalisations à découvrir' },
   { value: '4', label: 'communes couvertes' },
 ];
 ---
 
 <Layout
-  title="Réalisations paysagiste Cotonou | Be Clean"
+  title="Réalisations paysagiste Cotonou | BeClean"
   description="Découvrez nos réalisations d'aménagement paysager à Cotonou : villas, entreprises, hôtels. Avant/après, projets sur mesure."
 >
   <PageHeader
@@ -120,7 +121,7 @@ const stats = [
             {filter.label}
           </button>
         ))}
-        <span class="ml-1 text-sm text-gray-500" data-count>{projects.length} réalisations</span>
+        <span class="ml-1 text-sm text-gray-500" data-results-count>{projects.length} réalisations</span>
       </div>
 
       <div class="grid grid-cols-1 gap-7 md:grid-cols-2 lg:grid-cols-3 stagger">
@@ -209,7 +210,7 @@ const stats = [
           project.style.transitionDelay = '';
         }
       });
-      const counter = document.querySelector('[data-count]');
+      const counter = document.querySelector('[data-results-count]');
       if (counter) counter.textContent = visibleCount + ' réalisation' + (visibleCount > 1 ? 's' : '');
     });
   });

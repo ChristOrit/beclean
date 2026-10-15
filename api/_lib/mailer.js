@@ -1,8 +1,12 @@
+import { site, contact } from "../../src/data/site.js";
+
+// Coordonnées centralisées dans src/data/site.js (source unique de vérité).
 const NAP = {
-  phone: "+229 01 67 59 23 19",
-  whatsapp: "22967592319",
-  to: "oritchrist@gmail.com"
+  phone: contact.phoneDisplay,
+  whatsapp: contact.whatsapp,
+  to: contact.email
 };
+const SITE_HOST = new URL(site.url).host;
 const SERVICE_LABELS = {
   conception: "Conception paysagère et modélisation 3D",
   creation: "Création de jardins tropicaux",
@@ -31,7 +35,7 @@ function row(heading, value) {
   if (!value) return "";
   return `<tr><td style="padding:8px 12px;background:#f5f7f5;color:#555;font:600 12px/1.4 system-ui,sans-serif;text-transform:uppercase;letter-spacing:.06em;vertical-align:top;width:170px">${heading}</td><td style="padding:8px 12px;font:15px/1.6 system-ui,sans-serif;color:#111;white-space:pre-wrap">${escapeHtml(value)}</td></tr>`;
 }
-async function sendViaResend(subject, html, text) {
+async function sendViaResend(subject, html, text, replyTo) {
   const apiKey = process.env.RESEND_API_KEY;
   if (!apiKey) return false;
   try {
@@ -39,9 +43,9 @@ async function sendViaResend(subject, html, text) {
       method: "POST",
       headers: { Authorization: `Bearer ${apiKey}`, "Content-Type": "application/json" },
       body: JSON.stringify({
-        from: process.env.RESEND_FROM || "Be Clean <onboarding@resend.dev>",
+        from: process.env.RESEND_FROM || "BeClean <onboarding@resend.dev>",
         to: [process.env.LEADS_TO_EMAIL || NAP.to],
-        reply_to: NAP.to,
+        reply_to: replyTo || NAP.to,
         subject,
         html,
         text
@@ -67,7 +71,7 @@ async function handleLead(kind, body) {
   const honeypot = clean(body.website, 40);
   const ts = Number(body.ts) || 0;
   const wa = whatsappUrl([
-    `Bonjour Be Clean, je vous contacte via votre site (${kind === "Devis" ? "demande de devis" : "page contact"}).`,
+    `Bonjour BeClean, je vous contacte via votre site (${kind === "Devis" ? "demande de devis" : "page contact"}).`,
     "",
     `Nom : ${name || "—"}`,
     `Téléphone : ${phone || "—"}`,
@@ -86,12 +90,12 @@ async function handleLead(kind, body) {
   if (!ts || Date.now() - ts < MIN_FILL_MS) {
     return { ok: false, delivered: false, whatsapp: wa, error: "Envoi trop rapide, merci de réessayer." };
   }
-  const subject = `[Be Clean] ${kind === "Devis" ? "Nouveau devis" : "Nouveau message"} — ${name}${zone ? ` (${zone})` : ""}`;
+  const subject = `[BeClean] ${kind === "Devis" ? "Nouveau devis" : "Nouveau message"} — ${name}${zone ? ` (${zone})` : ""}`;
   const html = `<!doctype html><html><body style="margin:0;background:#f2f4f2;padding:24px">
   <div style="max-width:640px;margin:0 auto;background:#fff;border-radius:14px;overflow:hidden;border:1px solid #e4e8e4">
     <div style="background:#2f5d2a;padding:20px 24px">
-      <p style="margin:0;font:700 18px/1.3 system-ui,sans-serif;color:#fff">Be Clean — ${kind === "Devis" ? "Demande de devis" : "Nouveau message"}</p>
-      <p style="margin:6px 0 0;font:13px/1.4 system-ui,sans-serif;color:#c9e0c4">Reçu depuis ${escapeHtml(body.source || "beclean-benin.vercel.app")}</p>
+      <p style="margin:0;font:700 18px/1.3 system-ui,sans-serif;color:#fff">BeClean — ${kind === "Devis" ? "Demande de devis" : "Nouveau message"}</p>
+      <p style="margin:6px 0 0;font:13px/1.4 system-ui,sans-serif;color:#c9e0c4">Reçu depuis ${escapeHtml(body.source || SITE_HOST)}</p>
     </div>
     <table style="width:100%;border-collapse:collapse">
       ${row("Nom", name)}
@@ -107,7 +111,7 @@ async function handleLead(kind, body) {
   </div>
 </body></html>`;
   const text = [
-    `Be Clean — ${kind === "Devis" ? "Demande de devis" : "Nouveau message"}`,
+    `BeClean — ${kind === "Devis" ? "Demande de devis" : "Nouveau message"}`,
     `Nom : ${name}`,
     `Téléphone : ${phone}`,
     email ? `E-mail : ${email}` : "",
@@ -118,7 +122,7 @@ async function handleLead(kind, body) {
     "",
     `Répondre sur WhatsApp : ${wa}`
   ].filter(Boolean).join("\n");
-  const delivered = await sendViaResend(subject, html, text);
+  const delivered = await sendViaResend(subject, html, text, email);
   if (!delivered) console.warn("[lead] email non livré (RESEND_API_KEY manquante ou erreur)", { kind, name });
   return { ok: true, delivered, whatsapp: wa };
 }

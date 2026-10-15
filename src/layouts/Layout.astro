@@ -4,6 +4,7 @@ import Header from '../components/Header.astro';
 import Footer from '../components/Footer.astro';
 import { breadcrumbsFromPath, breadcrumbList } from '../lib/breadcrumb';
 import { websiteData } from '../lib/structured';
+import { site } from '../data/site.js';
 
 interface Props {
   title: string;
@@ -20,7 +21,7 @@ const {
   title,
   description,
   canonical,
-  ogImage = 'https://beclean-benin.vercel.app/og-image.jpg',
+  ogImage = `${site.url}${site.ogImage}`,
   ogType = 'website',
   structuredData,
   noindex = false,
@@ -63,7 +64,7 @@ if (isHome) {
     <meta property="og:url" content={url} />
     <meta property="og:image" content={ogImage} />
     <meta property="og:locale" content="fr_BJ" />
-    <meta property="og:site_name" content="Be Clean" />
+    <meta property="og:site_name" content="BeClean" />
 
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:title" content={title} />
@@ -437,7 +438,11 @@ if (isHome) {
           root.addEventListener('focusout', start);
 
           measure();
-          window.addEventListener('resize', function () { measure(); });
+          var resizeTimer = null;
+          window.addEventListener('resize', function () {
+            clearTimeout(resizeTimer);
+            resizeTimer = setTimeout(measure, 150);
+          });
           start();
         });
 

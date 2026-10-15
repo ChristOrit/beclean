@@ -21,14 +21,14 @@ const readTime = (content: string) => Math.max(2, Math.ceil(content.split(/\s+/)
 ---
 
 <Layout
-  title="Conseils jardinage Cotonou | Blog Be Clean"
-  description="Blog de votre paysagiste à Cotonou. Conseils d'experts en jardinage, aménagement paysager, entretien de jardin, plantes tropicales. Be Clean."
+  title="Conseils jardinage Cotonou | Blog BeClean"
+  description="Blog de votre paysagiste à Cotonou. Conseils d'experts en jardinage, aménagement paysager, entretien de jardin, plantes tropicales. BeClean."
 >
   <PageHeader
     badge="Blog & conseils"
     title="Conseils de jardinage à Cotonou"
     accent="par nos paysagistes"
-    description="Prix, techniques d'entretien, choix des plantes et inspirations : les fiches pratiques de l'équipe Be Clean pour réussir votre jardin au Bénin."
+    description="Prix, techniques d'entretien, choix des plantes et inspirations : les fiches pratiques de l'équipe BeClean pour réussir votre jardin au Bénin."
   />
 
   <section class="section-warm section-padding">
@@ -119,11 +119,15 @@ const readTime = (content: string) => Math.max(2, Math.ceil(content.split(/\s+/)
           <label class="sr-only" for="nl-email">Votre adresse e-mail</label>
           <input
             id="nl-email"
+            name="email"
             type="email"
             required
+            autocomplete="email"
             placeholder="Votre adresse e-mail"
             class="w-full flex-1 rounded-full border border-white/15 bg-white/10 px-5 py-3.5 text-white placeholder:text-white/55 focus:border-accent-400 focus:outline-none sm:max-w-sm"
           />
+          <input type="text" name="website" tabindex="-1" autocomplete="off" aria-hidden="true" class="hidden" />
+          <input type="hidden" name="ts" value="" />
           <button type="submit" class="btn-gold justify-center">Je m'inscris</button>
         </form>
         <p class="reveal mt-4 text-sm text-white/60" data-newsletter-msg hidden></p>
@@ -167,14 +171,43 @@ const readTime = (content: string) => Math.max(2, Math.ceil(content.split(/\s+/)
 
   const form = document.querySelector('[data-newsletter]');
   if (form) {
-    form.addEventListener('submit', (e) => {
+    const msg = document.querySelector('[data-newsletter-msg]');
+    const button = form.querySelector('button[type="submit"]');
+    const tsField = form.querySelector('input[name="ts"]');
+    if (tsField) tsField.value = String(Date.now());
+
+    const show = (text, tone) => {
+      if (!msg) return;
+      msg.hidden = false;
+      msg.textContent = text;
+      msg.className = `mt-4 text-sm ${tone === 'ok' ? 'text-emerald-200' : 'text-amber-200'}`;
+    };
+
+    form.addEventListener('submit', async (e) => {
       e.preventDefault();
-      const msg = document.querySelector('[data-newsletter-msg]');
-      if (msg) {
-        msg.hidden = false;
-        msg.textContent = 'Merci ! Votre inscription est enregistrée.';
+      if (!form.reportValidity()) return;
+      const payload = Object.fromEntries(new FormData(form).entries());
+      if (button) button.disabled = true;
+      if (msg) msg.hidden = true;
+      try {
+        const res = await fetch('/api/newsletter', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(payload),
+        });
+        const data = await res.json().catch(() => ({ ok: false }));
+        if (res.ok && data.ok) {
+          show('Merci ! Votre inscription est bien enregistrée.', 'ok');
+          form.reset();
+          if (tsField) tsField.value = String(Date.now());
+        } else {
+          show(data.error || "L'inscription a échoué. Merci de réessayer.", 'error');
+        }
+      } catch {
+        show('Connexion impossible. Merci de réessayer dans un instant.', 'error');
+      } finally {
+        if (button) button.disabled = false;
       }
-      form.reset();
     });
   }
 </script>

@@ -1,25 +1,18 @@
-const SITE = 'https://beclean-benin.vercel.app';
+import { site, contact, zones } from '../data/site.js';
 
 export const NAP = {
-  name: 'Be Clean',
-  alternateName: 'Paysage Plus Cotonou',
-  telephone: '+2290167592319',
-  email: 'oritchrist@gmail.com',
-  street: 'Rue 12.045, Haie Vive',
-  city: 'Cotonou',
-  region: 'Littoral',
-  country: 'BJ',
-  geo: { latitude: '6.3700', longitude: '2.4300' },
+  name: site.name,
+  legalName: site.legalName,
+  telephone: contact.phoneE164,
+  email: contact.email,
+  street: contact.address.street,
+  city: contact.address.city,
+  region: contact.address.region,
+  country: contact.address.country,
+  geo: contact.geo,
 };
 
-export const AREAS = [
-  'Cotonou',
-  'Abomey-Calavi',
-  'Porto-Novo',
-  'Calavi',
-  'Sèmè-Podji',
-  'Ouidah',
-];
+export const AREAS = zones;
 
 /**
  * Données structurées du site (page d'accueil).
@@ -30,19 +23,19 @@ export function websiteData(localBusiness?: Record<string, unknown>) {
   const graph: Record<string, unknown>[] = [
     {
       '@type': 'WebSite',
-      '@id': `${SITE}/#website`,
-      url: `${SITE}/`,
-      name: 'Be Clean',
+      '@id': `${site.url}/#website`,
+      url: `${site.url}/`,
+      name: site.name,
       description:
         "Paysagiste à Cotonou : conception, création et entretien de jardins et d'espaces verts au Bénin.",
-      inLanguage: 'fr',
-      ...(localBusiness ? { publisher: { '@id': `${SITE}/#organization` } } : {}),
+      inLanguage: site.lang,
+      ...(localBusiness ? { publisher: { '@id': `${site.url}/#organization` } } : {}),
     },
   ];
 
   if (localBusiness) {
     const { '@context': _ctx, ...rest } = localBusiness as Record<string, unknown>;
-    graph.push({ '@id': `${SITE}/#organization`, ...rest });
+    graph.push({ '@id': `${site.url}/#organization`, ...rest });
   }
 
   return { '@context': 'https://schema.org', '@graph': graph };
@@ -55,7 +48,7 @@ export function serviceData({ slug, title, description }: { slug: string; title:
     '@type': 'Service',
     name: title,
     description,
-    url: `${SITE}/services/${slug}/`,
+    url: `${site.url}/services/${slug}/`,
     serviceType: title,
     provider: {
       '@type': 'Organization',

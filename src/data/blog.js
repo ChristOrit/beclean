@@ -17,7 +17,7 @@ export const blogPosts = [
       <h2>Prix moyens à Cotonou</h2>
       <p>Un aménagement paysager complet pour un jardin de 500m² peut coûter entre 500 000 et 2 000 000 FCFA selon les options choisies.</p>
       <h2>Un investissement rentable</h2>
-      <p>Un aménagement paysager est un investissement durable qui valorise votre propriété de 10 à 20%. Pour un devis précis adapté à votre projet, contactez Be Clean pour une étude gratuite sur site.</p>
+      <p>Un aménagement paysager est un investissement durable qui valorise votre propriété de 10 à 20%. Pour un devis précis adapté à votre projet, contactez BeClean pour une étude gratuite sur site.</p>
     `,
   },
   {
@@ -38,8 +38,8 @@ export const blogPosts = [
         <li><strong>La disponibilité</strong> — Réactivité et respect des délais.</li>
         <li><strong>Le bouche-à-oreille</strong> — Avis et recommandations.</li>
       </ol>
-      <h2>Pourquoi choisir Be Clean ?</h2>
-      <p>Vérifiez l'expérience locale (connaissance du climat tropical), demandez des références et des photos de réalisations, assurez-vous qu'il propose une étude de conception avant les travaux, et comparez plusieurs devis détaillés. Be Clean cumule plus de 13 ans d'expérience à Cotonou.</p>
+      <h2>Pourquoi choisir BeClean ?</h2>
+      <p>Vérifiez l'expérience locale (connaissance du climat tropical), demandez des références et des photos de réalisations, assurez-vous qu'il propose une étude de conception avant les travaux, et comparez plusieurs devis détaillés. BeClean cumule plus de 13 ans d'expérience à Cotonou.</p>
     `,
   },
   {
@@ -64,7 +64,7 @@ export const blogPosts = [
         <li><strong>Jasmin</strong> — Parfum délicat</li>
       </ol>
       <h2>Conseils de plantation</h2>
-      <p>Avec les bonnes plantes et un entretien adapté, votre jardin à Cotonou sera luxuriant toute l'année. Pour une sélection personnalisée et une plantation professionnelle, contactez Be Clean.</p>
+      <p>Avec les bonnes plantes et un entretien adapté, votre jardin à Cotonou sera luxuriant toute l'année. Pour une sélection personnalisée et une plantation professionnelle, contactez BeClean.</p>
     `,
   },
   {
@@ -82,7 +82,7 @@ export const blogPosts = [
       <h2>Taille et fertilisation</h2>
       <p>Taillez régulièrement pour maintenir la forme et la santé de vos plantes. Fertilisez tous les 2-3 mois avec un engrais adapté.</p>
       <h2>Un entretien régulier et adapté aux saisons</h2>
-      <p>Un entretien régulier et adapté aux saisons garantit la beauté de votre jardin tropical. Pour un suivi professionnel, Be Clean propose des contrats d'entretien personnalisés.</p>
+      <p>Un entretien régulier et adapté aux saisons garantit la beauté de votre jardin tropical. Pour un suivi professionnel, BeClean propose des contrats d'entretien personnalisés.</p>
     `,
   },
   {
@@ -100,7 +100,7 @@ export const blogPosts = [
       <h2>Fertilisation</h2>
       <p>Un engrais riche en potassium renforce la résistance à la sécheresse. Évitez les engrais azotés en saison sèche.</p>
       <h2>Une pelouse verte toute l'année</h2>
-      <p>Une pelouse verte toute l'année à Cotonou, c'est possible avec les bons gestes. Pour un diagnostic de votre gazon et des solutions adaptées, contactez les experts Be Clean.</p>
+      <p>Une pelouse verte toute l'année à Cotonou, c'est possible avec les bons gestes. Pour un diagnostic de votre gazon et des solutions adaptées, contactez les experts BeClean.</p>
     `,
   },
   {
@@ -160,7 +160,7 @@ export const blogPosts = [
       <h2>Comment fonctionne un contrat d'entretien professionnel ?</h2>
       <p>Nous établissons un diagnostic de vos espaces, puis nous proposons un contrat adapté à vos besoins et à votre budget. Nos équipes interviennent selon la fréquence convenue.</p>
       <h2>Valorisez votre image professionnelle</h2>
-      <p>Valorisez votre image professionnelle par des espaces verts impeccables. Contactez Be Clean pour une proposition commerciale adaptée à vos besoins.</p>
+      <p>Valorisez votre image professionnelle par des espaces verts impeccables. Contactez BeClean pour une proposition commerciale adaptée à vos besoins.</p>
     `,
   },
   {
@@ -224,7 +224,7 @@ export const blogPosts = [
       </ul>
       <h2>Les pièges à éviter</h2>
         <p>Méfiez-vous des devis anormalement bas, des paysagistes sans références locales, et de ceux qui ne proposent pas de conception préalable.</p>
-      <h2>Be Clean, votre partenaire de confiance</h2>
+      <h2>BeClean, votre partenaire de confiance</h2>
       <p>Avec plus de 13 ans d'expérience à Cotonou, nous répondons à tous ces critères. Contactez-nous pour un devis gratuit.</p>
     `,
   },
@@ -249,7 +249,7 @@ export const blogPosts = [
         <li>Fertilisation</li>
       </ul>
       <h2>Confiez l'entretien de votre jardin à des professionnels</h2>
-      <p>Confiez l'entretien de votre jardin à des professionnels. Demandez votre devis personnalisé à Be Clean.</p>
+      <p>Confiez l'entretien de votre jardin à des professionnels. Demandez votre devis personnalisé à BeClean.</p>
     `,
   },
   {
@@ -299,7 +299,7 @@ export const blogPosts = [
         <li>Plantes grimpantes</li>
       </ul>
       <h2>Conseils de plantation</h2>
-      <p>Avec les bonnes plantes et un entretien adapté, votre jardin à Cotonou sera luxuriant toute l'année. Pour une sélection personnalisée et une plantation professionnelle, contactez Be Clean.</p>
+      <p>Avec les bonnes plantes et un entretien adapté, votre jardin à Cotonou sera luxuriant toute l'année. Pour une sélection personnalisée et une plantation professionnelle, contactez BeClean.</p>
     `,
   },
 ];

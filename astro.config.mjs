@@ -1,9 +1,10 @@
 import { defineConfig } from 'astro/config';
 import tailwind from '@astrojs/tailwind';
 import sitemap from '@astrojs/sitemap';
+import { site } from './src/data/site.js';
 
 export default defineConfig({
-  site: 'https://beclean-benin.vercel.app',
+  site: site.url,
   integrations: [
     tailwind({ applyBaseStyles: false }),
     sitemap({

@@ -42,7 +42,7 @@ export const services = [
         <li>Espaces verts d'entreprise</li>
       </ul>
       <h2>Notre savoir-faire</h2>
-      <p>Depuis 2013, nous créons des jardins d'exception à Cotonou. Notre équipe de paysagistes expérimentés maîtrise les techniques de plantation tropicale, l'éclairage paysager et les systèmes d'arrosage automatique.</p>
+      <p>Depuis 2015, nous créons des jardins d'exception à Cotonou. Notre équipe de paysagistes expérimentés maîtrise les techniques de plantation tropicale, l'éclairage paysager et les systèmes d'arrosage automatique.</p>
       <h2>Un jardin clé en main sans souci</h2>
       <p>De la conception à la réalisation, nous gérons tout : préparation du sol, plantation, éclairage, arrosage. Vous n'avez qu'à profiter de votre nouveau jardin.</p>
     `,
@@ -71,7 +71,7 @@ export const services = [
         <li><strong>Suivi</strong> — Garantie de reprise et d'entretien.</li>
       </ol>
       <h2>Votre jardin mérite une seconde jeunesse</h2>
-      <p>Contactez Be Clean pour un diagnostic gratuit et une proposition de rénovation sur mesure.</p>
+      <p>Contactez BeClean pour un diagnostic gratuit et une proposition de rénovation sur mesure.</p>
     `,
   },
   {
@@ -81,7 +81,7 @@ export const services = [
     description: "Entretien d'espaces verts à Cotonou. Contrats d'entretien hebdomadaires ou bimensuels. Tonte, taille, arrosage, fertilisation.",
     image: '/assets/img/photo-1416879595882-3373a0480b5b.jpg',
     content: `
-      <p>Un beau jardin nécessite un entretien régulier. À Cotonou, la croissance rapide de la végétation tropicale exige une attention constante. Be Clean vous propose des contrats d'entretien sur mesure pour maintenir votre jardin en parfait état tout au long de l'année.</p>
+      <p>Un beau jardin nécessite un entretien régulier. À Cotonou, la croissance rapide de la végétation tropicale exige une attention constante. BeClean vous propose des contrats d'entretien sur mesure pour maintenir votre jardin en parfait état tout au long de l'année.</p>
       <h2>Un jardin impeccable toute l'année</h2>
       <p>Un jardin tropical exige un entretien régulier. Nous proposons des contrats d'entretien hebdomadaires ou bimensuels pour maintenir votre jardin en parfait état : tonte, taille, désherbage, arrosage, fertilisation. Vous profitez d'un jardin impeccable sans lever le petit doigt.</p>
       <h2>Nos prestations d'entretien</h2>
