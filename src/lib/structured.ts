@@ -94,6 +94,42 @@ export function serviceData({ slug, title, description }: { slug: string; title:
   };
 }
 
+/** JSON-LD BlogPosting pour un article du blog. */
+export function blogPostingData({
+  slug,
+  title,
+  description,
+  image,
+  date,
+  category,
+}: {
+  slug: string;
+  title: string;
+  description: string;
+  image: string;
+  date: string;
+  category: string;
+}) {
+  const url = `${site.url}/blog/${slug}/`;
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${url}#article`,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    url,
+    headline: title,
+    description,
+    image: `${site.url}${image}`,
+    datePublished: date,
+    dateModified: date,
+    author: { '@type': 'Organization', name: site.name, url: site.url },
+    publisher: { '@id': ORG_ID },
+    articleSection: category,
+    inLanguage: site.lang,
+    isPartOf: { '@id': `${site.url}/#website` },
+  };
+}
+
 /** JSON-LD FAQPage pour une liste de questions/réponses. */
 export function faqData(items: { question: string; answer: string }[]) {
   return {
