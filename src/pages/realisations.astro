@@ -176,8 +176,8 @@ const stats = [
 </Layout>
 
 <script>
-  const buttons = document.querySelectorAll('[data-filter]');
-  const projects = document.querySelectorAll('[data-category]');
+  const buttons = document.querySelectorAll<HTMLElement>('[data-filter]');
+  const projects = document.querySelectorAll<HTMLElement>('[data-category]');
 
   buttons.forEach((btn) => {
     btn.addEventListener('click', () => {

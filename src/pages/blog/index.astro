@@ -159,8 +159,8 @@ const posts = byDateDesc(blogPosts);
 </Layout>
 
 <script>
-  const buttons = document.querySelectorAll('[data-category]');
-  const posts = document.querySelectorAll('[data-cat]');
+  const buttons = document.querySelectorAll<HTMLElement>('[data-category]');
+  const posts = document.querySelectorAll<HTMLElement>('[data-cat]');
 
   buttons.forEach((btn) => {
     btn.addEventListener('click', () => {
@@ -173,7 +173,7 @@ const posts = byDateDesc(blogPosts);
       btn.classList.add('bg-primary-600', 'text-white');
       btn.setAttribute('aria-pressed', 'true');
 
-      const cat = btn.getAttribute('data-category');
+      const cat = btn.getAttribute('data-category') ?? 'all';
       posts.forEach((post) => {
         const match = cat === 'all' || (post.getAttribute('data-cat') || '').includes(cat);
         post.style.display = match ? '' : 'none';
@@ -182,14 +182,14 @@ const posts = byDateDesc(blogPosts);
     });
   });
 
-  const form = document.querySelector('[data-newsletter]');
+  const form = document.querySelector<HTMLFormElement>('[data-newsletter]');
   if (form) {
-    const msg = document.querySelector('[data-newsletter-msg]');
-    const button = form.querySelector('button[type="submit"]');
-    const tsField = form.querySelector('input[name="ts"]');
+    const msg = document.querySelector<HTMLElement>('[data-newsletter-msg]');
+    const button = form.querySelector<HTMLButtonElement>('button[type="submit"]');
+    const tsField = form.querySelector<HTMLInputElement>('input[name="ts"]');
     if (tsField) tsField.value = String(Date.now());
 
-    const show = (text, tone) => {
+    const show = (text: string, tone: 'ok' | 'error') => {
       if (!msg) return;
       msg.hidden = false;
       msg.textContent = text;

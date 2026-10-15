@@ -117,7 +117,7 @@
             `<span class="flex gap-2 font-semibold">${alertSvg} ${data.error || "L'envoi a échoué."}</span>
              <span>Vérifiez les champs obligatoires, ou passez par WhatsApp / téléphone :</span>
              ${waButton('Envoyer sur WhatsApp')}
-             <a href={telHref} class="font-semibold underline underline-offset-2">${contact.phoneDisplay}</a>`,
+             <a href="${telHref}" class="font-semibold underline underline-offset-2">${contact.phoneDisplay}</a>`,
           );
         }
       } catch {

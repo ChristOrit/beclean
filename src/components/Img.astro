@@ -15,7 +15,7 @@ interface Props {
   loading?: 'eager' | 'lazy';
   decoding?: 'async' | 'auto' | 'sync';
   fetchpriority?: 'high' | 'low' | 'auto';
-  'aria-hidden'?: string;
+  'aria-hidden'?: boolean | 'true' | 'false';
 }
 
 const {

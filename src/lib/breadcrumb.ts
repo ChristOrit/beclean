@@ -55,7 +55,7 @@ export function breadcrumbsFromPath(pathname: string): Crumb[] {
 }
 
 /** JSON-LD BreadcrumbList à partir de chemins relatifs et de l'URL de base. */
-export function breadcrumbList(crumbs: Crumb[], base: string) {
+export function breadcrumbList(crumbs: Crumb[], base: string | URL) {
   if (!crumbs.length) return null;
   return {
     '@context': 'https://schema.org',
