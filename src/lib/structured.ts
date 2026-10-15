@@ -1,4 +1,4 @@
-import { site, contact, zones } from '../data/site.js';
+import { site, contact, zones, currency, priceRange } from '../data/site.js';
 
 export const NAP = {
   name: site.name,
@@ -12,10 +12,42 @@ export const NAP = {
   geo: contact.geo,
 };
 
-export const AREAS = zones;
+/** Identifiant stable de l'organisation : référencé depuis toutes les pages. */
+export const ORG_ID = `${site.url}/#organization`;
 
 /**
- * Données structurées du site (page d'accueil).
+ * Référence vers l'organisation (jamais de NAP dupliqué dans les pages :
+ * l'entité complète est décrite une seule fois, sur l'accueil).
+ */
+export const orgRef = {
+  '@type': 'Organization',
+  '@id': ORG_ID,
+  name: site.name,
+  url: site.url,
+};
+
+/** Zones desservies : toutes les villes + le pays. */
+export const areaServed = [
+  ...zones.map((name) => ({ '@type': 'City', name })),
+  { '@type': 'Country', name: contact.address.countryLabel },
+];
+
+/** Horaires au format schema.org, dérivés de la config (source unique). */
+export const openingHoursSpecification = contact.hours
+  .filter((h) => h.schema)
+  .map((h) => ({
+    '@type': 'OpeningHoursSpecification',
+    dayOfWeek: h.schema.days,
+    opens: h.schema.opens,
+    closes: h.schema.closes,
+  }));
+
+/** Devise et fourchette de prix (voir src/data/site.js). */
+export const currencyAccepted = currency;
+export const priceRangeLabel = priceRange;
+
+/**
+ * Données structurées de la page d'accueil.
  * `localBusiness` est un sous-type d'Organization : on le met dans le même
  * graphe pour éviter deux entités qui se décrivent en double.
  */
@@ -29,13 +61,13 @@ export function websiteData(localBusiness?: Record<string, unknown>) {
       description:
         "Paysagiste à Cotonou : conception, création et entretien de jardins et d'espaces verts au Bénin.",
       inLanguage: site.lang,
-      ...(localBusiness ? { publisher: { '@id': `${site.url}/#organization` } } : {}),
+      ...(localBusiness ? { publisher: { '@id': ORG_ID } } : {}),
     },
   ];
 
   if (localBusiness) {
     const { '@context': _ctx, ...rest } = localBusiness as Record<string, unknown>;
-    graph.push({ '@id': `${site.url}/#organization`, ...rest });
+    graph.push({ '@id': ORG_ID, ...rest });
   }
 
   return { '@context': 'https://schema.org', '@graph': graph };
@@ -50,23 +82,27 @@ export function serviceData({ slug, title, description }: { slug: string; title:
     description,
     url: `${site.url}/services/${slug}/`,
     serviceType: title,
-    provider: {
-      '@type': 'Organization',
-      name: NAP.name,
-      telephone: NAP.telephone,
-      address: {
-        '@type': 'PostalAddress',
-        streetAddress: NAP.street,
-        addressLocality: NAP.city,
-        addressRegion: NAP.region,
-        addressCountry: NAP.country,
-      },
+    provider: orgRef,
+    areaServed,
+    hasOfferCatalog: {
+      '@type': 'OfferCatalog',
+      name: title,
+      itemListElement: [
+        { '@type': 'Offer', itemOffered: { '@type': 'Service', name: title } },
+      ],
     },
-    areaServed: { '@type': 'City', name: 'Cotonou' },
-    offers: {
-      '@type': 'Offer',
-      priceCurrency: 'XOF',
-      availability: 'https://schema.org/InStock',
-    },
+  };
+}
+
+/** JSON-LD FAQPage pour une liste de questions/réponses. */
+export function faqData(items: { question: string; answer: string }[]) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'FAQPage',
+    mainEntity: items.map((item) => ({
+      '@type': 'Question',
+      name: item.question,
+      acceptedAnswer: { '@type': 'Answer', text: item.answer },
+    })),
   };
 }

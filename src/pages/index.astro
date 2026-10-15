@@ -8,11 +8,14 @@ import TrustLogos from '../components/TrustLogos.astro';
 import HeroPicture from '../components/HeroPicture.astro';
 import { services } from '../data/services.js';
 import { blogPosts } from '../data/blog.js';
-import { site, contact, zones, stats, telHref, whatsappHref, yearsExperience, experienceLabel } from '../data/site.js';
+import { site, contact, stats, telHref, whatsappHref, yearsExperience, experienceLabel, currency, priceRange } from '../data/site.js';
+import { areaServed, openingHoursSpecification } from '../lib/structured';
 
 const structuredData = {
   "@context": "https://schema.org",
-  "@type": "LandscapingBusiness",
+  // « LandscapingBusiness » n'existe pas dans schema.org (Google ignore les types
+  // inventés). On utilise le parent reconnu le plus proche du métier de paysagiste.
+  "@type": "HomeAndConstructionBusiness",
   "name": site.name,
   "legalName": site.legalName,
   "description": "BeClean, paysagiste à Cotonou : conception de jardins, modélisation 3D, création, rénovation, entretien d'espaces verts et traitement phytosanitaire pour villas, entreprises et hôtels au Bénin.",
@@ -20,7 +23,10 @@ const structuredData = {
   "telephone": contact.phoneE164,
   "email": contact.email,
   "image": `${site.url}/og-image.jpg`,
-  "logo": `${site.url}/assets/logo.svg`,
+  // Google attend un logo raster (PNG/JPG) : le SVG n'est pas exploité.
+  "logo": `${site.url}/assets/logo-512.png`,
+  "priceRange": priceRange,
+  "currenciesAccepted": currency,
   "address": {
     "@type": "PostalAddress",
     "streetAddress": contact.address.street,
@@ -35,10 +41,15 @@ const structuredData = {
     "latitude": contact.geo.latitude,
     "longitude": contact.geo.longitude
   },
-  "areaServed": [
-    ...zones.map((name) => ({ "@type": "City", name })),
-    { "@type": "Country", "name": contact.address.countryLabel }
-  ],
+  "openingHoursSpecification": openingHoursSpecification,
+  "areaServed": areaServed,
+  // Note moyenne des avis clients (voir src/data/site.js).
+  "aggregateRating": {
+    "@type": "AggregateRating",
+    "ratingValue": stats.ratingValue,
+    "bestRating": stats.ratingBest,
+    "reviewCount": stats.reviewsCount
+  },
   "hasOfferCatalog": {
     "@type": "OfferCatalog",
     "name": "Services d'aménagement paysager",

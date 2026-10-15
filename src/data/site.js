@@ -33,10 +33,23 @@ export const contact = {
   },
   geo: { latitude: '6.3654', longitude: '2.4266' },
   hours: [
-    { days: 'Lun – Ven', time: '08h00 – 18h00' },
-    { days: 'Sam', time: '09h00 – 13h00' },
+    {
+      days: 'Lun – Ven',
+      time: '08h00 – 18h00',
+      // Version machine (schema.org) — l'affichage utilise `days` / `time`.
+      schema: { days: ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday'], opens: '08:00', closes: '18:00' },
+    },
+    {
+      days: 'Sam',
+      time: '09h00 – 13h00',
+      schema: { days: ['Saturday'], opens: '09:00', closes: '13:00' },
+    },
   ],
 };
+
+/** Devise et fourchette de prix transmises aux moteurs (texte libre). */
+export const currency = 'XOF';
+export const priceRange = 'Sur devis';
 
 /** Chiffres clés (une seule vérité pour tout le site). */
 export const stats = {
@@ -45,6 +58,9 @@ export const stats = {
   projectsLabel: '25+',
   reviewsCount: 15,
   // Note moyenne communiquée par le gérant (> 4,5).
+  // `ratingValue` / `ratingBest` sont les valeurs machine (schema.org), point décimal obligatoire.
+  ratingValue: 4.5,
+  ratingBest: 5,
   ratingLabel: '4,5/5',
 };
 

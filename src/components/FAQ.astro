@@ -1,4 +1,6 @@
 ---
+import { faqData } from '../lib/structured';
+
 interface Props {
   title?: string;
   subtitle?: string;
@@ -17,6 +19,9 @@ const baseId = `faq-${Math.random().toString(36).slice(2, 8)}`;
 const speed = 58;
 const startDelay = 200;
 ---
+
+<!-- Données structurées : une seule FAQ par page, donc un seul bloc FAQPage. -->
+<script type="application/ld+json" set:html={JSON.stringify(faqData(items)).replace(/</g, '\\u003c')} />
 
 <section class="py-16 md:py-24 bg-white">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
