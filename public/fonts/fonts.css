@@ -32,104 +32,223 @@
 }
 
 /* ---------------------------------------------------------------------------
-   Replis métriquement alignés, un par graisse utilisée (400, 500, 600, 700).
+   Replis métriquement alignés.
 
    Pendant que les polices ci-dessus se chargent, `font-display: swap` affiche le
    texte avec la famille suivante de la pile. Comme le repli n'a pas les mêmes
    métriques, tout le texte se réorganise au moment du remplacement : c'est le
    principal décalage d'affichage d'une page.
 
-   Ces replis sont calés sur les métriques réelles d'Inter et de Playfair Display
-   (mesurées dans le navigateur, graisse par graisse) : la largeur du texte ET la
-   hauteur de ligne deviennent identiques, donc le remplacement ne déplace rien.
-   Écart constaté : moins de 0,02 % sur une ligne de 7 800 px à 100 px.
+   Les replis ci-dessous sont calés sur les métriques réelles d'Inter et de
+   Playfair Display, mesurées dans le navigateur.
+
+   Le facteur `size-adjust` est calculé sur le contenu réel du site (338 titres
+   et 211 paragraphes relevés dans les pages), et non sur une phrase type : les
+   titres et les paragraphes n'ont pas le même profil de caractères, chacun est
+   donc calé sur ce qu'il sert réellement à afficher. Cela compte : sur la
+   graisse 600, l'erreur moyenne passe de 2,8 % à 0,85 % en calant sur le corpus.
+
+   Il reste une imprécision inévitable, propre à toute substitution de police :
+   deux fontes n'ont pas les mêmes largeurs caractère par caractère. Après
+   calage, l'écart de largeur d'une chaîne donnée est de 0,35 % en moyenne pour
+   le texte courant et de 0,9 % pour les titres. Une ligne déjà à la limite peut
+   donc basculer d'un côté ou de l'autre au moment du remplacement, mais rien ne
+   se décale en masse comme sans calage (où l'écart atteignait 5 à 10 %).
 
    Une graisse par règle est nécessaire : le repli saute de « régulier » à
-   « gras » entre 500 et 600, alors que les polices d'origine, variables,
-   s'épaississent progressivement.
+   « gras » entre 500 et 600, alors que les polices d'origine s'épaississent
+   progressivement. `size-adjust` met les largeurs à l'échelle, mais il met aussi
+   les `*-override` à l'échelle : les valeurs ci-dessous en tiennent compte.
 
-   `size-adjust` met les largeurs à l'échelle, mais il met aussi les
-   `*-override` à l'échelle : les valeurs ci-dessous en tiennent compte.
-   Arial, Helvetica et Liberation Sans sont métriquement compatibles entre eux,
-   tout comme Georgia et Gelasio.
+   `local()` n'accepte pas toujours le seul nom de famille (constaté :
+   « Noto Serif » échoue, « Noto Serif Regular » réussit) : les chaînes
+   ci-dessous donnent donc les deux formes.
+
+   Deux familles de repli par police, essayées dans l'ordre de la pile :
+   - « Arial » / « Georgia » : Windows, macOS, iOS (et Liberation/Gelasio sous
+     Linux), métriquement compatibles avec elles ;
+   - « Roboto » / « Noto Serif » : Android, qui n'a ni Arial ni Georgia. C'est la
+     famille qui compte le plus ici, l'essentiel du trafic étant mobile.
 --------------------------------------------------------------------------- */
+
 @font-face {
-  font-family: 'Inter Fallback';
+  font-family: 'Inter Fallback Arial';
   font-style: normal;
   font-weight: 400;
-  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
-  size-adjust: 106.308%;
-  ascent-override: 91.24%;
-  descent-override: 22.58%;
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans'), local('ArialMT');
+  size-adjust: 106.580%;
+  ascent-override: 91.01%;
+  descent-override: 22.52%;
   line-gap-override: 0%;
 }
+
 @font-face {
-  font-family: 'Inter Fallback';
+  font-family: 'Inter Fallback Arial';
   font-style: normal;
   font-weight: 500;
-  src: local('Arial'), local('Helvetica'), local('Liberation Sans');
-  size-adjust: 107.329%;
-  ascent-override: 90.38%;
-  descent-override: 22.36%;
+  src: local('Arial'), local('Helvetica'), local('Liberation Sans'), local('ArialMT');
+  size-adjust: 107.704%;
+  ascent-override: 90.06%;
+  descent-override: 22.28%;
   line-gap-override: 0%;
 }
+
 @font-face {
-  font-family: 'Inter Fallback';
+  font-family: 'Inter Fallback Arial';
   font-style: normal;
   font-weight: 600;
-  src: local('Arial Bold'), local('Helvetica Bold'), local('Liberation Sans Bold'), local('Arial');
-  size-adjust: 101.442%;
-  ascent-override: 95.62%;
-  descent-override: 23.66%;
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Helvetica Bold'),
+       local('Liberation Sans Bold');
+  size-adjust: 101.181%;
+  ascent-override: 95.87%;
+  descent-override: 23.72%;
   line-gap-override: 0%;
 }
+
 @font-face {
-  font-family: 'Inter Fallback';
+  font-family: 'Inter Fallback Arial';
   font-style: normal;
   font-weight: 700;
-  src: local('Arial Bold'), local('Helvetica Bold'), local('Liberation Sans Bold'), local('Arial');
-  size-adjust: 102.384%;
-  ascent-override: 94.74%;
-  descent-override: 23.44%;
+  src: local('Arial Bold'), local('Arial-BoldMT'), local('Helvetica Bold'),
+       local('Liberation Sans Bold');
+  size-adjust: 102.208%;
+  ascent-override: 94.90%;
+  descent-override: 23.48%;
   line-gap-override: 0%;
 }
+
 @font-face {
-  font-family: 'Playfair Display Fallback';
+  font-family: 'Inter Fallback Roboto';
   font-style: normal;
   font-weight: 400;
-  src: local('Georgia'), local('Gelasio');
-  size-adjust: 101.385%;
-  ascent-override: 106.52%;
-  descent-override: 24.66%;
+  src: local('Roboto'), local('Roboto Regular'), local('Roboto-Regular');
+  size-adjust: 107.236%;
+  ascent-override: 90.45%;
+  descent-override: 22.38%;
   line-gap-override: 0%;
 }
+
 @font-face {
-  font-family: 'Playfair Display Fallback';
+  font-family: 'Inter Fallback Roboto';
   font-style: normal;
   font-weight: 500;
-  src: local('Georgia'), local('Gelasio');
-  size-adjust: 102.115%;
-  ascent-override: 105.76%;
-  descent-override: 24.48%;
+  src: local('Roboto'), local('Roboto Regular'), local('Roboto-Regular');
+  size-adjust: 108.367%;
+  ascent-override: 89.51%;
+  descent-override: 22.15%;
   line-gap-override: 0%;
 }
+
 @font-face {
-  font-family: 'Playfair Display Fallback';
+  font-family: 'Inter Fallback Roboto';
   font-style: normal;
   font-weight: 600;
-  src: local('Georgia Bold'), local('Gelasio Bold'), local('Georgia');
-  size-adjust: 88.393%;
-  ascent-override: 122.18%;
-  descent-override: 28.28%;
+  src: local('Roboto Bold'), local('Roboto-Bold'), local('Roboto Medium'),
+       local('Roboto-Medium');
+  size-adjust: 107.731%;
+  ascent-override: 90.04%;
+  descent-override: 22.28%;
   line-gap-override: 0%;
 }
+
 @font-face {
-  font-family: 'Playfair Display Fallback';
+  font-family: 'Inter Fallback Roboto';
   font-style: normal;
   font-weight: 700;
-  src: local('Georgia Bold'), local('Gelasio Bold'), local('Georgia');
-  size-adjust: 89.032%;
-  ascent-override: 121.30%;
-  descent-override: 28.08%;
+  src: local('Roboto Bold'), local('Roboto-Bold'), local('Roboto Medium'),
+       local('Roboto-Medium');
+  size-adjust: 108.825%;
+  ascent-override: 89.13%;
+  descent-override: 22.05%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Playfair Display Fallback Georgia';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Georgia'), local('Georgia Regular'), local('Gelasio'), local('Gelasio-Regular');
+  size-adjust: 101.718%;
+  ascent-override: 106.18%;
+  descent-override: 24.58%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Playfair Display Fallback Georgia';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Georgia'), local('Georgia Regular'), local('Gelasio'), local('Gelasio-Regular');
+  size-adjust: 102.545%;
+  ascent-override: 105.32%;
+  descent-override: 24.38%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Playfair Display Fallback Georgia';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Georgia Bold'), local('Georgia-Bold'), local('Gelasio Bold'),
+       local('Gelasio-Bold');
+  size-adjust: 88.628%;
+  ascent-override: 121.86%;
+  descent-override: 28.21%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Playfair Display Fallback Georgia';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Georgia Bold'), local('Georgia-Bold'), local('Gelasio Bold'),
+       local('Gelasio-Bold');
+  size-adjust: 89.352%;
+  ascent-override: 120.87%;
+  descent-override: 27.98%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Playfair Display Fallback Noto Serif';
+  font-style: normal;
+  font-weight: 400;
+  src: local('Noto Serif'), local('Noto Serif Regular'), local('NotoSerif-Regular');
+  size-adjust: 94.377%;
+  ascent-override: 114.43%;
+  descent-override: 26.49%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Playfair Display Fallback Noto Serif';
+  font-style: normal;
+  font-weight: 500;
+  src: local('Noto Serif'), local('Noto Serif Regular'), local('NotoSerif-Regular');
+  size-adjust: 93.427%;
+  ascent-override: 115.60%;
+  descent-override: 26.76%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Playfair Display Fallback Noto Serif';
+  font-style: normal;
+  font-weight: 600;
+  src: local('Noto Serif Bold'), local('Noto Serif-Bold'), local('NotoSerif-Bold');
+  size-adjust: 92.124%;
+  ascent-override: 117.23%;
+  descent-override: 27.14%;
+  line-gap-override: 0%;
+}
+
+@font-face {
+  font-family: 'Playfair Display Fallback Noto Serif';
+  font-style: normal;
+  font-weight: 700;
+  src: local('Noto Serif Bold'), local('Noto Serif-Bold'), local('NotoSerif-Bold');
+  size-adjust: 90.677%;
+  ascent-override: 119.10%;
+  descent-override: 27.57%;
   line-gap-override: 0%;
 }
