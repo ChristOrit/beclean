@@ -1,10 +1,36 @@
 ---
 /**
  * <Img> : comme <img>, mais sert automatiquement les variantes AVIF et WebP
- * lorsqu'elles existent à côté du JPEG dans public/. Sinon, <img> strict.
+ * à la largeur adaptée à l'écran du visiteur.
+ *
+ * Les variantes vivent à côté du JPEG sous la forme `{base}-{largeur}.avif` / `.webp`.
+ * Elles respectent une règle stricte : jamais moins fidèles que le plus grand fichier,
+ * toujours plus légères (règle mesurée en SSIM sur chaque image et chaque largeur).
+ *
+ * `sizes` reçoit un nom de gabarit de mise en page (voir GABARITS) ou une valeur CSS brute.
+ * Sans `sizes`, aucune variante n'est proposée : le plus grand fichier est servi, comme avant.
+ * Les fichiers absents sont simplement ignorés : un `srcset` ne référence jamais un 404.
  */
 import fs from 'node:fs';
 import path from 'node:path';
+
+/** Gabarits de mise en page du site -> valeur `sizes` correspondante. */
+const GABARITS: Record<string, string> = {
+  // grille de 2 cartes dès 640 px (sm:grid-cols-2)
+  carteSm: '(min-width: 1024px) 400px, (min-width: 640px) calc(50vw - 2rem), calc(100vw - 2rem)',
+  // grille de 2 cartes dès 768 px (md:grid-cols-2)
+  carteMd: '(min-width: 1024px) 400px, (min-width: 768px) calc(50vw - 2rem), calc(100vw - 2rem)',
+  // grille de 3 cartes dès 768 px (md:grid-cols-3)
+  carteMd3: '(min-width: 1024px) 400px, (min-width: 768px) calc(33.34vw - 1rem), calc(100vw - 2rem)',
+  // grille de 3 cartes seulement dès 1024 px (une colonne avant)
+  carteLg3: '(min-width: 1024px) 400px, calc(100vw - 2rem)',
+  // moitié de contenu dès 1024 px (lg:grid-cols-2)
+  demi: '(min-width: 1024px) 600px, calc(100vw - 2rem)',
+  // pleine largeur d'écran (bandeau parallaxe)
+  pleine: '100vw',
+  // largeur de lecture d'un article (max-w-4xl)
+  article: '(min-width: 928px) 896px, calc(100vw - 2rem)',
+};
 
 interface Props {
   src: string;
@@ -15,6 +41,7 @@ interface Props {
   loading?: 'eager' | 'lazy';
   decoding?: 'async' | 'auto' | 'sync';
   fetchpriority?: 'high' | 'low' | 'auto';
+  sizes?: string;
   'aria-hidden'?: boolean | 'true' | 'false';
 }
 
@@ -27,21 +54,44 @@ const {
   loading,
   decoding,
   fetchpriority,
+  sizes,
   'aria-hidden': ariaHidden,
 } = Astro.props;
 
 const isLocal = typeof src === 'string' && /^\/assets\/[\w./-]+\.jpe?g$/.test(src);
 const base = isLocal ? src.replace(/\.jpe?g$/, '') : '';
 const publicDir = path.join(process.cwd(), 'public');
-const hasAvif = isLocal && fs.existsSync(path.join(publicDir, `${base}.avif`));
-const hasWebp = isLocal && fs.existsSync(path.join(publicDir, `${base}.webp`));
+
+/** Largeurs de variantes produites par le script d'images, dans l'ordre croissant. */
+const LARGEURS = [480, 800, 900, 1200];
+
+const variantes = (ext: string) =>
+  isLocal ? LARGEURS.filter((w) => fs.existsSync(path.join(publicDir, `${base}-${w}${ext}`))) : [];
+
+const avif = variantes('.avif');
+const webp = variantes('.webp');
+const sizesValue = sizes ? (GABARITS[sizes] ?? sizes) : undefined;
+const srcset = (liste: number[], ext: string) => liste.map((w) => `${base}-${w}${ext} ${w}w`).join(', ');
+const plusGrand = (liste: number[], ext: string) => `${base}-${liste[liste.length - 1]}${ext}`;
 ---
 
 {
-  hasAvif || hasWebp ? (
+  avif.length || webp.length ? (
     <picture>
-      {hasAvif && <source type="image/avif" srcset={`${base}.avif`} />}
-      {hasWebp && <source type="image/webp" srcset={`${base}.webp`} />}
+      {avif.length > 0 && (
+        <source
+          type="image/avif"
+          srcset={sizesValue ? srcset(avif, '.avif') : plusGrand(avif, '.avif')}
+          sizes={sizesValue}
+        />
+      )}
+      {webp.length > 0 && (
+        <source
+          type="image/webp"
+          srcset={sizesValue ? srcset(webp, '.webp') : plusGrand(webp, '.webp')}
+          sizes={sizesValue}
+        />
+      )}
       <img
         src={src}
         alt={alt}
