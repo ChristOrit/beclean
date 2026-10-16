@@ -10,9 +10,13 @@
  * `sizes` reçoit un nom de gabarit de mise en page (voir GABARITS) ou une valeur CSS brute.
  * Sans `sizes`, aucune variante n'est proposée : le plus grand fichier est servi, comme avant.
  * Les fichiers absents sont simplement ignorés : un `srcset` ne référence jamais un 404.
+ *
+ * `width`/`height` sont lus dans le fichier lui-même (voir lib/imageSize) : le navigateur
+ * réserve donc toujours la place exacte, et un décalage d'affichage est impossible.
  */
 import fs from 'node:fs';
 import path from 'node:path';
+import { imageSize } from '../lib/imageSize';
 
 /** Gabarits de mise en page du site -> valeur `sizes` correspondante. */
 const GABARITS: Record<string, string> = {
@@ -36,8 +40,6 @@ interface Props {
   src: string;
   alt: string;
   class?: string;
-  width?: number | string;
-  height?: number | string;
   loading?: 'eager' | 'lazy';
   decoding?: 'async' | 'auto' | 'sync';
   fetchpriority?: 'high' | 'low' | 'auto';
@@ -49,8 +51,6 @@ const {
   src,
   alt,
   class: className,
-  width,
-  height,
   loading,
   decoding,
   fetchpriority,
@@ -61,6 +61,12 @@ const {
 const isLocal = typeof src === 'string' && /^\/assets\/[\w./-]+\.jpe?g$/.test(src);
 const base = isLocal ? src.replace(/\.jpe?g$/, '') : '';
 const publicDir = path.join(process.cwd(), 'public');
+
+/** Dimensions réelles du fichier servi : la place réservée est donc toujours juste. */
+const taille =
+  typeof src === 'string' && src.startsWith('/')
+    ? imageSize(path.join(publicDir, src.slice(1)))
+    : null;
 
 /** Largeurs de variantes produites par le script d'images, dans l'ordre croissant. */
 const LARGEURS = [480, 800, 900, 1200];
@@ -96,8 +102,8 @@ const plusGrand = (liste: number[], ext: string) => `${base}-${liste[liste.lengt
         src={src}
         alt={alt}
         class={className}
-        width={width}
-        height={height}
+        width={taille?.[0]}
+        height={taille?.[1]}
         loading={loading}
         decoding={decoding ?? 'async'}
         fetchpriority={fetchpriority}
@@ -109,8 +115,8 @@ const plusGrand = (liste: number[], ext: string) => `${base}-${liste[liste.lengt
       src={src}
       alt={alt}
       class={className}
-      width={width}
-      height={height}
+      width={taille?.[0]}
+      height={taille?.[1]}
       loading={loading}
       decoding={decoding ?? 'async'}
       fetchpriority={fetchpriority}

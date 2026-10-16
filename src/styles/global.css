@@ -479,7 +479,7 @@ html.js [data-split].in .w {
   }
   .rich a:hover { color: #1d4a1b; }
   .rich h2 {
-    font-family: 'Playfair Display', Georgia, serif;
+    font-family: 'Playfair Display', 'Playfair Display Fallback', Georgia, serif;
     font-size: clamp(1.5rem, 2.1vw, 1.9rem);
     line-height: 1.25;
     color: #111827;

@@ -25,8 +25,8 @@ export default {
         },
       },
       fontFamily: {
-        sans: ['Inter', 'system-ui', 'sans-serif'],
-        display: ['Playfair Display', 'Georgia', 'serif'],
+        sans: ['Inter', 'Inter Fallback', 'system-ui', 'sans-serif'],
+        display: ['Playfair Display', 'Playfair Display Fallback', 'Georgia', 'serif'],
       },
     },
   },

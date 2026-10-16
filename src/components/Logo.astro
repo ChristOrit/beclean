@@ -13,4 +13,4 @@ const pngExists = fs.existsSync(path.join(process.cwd(), 'public/assets/logo.png
 const src = pngExists ? '/assets/logo.png' : '/assets/logo.svg';
 ---
 
-<Img src={src} alt="BeClean" class={className} width="140" height="140" decoding="async" fetchpriority="low" />
+<Img src={src} alt="BeClean" class={className} decoding="async" fetchpriority="low" />
