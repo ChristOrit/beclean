@@ -210,7 +210,12 @@ const socials: { key: keyof typeof socialUrls; label: string; path: string }[] =
   <!-- Barre basse -->
   <div class="border-t border-white/10">
     <div class="container-custom flex flex-col gap-3 py-6 text-xs text-gray-400 md:flex-row md:items-center md:justify-between">
-      <p>&copy; {currentYear} BeClean — Tous droits réservés. — <a href="/contact" class="inline-block cursor-pointer py-2.5 transition-colors hover:text-accent-400">Mentions & contact</a></p>
+      <p>
+        &copy; {currentYear} BeClean — Tous droits réservés. —{' '}
+        <a href="/mentions-legales" class="inline-block cursor-pointer py-2.5 transition-colors hover:text-accent-400">Mentions légales</a>
+        {' · '}
+        <a href="/politique-de-confidentialite" class="inline-block cursor-pointer py-2.5 transition-colors hover:text-accent-400">Politique de confidentialité</a>
+      </p>
       <p class="md:text-right">
         Paysagiste Cotonou · Aménagement paysager · Jardinier · Jardinage ·
         Porto-Novo · Parakou · Création de jardins Bénin
