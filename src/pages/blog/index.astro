@@ -196,11 +196,21 @@ const posts = byDateDesc(blogPosts);
       msg.className = `mt-4 text-sm ${tone === 'ok' ? 'text-emerald-200' : 'text-amber-200'}`;
     };
 
+    const setLoading = (loading: boolean) => {
+      if (!button) return;
+      button.disabled = loading;
+      if (loading) {
+        button.innerHTML = '<svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg> Envoi…';
+      } else {
+        button.textContent = "Je m'inscris";
+      }
+    };
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!form.reportValidity()) return;
       const payload = Object.fromEntries(new FormData(form).entries());
-      if (button) button.disabled = true;
+      setLoading(true);
       if (msg) msg.hidden = true;
       try {
         const res = await fetch('/api/newsletter', {
@@ -219,7 +229,7 @@ const posts = byDateDesc(blogPosts);
       } catch {
         show('Connexion impossible. Merci de réessayer dans un instant.', 'error');
       } finally {
-        if (button) button.disabled = false;
+        setLoading(false);
       }
     });
   }

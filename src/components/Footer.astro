@@ -263,11 +263,21 @@ const socials: { key: keyof typeof socialUrls; label: string; path: string }[] =
       msg.className = `mt-2 text-xs ${tone === 'ok' ? 'text-emerald-300' : 'text-amber-300'}`;
     };
 
+    const setLoading = (loading: boolean) => {
+      if (!button) return;
+      button.disabled = loading;
+      if (loading) {
+        button.innerHTML = '<svg class="h-4 w-4 animate-spin" fill="none" viewBox="0 0 24 24" aria-hidden="true"><circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle><path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4z"></path></svg> Envoi…';
+      } else {
+        button.textContent = "S'inscrire";
+      }
+    };
+
     form.addEventListener('submit', async (e) => {
       e.preventDefault();
       if (!form.reportValidity()) return;
       const payload = Object.fromEntries(new FormData(form).entries());
-      if (button) button.disabled = true;
+      setLoading(true);
       if (msg) msg.hidden = true;
       try {
         const res = await fetch('/api/newsletter', {
@@ -286,7 +296,7 @@ const socials: { key: keyof typeof socialUrls; label: string; path: string }[] =
       } catch {
         show('Connexion impossible. Réessayez dans un instant.', 'error');
       } finally {
-        if (button) button.disabled = false;
+        setLoading(false);
       }
     });
   }
