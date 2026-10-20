@@ -1,7 +1,7 @@
 ---
 import Layout from '../layouts/Layout.astro';
 import PageHeader from '../components/PageHeader.astro';
-import { contact, site } from '../data/site.js';
+import { contact, legal, site } from '../data/site.js';
 ---
 
 <Layout
@@ -37,7 +37,11 @@ import { contact, site } from '../data/site.js';
             </div>
             <div class="flex gap-3">
               <dt class="w-32 shrink-0 font-medium text-gray-500">RCCM</dt>
-              <dd class="text-gray-800">En cours d'enregistrement</dd>
+              <dd class="text-gray-800">{legal.rccm}</dd>
+            </div>
+            <div class="flex gap-3">
+              <dt class="w-32 shrink-0 font-medium text-gray-500">IFU</dt>
+              <dd class="text-gray-800">{legal.ifu}</dd>
             </div>
             <div class="flex gap-3">
               <dt class="w-32 shrink-0 font-medium text-gray-500">Téléphone</dt>
