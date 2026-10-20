@@ -8,12 +8,18 @@
 /** Identité & domaine. */
 export const site = {
   name: 'BeClean',
-  legalName: 'Établissement BeClean',
+  legalName: 'Établissement BeClean & Multiservices',
   tagline: 'Du rêve à la réalité, en toute harmonie.',
   // Domaine provisoire : basculer sur le domaine final en changeant cette ligne.
   url: 'https://beclean-benin.vercel.app',
   lang: 'fr',
   ogImage: '/og-image.jpg',
+};
+
+/** Identification légale — obligatoire dans les mentions légales. */
+export const legal = {
+  rccm: 'RB/COT/19 A 166000',
+  ifu: '0201910724958',
 };
 
 /** Coordonnées (NAP) — identiques partout. */
