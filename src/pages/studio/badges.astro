@@ -1,0 +1,177 @@
+---
+// Studio badges — atelier interne.
+// La page est statique (aucune donnée) : tout passe par /api/badges (protégés).
+const title = "Studio badges — BeClean & Multiservices";
+---
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex, nofollow" />
+  <meta name="color-scheme" content="light" />
+  <title>{title}</title>
+  <link rel="stylesheet" href="/assets/badges/studio.css" />
+  <link rel="icon" href="/assets/logo.png" />
+</head>
+<body>
+
+<!-- ══════ CONNEXION ══════ -->
+<div class="lg" id="login" hidden>
+  <form class="lg-card" id="lgForm">
+    <img src="/assets/badges/logo-disc.png" alt="BeClean" />
+    <b>Studio badges</b>
+    <span>Atelier interne — BeClean &amp; Multiservices</span>
+    <input class="in" type="password" id="lgPwd" placeholder="Mot de passe" autocomplete="current-password" />
+    <div class="lg-err" id="lgErr" hidden>Mot de passe incorrect</div>
+    <button class="btn" type="submit">Ouvrir le studio</button>
+    <div class="lg-foot">Badges PVC CR80 · 54 × 85,6 mm</div>
+  </form>
+</div>
+
+<!-- ══════ APPLICATION ══════ -->
+<div id="app">
+  <header class="top">
+    <img class="disc" src="/assets/badges/logo-disc.png" alt="" />
+    <div class="tt">
+      <b>Studio badges</b>
+      <span>BeClean &amp; Multiservices · PVC CR80 — 54 × 85,6 mm</span>
+    </div>
+    <div class="sp"></div>
+    <button class="btn ghost sm" id="bExport">⬇ Sauver l'équipe</button>
+    <button class="btn ghost sm" id="bImport">⬆ Importer</button>
+    <button class="btn ghost sm" id="bLogout">Se déconnecter</button>
+  </header>
+
+  <div class="cols">
+    <!-- ════ COLONNE FORMULAIRE ════ -->
+    <aside class="colf">
+
+      <section class="card">
+        <div class="ch">
+          <span class="l">Agent</span>
+          <div class="sp"></div>
+          <button class="mini" id="bNew" style="position:static;transform:none">+ Nouveau agent</button>
+        </div>
+        <div class="cd">
+          <div class="frow r2">
+            <div><label class="f">Prénom</label>
+              <input class="in" data-f="prenom" placeholder="Dona" /></div>
+            <div><label class="f">Nom</label>
+              <input class="in" data-f="nom" placeholder="KPONOU" /></div>
+          </div>
+          <div class="frow"><label class="f">Fonction</label>
+            <input class="in" data-f="role" placeholder="AGENT PAYSAGISTE" /></div>
+          <div class="frow r2">
+            <div><label class="f">Matricule</label>
+              <span class="withbtn">
+                <input class="in" id="f-matricule" data-f="matricule" placeholder="BC-26-001" />
+                <button class="mini" id="bMatri" title="Prochain matricule libre" type="button">auto</button>
+              </span></div>
+            <div><label class="f">WhatsApp direct</label>
+              <input class="in" data-f="whatsapp" placeholder="+229 01 …" /></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="ch"><span class="l">Photo de profil</span></div>
+        <div class="cd">
+          <div class="dz frow" id="dz" style="margin-top:0">
+            <b>Charger la photo</b> · JPG ou PNG<br />recadrage automatique au format 4:5
+          </div>
+          <div class="phprev" id="phPrev">
+            <img id="phImg" alt="" />
+            <div class="ctr">
+              <div class="rng"><span>Zoom</span>
+                <input type="range" id="r-zoom" min="80" max="220" step="2" value="100" /><b id="v-zoom">100 %</b></div>
+              <div class="rng"><span>Cadrage</span>
+                <input type="range" id="r-oy" min="0" max="100" step="1" value="38" /><b id="v-oy">38 %</b></div>
+              <div style="text-align:right"><button class="link" id="bPhDel" type="button">Retirer la photo</button></div>
+            </div>
+          </div>
+          <input type="file" id="fPhoto" accept="image/*" style="display:none" />
+          <input type="file" id="fImport" accept=".json,application/json" style="display:none" />
+        </div>
+      </section>
+
+      <details class="card co">
+        <summary>Entreprise — identité commune
+          <span class="car">▸</span></summary>
+        <div class="cd">
+          <div class="frow r2">
+            <div><label class="f">Nom</label><input class="in" data-c="nom" /></div>
+            <div><label class="f">Sous-ligne</label><input class="in" data-c="sous" /></div>
+          </div>
+          <div class="frow"><label class="f">Activité (verso)</label><input class="in" data-c="act" /></div>
+          <div class="frow r2">
+            <div><label class="f">Standard</label><input class="in" data-c="standard" /></div>
+            <div><label class="f">Adresse</label><input class="in" data-c="adresse" /></div>
+          </div>
+          <div class="frow r2">
+            <div><label class="f">IFU</label><input class="in" data-c="ifu" /></div>
+            <div><label class="f">Site (QR)</label><input class="in" data-c="site" /></div>
+          </div>
+          <div class="frow"><label class="f">Slogan</label><input class="in" data-c="slogan" /></div>
+          <div class="frow r2">
+            <div><label class="f">Services — ligne 1</label><input class="in" data-c="serv1" /></div>
+            <div><label class="f">Services — ligne 2</label><input class="in" data-c="serv2" /></div>
+          </div>
+        </div>
+      </details>
+
+      <section class="card">
+        <div class="ch">
+          <span class="l">Équipe</span>
+          <span class="ct" id="teamCt">0</span>
+          <div class="sp"></div>
+        </div>
+        <div class="roster" id="roster"></div>
+      </section>
+
+    </aside>
+
+    <!-- ════ COLONNE APERÇU ════ -->
+    <main class="stagecol">
+      <section class="card">
+        <div class="ch">
+          <span class="l">Aperçu live — agent courant</span>
+          <div class="sp"></div>
+          <span class="ct" id="pvChip">—</span>
+        </div>
+        <div class="faces">
+          <div class="fbox"><div class="fl">Recto</div>
+            <div class="pvbox" id="pvR"></div></div>
+          <div class="fbox"><div class="fl">Verso</div>
+            <div class="pvbox" id="pvV"></div></div>
+        </div>
+        <div class="acts">
+          <button class="btn gr" id="bSave">Enregistrer dans l'équipe</button>
+          <button class="btn" id="bPrintOne">🖨 Imprimer ce badge · 2 pages</button>
+          <button class="btn ghost" id="bPlate">🖨 Planche — toute l'équipe</button>
+        </div>
+      </section>
+
+      <section class="card cd help">
+        <label class="f" style="margin-bottom:2px">Envoyer à l'imprimeur</label>
+        <ul>
+          <li><b>Imprimer ce badge</b> → destination « <b>Enregistrer au format PDF</b> » → marges : <b>aucune</b>.</li>
+          <li>Le PDF sort en <b>2 pages CR80</b> (recto puis verso) — identique au modèle validé.</li>
+          <li>La <b>planche</b> regroupe toute l'équipe enregistrée : 2 pages par agent, dans l'ordre de la liste.</li>
+          <li>Raccourci : <b>Ctrl+P</b> imprime directement la fiche courante.</li>
+          <li>Le trou Ø 1,8 mm (4,2 mm du bord) est déjà dessiné sur les deux faces.</li>
+        </ul>
+        <div class="note">L'équipe est enregistrée sur le serveur de BeClean — retrouvable depuis
+        n'importe quel ordinateur. « Sauver l'équipe » télécharge aussi une copie <b>.json</b>.</div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<div id="printroot"></div>
+<div id="toast"></div>
+
+<script is:inline src="/assets/badges/qrcode.js"></script>
+<script is:inline src="/assets/badges/studio.js"></script>
+</body>
+</html>
