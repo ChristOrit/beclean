@@ -1,6 +1,7 @@
 ---
 // Studio badges — atelier interne.
-// La page est statique (aucune donnée) : tout passe par /api/badges (protégés).
+// Page statique : aucune donnée n'est rendue côté serveur.
+// Toutes les opérations passent par /api/badges (protégé par cookie HMAC).
 const title = "Studio badges — BeClean & Multiservices";
 ---
 <!DOCTYPE html>
@@ -9,167 +10,275 @@ const title = "Studio badges — BeClean & Multiservices";
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <meta name="robots" content="noindex, nofollow" />
-  <meta name="color-scheme" content="light" />
+  <meta name="color-scheme" content="dark" />
+  <meta name="theme-color" content="#040e16" />
+  <meta name="description" content="Atelier interne BeClean — identités d'équipe, badges PVC CR80." />
   <title>{title}</title>
+  <link rel="stylesheet" href="/assets/badges/badge.css" />
   <link rel="stylesheet" href="/assets/badges/studio.css" />
   <link rel="icon" href="/assets/logo.png" />
 </head>
 <body>
 
-<!-- ══════ CONNEXION ══════ -->
-<div class="lg" id="login" hidden>
-  <form class="lg-card" id="lgForm">
-    <img src="/assets/badges/logo-disc.png" alt="BeClean" />
-    <b>Studio badges</b>
-    <span>Atelier interne — BeClean &amp; Multiservices</span>
-    <input class="in" type="password" id="lgPwd" placeholder="Mot de passe" autocomplete="current-password" />
-    <div class="lg-err" id="lgErr" hidden>Mot de passe incorrect</div>
-    <button class="btn" type="submit">Ouvrir le studio</button>
-    <div class="lg-foot">Badges PVC CR80 · 54 × 85,6 mm</div>
-  </form>
-</div>
+<canvas id="bg" aria-hidden="true"></canvas>
+<div class="shaft" aria-hidden="true"></div>
+<div class="atmo" aria-hidden="true"></div>
+<div class="grain" aria-hidden="true"></div>
+<div class="spores" id="spores" aria-hidden="true"></div>
 
-<!-- ══════ APPLICATION ══════ -->
-<div id="app">
-  <header class="top">
-    <img class="disc" src="/assets/badges/logo-disc.png" alt="" />
-    <div class="tt">
-      <b>Studio badges</b>
-      <span>BeClean &amp; Multiservices · PVC CR80 — 54 × 85,6 mm</span>
+<!-- ═══════════════════ SEUIL ═══════════════════ -->
+<section class="seam" id="seam" aria-hidden="true">
+  <div class="seam-inner">
+    <div class="seal">
+      <div class="seal-ring"></div>
+      <img src="/assets/badges/logo-disc.png" alt="BeClean &amp; Multiservices">
     </div>
-    <div class="sp"></div>
-    <button class="btn ghost sm" id="bExport">⬇ Sauver l'équipe</button>
-    <button class="btn ghost sm" id="bImport">⬆ Importer</button>
-    <button class="btn ghost sm" id="bLogout">Se déconnecter</button>
+    <p class="eyebrow">BeClean &amp; Multiservices</p>
+    <h1 class="display">Le Studio</h1>
+    <p class="sub">Identités d'équipe <i>—</i> Cotonou</p>
+    <form class="key" id="keyForm" novalidate>
+      <label for="key">Clé d'accès</label>
+      <div class="keyfield">
+        <input id="key" type="password" placeholder="••••••••••" autocomplete="current-password"
+               spellcheck="false" aria-describedby="err">
+        <button type="submit" id="enterBtn">Entrer
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M5 12h14"/><path d="m13 6 6 6-6 6"/></svg>
+        </button>
+      </div>
+      <p class="err" id="err" role="alert">Entrez votre clé d'accès pour continuer.</p>
+    </form>
+    <p class="hint">Accès réservé · appuyez sur Entrée</p>
+  </div>
+  <div class="seam-foot"><span>CR80 · 54 × 85,6 mm</span><span>Atelier interne — BeClean</span></div>
+</section>
+<div class="iris" id="iris" aria-hidden="true"></div>
+
+<!-- ═══════════════════ ATELIER ═══════════════════ -->
+<section class="studio" id="studio" aria-hidden="true">
+  <header class="top">
+    <div class="wordmark">
+      <img src="/assets/badges/logo-disc.png" alt="">
+      <div><b>BeClean</b><i>STUDIO</i></div>
+    </div>
+    <div class="top-mid"><span>Atelier</span><b>·</b><span id="topCount">00 spécimens</span></div>
+    <div class="top-actions">
+      <button class="tbtn sheet-btn" id="sheetBtn" aria-label="Fiche de l'agent" aria-controls="inspector">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+        <span>Fiche</span>
+      </button>
+      <button class="tbtn" id="wallBtn" aria-label="Ouvrir le rayon" aria-controls="wall" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3.5" y="3.5" width="7" height="7" rx="1.4"/><rect x="13.5" y="3.5" width="7" height="7" rx="1.4"/><rect x="3.5" y="13.5" width="7" height="7" rx="1.4"/><rect x="13.5" y="13.5" width="7" height="7" rx="1.4"/></svg>
+        <span>Rayon</span>
+      </button>
+      <button class="tbtn" id="cmdBtn" aria-label="Rechercher un agent" aria-controls="palette" aria-expanded="false">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.6-3.6"/></svg>
+        <span>Rechercher</span><kbd>⌘K</kbd>
+      </button>
+      <button class="avatar" id="accountBtn" aria-label="Compte BeClean" aria-haspopup="menu" aria-controls="menu" aria-expanded="false">BC</button>
+    </div>
   </header>
 
-  <div class="cols">
-    <!-- ════ COLONNE FORMULAIRE ════ -->
-    <aside class="colf">
+  <div class="body">
+    <nav class="rail" id="rail" aria-label="Équipe"></nav>
 
-      <section class="card">
-        <div class="ch">
-          <span class="l">Agent</span>
-          <div class="sp"></div>
-          <button class="mini" id="bNew" style="position:static;transform:none">+ Nouveau agent</button>
-        </div>
-        <div class="cd">
-          <div class="frow r2">
-            <div><label class="f">Prénom</label>
-              <input class="in" data-f="prenom" placeholder="Dona" /></div>
-            <div><label class="f">Nom</label>
-              <input class="in" data-f="nom" placeholder="KPONOU" /></div>
-          </div>
-          <div class="frow"><label class="f">Fonction</label>
-            <input class="in" data-f="role" placeholder="AGENT PAYSAGISTE" /></div>
-          <div class="frow r2">
-            <div><label class="f">Matricule</label>
-              <span class="withbtn">
-                <input class="in" id="f-matricule" data-f="matricule" placeholder="BC-26-001" />
-                <button class="mini" id="bMatri" title="Prochain matricule libre" type="button">auto</button>
-              </span></div>
-            <div><label class="f">WhatsApp direct</label>
-              <input class="in" data-f="whatsapp" placeholder="+229 01 …" /></div>
-          </div>
-        </div>
-      </section>
+    <main class="stage" id="stage">
+      <div class="rosette" id="rosette" aria-hidden="true"></div>
+      <div class="pool" aria-hidden="true"></div>
+      <div class="spot" id="spot" aria-hidden="true"></div>
 
-      <section class="card">
-        <div class="ch"><span class="l">Photo de profil</span></div>
-        <div class="cd">
-          <div class="dz frow" id="dz" style="margin-top:0">
-            <b>Charger la photo</b> · JPG ou PNG<br />recadrage automatique au format 4:5
+      <div class="stage-inner" id="stageInner">
+        <p class="kicker"><i class="dot"></i> Spécimen <b id="kIdx">—</b>
+          <span class="slash">/ <b id="kTotal">00</b></span></p>
+        <div class="cardwrap" id="cardwrap" role="button" tabindex="0"
+             aria-label="Retourner le badge — recto ou verso">
+          <div class="card-scaler">
+            <div class="badge front"><div class="face-holder" id="cardFrontFace"></div></div>
+            <div class="badge back"><div class="face-holder" id="cardBackFace"></div></div>
           </div>
-          <div class="phprev" id="phPrev">
-            <img id="phImg" alt="" />
-            <div class="ctr">
-              <div class="rng"><span>Zoom</span>
-                <input type="range" id="r-zoom" min="80" max="220" step="2" value="100" /><b id="v-zoom">100 %</b></div>
-              <div class="rng"><span>Cadrage</span>
-                <input type="range" id="r-oy" min="0" max="100" step="1" value="38" /><b id="v-oy">38 %</b></div>
-              <div style="text-align:right"><button class="link" id="bPhDel" type="button">Retirer la photo</button></div>
-            </div>
+          <div class="reflect" aria-hidden="true">
+            <div class="card-scaler"><div class="face-holder" id="cardReflectFace"></div></div>
           </div>
-          <input type="file" id="fPhoto" accept="image/*" style="display:none" />
-          <input type="file" id="fImport" accept=".json,application/json" style="display:none" />
+          <div class="sheen" aria-hidden="true"></div>
         </div>
-      </section>
+        <h2 id="aName">Nouvel agent</h2>
+        <p class="role" id="aRole">Fonction à définir</p>
+        <div class="idrow">
+          <i class="dot"></i><span id="aMat">Sans matricule</span>
+          <i class="sep"></i><span id="aStatus">Fiche vide</span>
+        </div>
+      </div>
 
-      <details class="card co">
-        <summary>Entreprise — identité commune
-          <span class="car">▸</span></summary>
-        <div class="cd">
-          <div class="frow r2">
-            <div><label class="f">Nom</label><input class="in" data-c="nom" /></div>
-            <div><label class="f">Sous-ligne</label><input class="in" data-c="sous" /></div>
-          </div>
-          <div class="frow"><label class="f">Activité (verso)</label><input class="in" data-c="act" /></div>
-          <div class="frow r2">
-            <div><label class="f">Standard</label><input class="in" data-c="standard" /></div>
-            <div><label class="f">Adresse</label><input class="in" data-c="adresse" /></div>
-          </div>
-          <div class="frow r2">
-            <div><label class="f">IFU</label><input class="in" data-c="ifu" /></div>
-            <div><label class="f">Site (QR)</label><input class="in" data-c="site" /></div>
-          </div>
-          <div class="frow"><label class="f">Slogan</label><input class="in" data-c="slogan" /></div>
-          <div class="frow r2">
-            <div><label class="f">Services — ligne 1</label><input class="in" data-c="serv1" /></div>
-            <div><label class="f">Services — ligne 2</label><input class="in" data-c="serv2" /></div>
-          </div>
-        </div>
-      </details>
-
-      <section class="card">
-        <div class="ch">
-          <span class="l">Équipe</span>
-          <span class="ct" id="teamCt">0</span>
-          <div class="sp"></div>
-        </div>
-        <div class="roster" id="roster"></div>
-      </section>
-
-    </aside>
-
-    <!-- ════ COLONNE APERÇU ════ -->
-    <main class="stagecol">
-      <section class="card">
-        <div class="ch">
-          <span class="l">Aperçu live — agent courant</span>
-          <div class="sp"></div>
-          <span class="ct" id="pvChip">—</span>
-        </div>
-        <div class="faces">
-          <div class="fbox"><div class="fl">Recto</div>
-            <div class="pvbox" id="pvR"></div></div>
-          <div class="fbox"><div class="fl">Verso</div>
-            <div class="pvbox" id="pvV"></div></div>
-        </div>
-        <div class="acts">
-          <button class="btn gr" id="bSave">Enregistrer dans l'équipe</button>
-          <button class="btn" id="bPrintOne">🖨 Imprimer ce badge · 2 pages</button>
-          <button class="btn ghost" id="bPlate">🖨 Planche — toute l'équipe</button>
-        </div>
-      </section>
-
-      <section class="card cd help">
-        <label class="f" style="margin-bottom:2px">Envoyer à l'imprimeur</label>
-        <ul>
-          <li><b>Imprimer ce badge</b> → destination « <b>Enregistrer au format PDF</b> » → marges : <b>aucune</b>.</li>
-          <li>Le PDF sort en <b>2 pages CR80</b> (recto puis verso) — identique au modèle validé.</li>
-          <li>La <b>planche</b> regroupe toute l'équipe enregistrée : 2 pages par agent, dans l'ordre de la liste.</li>
-          <li>Raccourci : <b>Ctrl+P</b> imprime directement la fiche courante.</li>
-          <li>Le trou Ø 1,8 mm (4,2 mm du bord) est déjà dessiné sur les deux faces.</li>
-        </ul>
-        <div class="note">L'équipe est enregistrée sur le serveur de BeClean — retrouvable depuis
-        n'importe quel ordinateur. « Sauver l'équipe » télécharge aussi une copie <b>.json</b>.</div>
-      </section>
+      <div class="printsheet" id="printsheet" aria-hidden="true">
+        <div class="mini">Recto<br>54 × 85,6</div>
+        <div class="mini">Verso<br>54 × 85,6</div>
+        <div class="stamp" id="stamp">Imprimé</div>
+      </div>
     </main>
+
+    <aside class="inspector" id="inspector" aria-label="Fiche de l'agent">
+      <div class="ins-top">
+        <span class="mono">Fiche</span>
+        <em class="pill" id="insPill"><i></i><span id="insPillTxt">Nouveau</span></em>
+      </div>
+
+      <div class="ins-id">
+        <button class="thumb" id="thumb" type="button" aria-label="Choisir la photo 4×5">
+          <span class="init" id="insInit">—</span>
+          <img id="insPhoto" alt="">
+          <em id="thumbEm">Ajouter<br>photo 4×5</em>
+        </button>
+        <div>
+          <b id="insName">Nouvel agent</b>
+          <span id="insRole">Fonction à définir</span>
+        </div>
+      </div>
+
+      <div class="fields" id="fields">
+        <div class="field" style="--i:0"><label for="fPrenom">Prénom</label>
+          <input id="fPrenom" data-f="prenom" autocomplete="off" spellcheck="false"></div>
+        <div class="field" style="--i:1"><label for="fNom">Nom</label>
+          <input id="fNom" data-f="nom" autocomplete="off" spellcheck="false"></div>
+        <div class="field wide" style="--i:2"><label for="fRole">Fonction</label>
+          <input id="fRole" data-f="role" autocomplete="off"></div>
+        <div class="field wide" style="--i:3"><label for="fWa">WhatsApp</label>
+          <input id="fWa" data-f="whatsapp" autocomplete="off" inputmode="tel"></div>
+        <div class="field wide mat" style="--i:4"><label for="fMat">Matricule</label>
+          <input id="fMat" data-f="matricule" autocomplete="off" spellcheck="false">
+          <button class="auto-mat" id="bMatri" type="button" title="Prochain matricule libre">auto</button></div>
+      </div>
+
+      <div class="photo-tools" id="photoTools">
+        <div class="pt-row"><span>Zoom</span>
+          <input type="range" id="r-zoom" min="80" max="220" step="2" value="100" aria-label="Zoom de la photo">
+          <b id="v-zoom">100 %</b></div>
+        <div class="pt-row"><span>Cadrage</span>
+          <input type="range" id="r-oy" min="0" max="100" step="1" value="38" aria-label="Cadrage vertical de la photo">
+          <b id="v-oy">38 %</b></div>
+        <button class="link" id="bPhDel" type="button">Retirer la photo</button>
+      </div>
+
+      <div class="ins-actions">
+        <button class="btn-primary" id="saveBtn">Enregistrer</button>
+        <button class="btn-icon" id="printBtn" aria-label="Imprimer le badge" title="Imprimer · 2 pages CR80">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M7 8V3h10v5"/><path d="M7 18H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="7" y="14" width="10" height="7" rx="1"/></svg>
+        </button>
+        <button class="btn-icon danger" id="delBtn" aria-label="Retirer l'agent de l'équipe" title="Retirer de l'équipe" hidden>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M6 6v14a2 2 0 0 0 2 2h8a2 2 0 0 0 2-2V6"/></svg>
+        </button>
+      </div>
+      <p class="ins-foot"><span class="sync" id="sync"><i></i><span id="insFoot">Synchronisation…</span></span></p>
+    </aside>
+  </div>
+
+  <footer class="tray">
+    <div class="tray-l">
+      <button class="arrow" id="prevBtn" aria-label="Agent précédent">←</button>
+      <span class="idx" id="trayIdx">— / —</span>
+      <button class="arrow" id="nextBtn" aria-label="Agent suivant">→</button>
+    </div>
+    <div class="tray-c">
+      <button class="tool" id="flipBtn" title="Retourner le badge (F)">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M3 8h13a4 4 0 0 1 0 8h-2"/><path d="m13 4 4 4-4 4"/><path d="M21 16H8a4 4 0 0 1 0-8h2"/><path d="m11 20-4-4 4-4"/></svg>
+        <span>Recto / Verso</span>
+      </button>
+      <button class="tool" id="plancheBtn" title="Imprimer toute l'équipe">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" aria-hidden="true"><rect x="3" y="4" width="18" height="16" rx="1.6"/><path d="M9 4v16M15 4v16M3 12h18"/></svg>
+        <span>Planche</span>
+      </button>
+      <button class="tool" id="exportBtn" title="Exporter l'équipe en JSON">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 4v11"/><path d="m8 11 4 4 4-4"/><path d="M4 20h16"/></svg>
+        <span>Exporter</span>
+      </button>
+    </div>
+    <div class="tray-r"><span class="live"><i></i><span id="liveTxt">Base synchronisée</span></span></div>
+  </footer>
+</section>
+
+<!-- ═══════════════════ RAYON ═══════════════════ -->
+<section class="wall" id="wall" role="dialog" aria-modal="true" aria-labelledby="wallTitle" aria-hidden="true">
+  <header class="wall-top">
+    <button class="tbtn" id="wallBack">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M19 12H5"/><path d="m11 6-6 6 6 6"/></svg>
+      <span>Atelier</span>
+    </button>
+    <div class="wall-title">
+      <p class="eyebrow">Équipe</p>
+      <h2 class="display" id="wallTitle">Le rayon</h2>
+    </div>
+    <span class="wall-count" id="wallCount">0 spécimen</span>
+  </header>
+  <div class="wall-bar">
+    <div class="chips" id="wallChips">
+      <button class="chip on" data-f="all">Tous <b id="cAll">0</b></button>
+      <button class="chip" data-f="complete">Complets <b id="cDone">0</b></button>
+      <button class="chip" data-f="todo">À compléter <b id="cTodo">0</b></button>
+    </div>
+    <span class="wall-hint">Ouvrir une fiche →</span>
+  </div>
+  <div class="wall-grid" id="wallGrid"></div>
+</section>
+
+<!-- ═══════════════════ PALETTE ═══════════════════ -->
+<div class="palette" id="palette" role="dialog" aria-modal="true" aria-label="Rechercher un agent" aria-hidden="true">
+  <div class="palette-box">
+    <input id="pQuery" aria-label="Rechercher un agent" placeholder="Rechercher un agent, un matricule…"
+           autocomplete="off" spellcheck="false">
+    <div class="palette-list" id="pList"></div>
+    <div class="palette-foot"><span>↑ ↓ naviguer</span><span>↵ ouvrir</span><span>esc fermer</span></div>
   </div>
 </div>
 
+<!-- ═══════════════════ ENTREPRISE ═══════════════════ -->
+<div class="settings" id="settings" role="dialog" aria-modal="true" aria-labelledby="setTitle" aria-hidden="true">
+  <div class="settings-box">
+    <header class="set-head">
+      <div>
+        <p class="eyebrow">Identité commune</p>
+        <h2 class="display" id="setTitle">Entreprise</h2>
+      </div>
+      <button class="x" id="setClose" aria-label="Fermer les réglages">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" aria-hidden="true"><path d="M6 6l12 12M18 6 6 18"/></svg>
+      </button>
+    </header>
+    <div class="settings-grid">
+      <div class="sfield"><label for="cNom">Nom</label><input id="cNom" data-c="nom"></div>
+      <div class="sfield"><label for="cSous">Sous-ligne</label><input id="cSous" data-c="sous"></div>
+      <div class="sfield wide"><label for="cAct">Activité (verso)</label><input id="cAct" data-c="act"></div>
+      <div class="sfield"><label for="cStandard">Standard</label><input id="cStandard" data-c="standard"></div>
+      <div class="sfield"><label for="cAdresse">Adresse</label><input id="cAdresse" data-c="adresse"></div>
+      <div class="sfield"><label for="cIfu">IFU</label><input id="cIfu" data-c="ifu"></div>
+      <div class="sfield wide"><label for="cSite">Site (QR du verso)</label><input id="cSite" data-c="site" inputmode="url"></div>
+      <div class="sfield wide"><label for="cSlogan">Slogan</label><input id="cSlogan" data-c="slogan"></div>
+      <div class="sfield wide"><label for="cServ1">Services — ligne 1</label><input id="cServ1" data-c="serv1"></div>
+      <div class="sfield wide"><label for="cServ2">Services — ligne 2</label><input id="cServ2" data-c="serv2"></div>
+    </div>
+    <footer class="set-foot">
+      <span class="set-state" id="setState">Synchronisé</span>
+      <span>Ces champs s'appliquent à tous les badges.</span>
+    </footer>
+  </div>
+</div>
+
+<!-- ═══════════════════ MENU COMPTE ═══════════════════ -->
+<div class="menu" id="menu" role="menu" aria-hidden="true">
+  <button type="button" role="menuitem" data-act="settings">Entreprise</button>
+  <button type="button" role="menuitem" data-act="new">Nouvel agent</button>
+  <div class="menu-sep"></div>
+  <button type="button" role="menuitem" data-act="export">Exporter l'équipe (.json)</button>
+  <button type="button" role="menuitem" data-act="import">Importer un fichier…</button>
+  <div class="menu-sep"></div>
+  <button type="button" role="menuitem" class="danger" data-act="logout">Se déconnecter</button>
+</div>
+
+<div class="scrim" id="scrim"></div>
+<div class="toast" id="toast" role="status" aria-live="polite">
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="m4 12.5 5 5L20 6.5"/></svg>
+  <span id="toastMsg"></span>
+</div>
+
 <div id="printroot"></div>
-<div id="toast"></div>
+<input type="file" id="fPhoto" accept="image/*" hidden>
+<input type="file" id="fImport" accept=".json,application/json" hidden>
 
 <script is:inline src="/assets/badges/qrcode.js"></script>
 <script is:inline src="/assets/badges/studio.js"></script>

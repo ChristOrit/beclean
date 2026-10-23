@@ -1018,106 +1018,114 @@ var qrcode = function() {
     };
 
     _this.getLostPoint = function(qrcode) {
+      // METRIQUE ISO (alignée sur util.lost_point de la lib Python qui a
+      // produit la carte validée). N1 : runs >= 5 -> + (longueur - 2),
+      // en ligne ET colonne. N2 : carré 2x2 uniforme -> +3.
+      // N3 : motifs 10111010000 / 00001011101 -> +40. N4 : densité.
 
       var moduleCount = qrcode.getModuleCount();
 
       var lostPoint = 0;
 
-      // LEVEL1
-
-      for (var row = 0; row < moduleCount; row += 1) {
-        for (var col = 0; col < moduleCount; col += 1) {
-
-          var sameCount = 0;
-          var dark = qrcode.isDark(row, col);
-
-          for (var r = -1; r <= 1; r += 1) {
-
-            if (row + r < 0 || moduleCount <= row + r) {
-              continue;
+      // N1
+      var row, col, t;
+      var m = [];
+      for (row = 0; row < moduleCount; row += 1) {
+        var line = new Array(moduleCount);
+        for (col = 0; col < moduleCount; col += 1) {
+          line[col] = qrcode.isDark(row, col);
+        }
+        m.push(line);
+      }
+      function scoreRuns(v) {
+        var length = 1;
+        var prev = v[0];
+        for (t = 1; t < moduleCount; t += 1) {
+          if (v[t] === prev) {
+            length += 1;
+          } else {
+            if (length >= 5) {
+              lostPoint += (length - 2);
             }
-
-            for (var c = -1; c <= 1; c += 1) {
-
-              if (col + c < 0 || moduleCount <= col + c) {
-                continue;
-              }
-
-              if (r == 0 && c == 0) {
-                continue;
-              }
-
-              if (dark == qrcode.isDark(row + r, col + c) ) {
-                sameCount += 1;
-              }
-            }
-          }
-
-          if (sameCount > 5) {
-            lostPoint += (3 + sameCount - 5);
+            length = 1;
+            prev = v[t];
           }
         }
-      };
+        if (length >= 5) {
+          lostPoint += (length - 2);
+        }
+      }
+      for (row = 0; row < moduleCount; row += 1) {
+        scoreRuns(m[row]);
+        var cols = new Array(moduleCount);
+        for (col = 0; col < moduleCount; col += 1) {
+          cols[col] = m[col][row];
+        }
+        scoreRuns(cols);
+      }
 
-      // LEVEL2
-
-      for (var row = 0; row < moduleCount - 1; row += 1) {
-        for (var col = 0; col < moduleCount - 1; col += 1) {
-          var count = 0;
-          if (qrcode.isDark(row, col) ) count += 1;
-          if (qrcode.isDark(row + 1, col) ) count += 1;
-          if (qrcode.isDark(row, col + 1) ) count += 1;
-          if (qrcode.isDark(row + 1, col + 1) ) count += 1;
-          if (count == 0 || count == 4) {
+      // N2
+      for (row = 0; row < moduleCount - 1; row += 1) {
+        for (col = 0; col < moduleCount - 1; col += 1) {
+          var b0 = m[row][col], b1 = m[row][col + 1], b2 = m[row + 1][col], b3 = m[row + 1][col + 1];
+          if (b0 === b1 && b1 === b2 && b2 === b3) {
             lostPoint += 3;
           }
         }
       }
 
-      // LEVEL3
-
-      for (var row = 0; row < moduleCount; row += 1) {
-        for (var col = 0; col < moduleCount - 6; col += 1) {
-          if (qrcode.isDark(row, col)
-              && !qrcode.isDark(row, col + 1)
-              &&  qrcode.isDark(row, col + 2)
-              &&  qrcode.isDark(row, col + 3)
-              &&  qrcode.isDark(row, col + 4)
-              && !qrcode.isDark(row, col + 5)
-              &&  qrcode.isDark(row, col + 6) ) {
+      // N3 (les deux orientations ISO)
+      var last = moduleCount - 10;
+      for (row = 0; row < moduleCount; row += 1) {
+        for (col = 0; col < last; col += 1) {
+          if (
+            !m[row][col + 1]
+            && m[row][col + 4]
+            && !m[row][col + 5]
+            && m[row][col + 6]
+            && !m[row][col + 9]
+            && (
+              (m[row][col] && m[row][col + 2] && m[row][col + 3]
+                && !m[row][col + 7] && !m[row][col + 8] && !m[row][col + 10])
+              || (!m[row][col] && !m[row][col + 2] && !m[row][col + 3]
+                && m[row][col + 7] && m[row][col + 8] && m[row][col + 10])
+            )
+          ) {
+            lostPoint += 40;
+          }
+        }
+      }
+      for (col = 0; col < moduleCount; col += 1) {
+        for (row = 0; row < last; row += 1) {
+          if (
+            !m[row + 1][col]
+            && m[row + 4][col]
+            && !m[row + 5][col]
+            && m[row + 6][col]
+            && !m[row + 9][col]
+            && (
+              (m[row][col] && m[row + 2][col] && m[row + 3][col]
+                && !m[row + 7][col] && !m[row + 8][col] && !m[row + 10][col])
+              || (!m[row][col] && !m[row + 2][col] && !m[row + 3][col]
+                && m[row + 7][col] && m[row + 8][col] && m[row + 10][col])
+            )
+          ) {
             lostPoint += 40;
           }
         }
       }
 
-      for (var col = 0; col < moduleCount; col += 1) {
-        for (var row = 0; row < moduleCount - 6; row += 1) {
-          if (qrcode.isDark(row, col)
-              && !qrcode.isDark(row + 1, col)
-              &&  qrcode.isDark(row + 2, col)
-              &&  qrcode.isDark(row + 3, col)
-              &&  qrcode.isDark(row + 4, col)
-              && !qrcode.isDark(row + 5, col)
-              &&  qrcode.isDark(row + 6, col) ) {
-            lostPoint += 40;
-          }
-        }
-      }
-
-      // LEVEL4
-
+      // N4
       var darkCount = 0;
-
-      for (var col = 0; col < moduleCount; col += 1) {
-        for (var row = 0; row < moduleCount; row += 1) {
-          if (qrcode.isDark(row, col) ) {
+      for (row = 0; row < moduleCount; row += 1) {
+        for (col = 0; col < moduleCount; col += 1) {
+          if (m[row][col]) {
             darkCount += 1;
           }
         }
       }
-
-      var ratio = Math.abs(100 * darkCount / moduleCount / moduleCount - 50) / 5;
-      lostPoint += ratio * 10;
+      var ratio = Math.abs(darkCount / (moduleCount * moduleCount) * 100 - 50) / 5;
+      lostPoint += Math.floor(ratio) * 10;
 
       return lostPoint;
     };
