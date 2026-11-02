@@ -51,7 +51,7 @@ Push sur la branche `main` → Vercel build et déploie automatiquement.
 ```
 src/
   pages/       Pages .astro + routes API (pages/api)
-  components/  Composants Astro (Header, FAQ, CAA, témoignages…)
+  components/  Composants Astro (Header, FAQ, CTA, témoignages…)
   layouts/     Layout global
   data/        Contenu centralisé (site.js, services.js, blog.js)
   lib/         Mailer, badges (auth/db), SEO, dates
